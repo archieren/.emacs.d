@@ -28,19 +28,6 @@
   (define-key dired-mode-map (kbd "RET") 'dired-find-alternate-file)
   (define-key dired-mode-map (kbd "<mouse-2>") 'dired-find-alternate-file))
 
-;; Fonts settings
-(defun init-local-set-font (English-font Chinese-font English-font-size Chinese-font-size)
-  "Set ENGLISH-FONT CHINESE-FONT ENGLISH-FONT-SIZE CHINESE-FONT-SIZE."
-  (set-face-attribute  'default   nil  :font  (font-spec :family English-font :size English-font-size))
-  (dolist (script '(kana han symbol cjk-misc bopomofo))
-    (set-fontset-font  (frame-parameter nil 'font) script (font-spec :family Chinese-font :size Chinese-font-size))))
-
-(init-local-set-font    "DejaVu Sans Mono" "Noto Sans Mono CJK SC" 14 14)
-;;Let the Latin and han 's font the same,it is not good idea.
-;;(init-local-set-font "Noto Sans Mono CJK SC" "Noto Sans Mono CJK SC" 14 14)
-;;xft:-GOOG-Noto Sans CJK SC-normal-normal-normal-*-14-*-*-*-*-0-iso10646-1
-;;xft:-PfEd-DejaVu Sans Mono-normal-normal-normal-*-13-*-*-*-m-0-iso10646-1
-(setq face-font-rescale-alist '(("DejaVu Sans Mono" . 1.0) ("Noto Sans Mono CJK SC" . 1.2)))
 
 ;;; 设置 shell
 (setq shell-file-name "/usr/bin/bash")
