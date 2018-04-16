@@ -1,30 +1,15 @@
 ;;; init-local.el --- do some customizations
 
-;; Copyright (C) 2018-2028 renjianpeng
-
-;; Author: renjianpeng <renjp_r@hotmail.com>
-;; Version:0.1
-;; Keywords:faces ghc-mod
-;; Maintainer: renjianpeng <renjp_r@hotmail.com>
-;; Created: 1 Jan 2018
-;; Homepage: http://no
 ;;; Commentary:
 
-;;  Install:
-;;  put the 'init-local.el' to your load path
-;;  add follow sentences to your .emacs
-;;  (require 'local-local)
-;;
-
 ;;; Code:
-;; Some Settings
 
 ;; 杂项
 (delete-selection-mode t) ;; 选择一片区域后，用键入字符代替
 (global-linum-mode t) ;; 显示行号
 (setq-default cursor-type 'bar ) ;;;; Set cursor-type
 (setq make-backup-files nil)  ;;;; 编辑时,不需要备份文件！
-(desktop-save-mode nil)
+(desktop-save-mode 1)
 
 
 
