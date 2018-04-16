@@ -1,10 +1,10 @@
 ;;; init-fonts.el --- Changing font sizes
-;;; Commentary :
-
+;;; Commentary:
+;; 目前不清楚想干什么！留给中文字体调整用！
 ;;; Code:
 (require 'cl)
 
-
+;;
 (defun font-name-replace-size (font-name new-size)
   "Replace the size part in the FONT-NAME with NEW-SIZE."
   (let ((parts (split-string font-name "-")))
@@ -38,6 +38,7 @@ DELTA should be a multiple of 10, in the units used by the
   (interactive)
   (increment-default-font-height -10))
 
+;; 用等宽字体，比较好对齐中英文！
 ;; Fonts settings
 (defun init-local-set-font (English-font Chinese-font English-font-size Chinese-font-size)
   "Set ENGLISH-FONT CHINESE-FONT ENGLISH-FONT-SIZE CHINESE-FONT-SIZE."
