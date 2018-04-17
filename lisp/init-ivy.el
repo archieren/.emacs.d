@@ -51,7 +51,8 @@
 (global-set-key (kbd "C-c C-r") 'ivy-resume)
 (global-set-key (kbd "C-x b") 'ivy-switch-buffer)
 (global-set-key (kbd "C-s") 'swiper)  ;; replaces i-search with swiper
-(global-set-key (kbd "M-x") 'counsel-M-x) ;; Gives M-x command counsel features
+;; Leave the kbd "M-x" for smex.
+(global-set-key (kbd "s-x") 'counsel-M-x) ;; Gives M-x command counsel features
 (global-set-key (kbd "C-x C-f") 'counsel-find-file) ;; gives C-x C-f counsel features
 (global-set-key (kbd "C-h v") 'counsel-describe-variable)
 (global-set-key (kbd "C-h f") 'counsel-describe-function)
