@@ -85,6 +85,7 @@ locate PACKAGE."
   (require-init 'init-flycheck)
 
   (require-init 'init-recentf)
+  (require-init 'init-ido)
   (require-init 'init-smex)
   (require-init 'init-ivy)
   (require 'init-helm)
