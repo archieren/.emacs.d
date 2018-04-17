@@ -108,7 +108,6 @@ locate PACKAGE."
   (require-init 'init-vc)
   (require-init 'init-darcs)
   (require-init 'init-git)
-  (require-init 'init-github)
 
   (require-init 'init-projectile)
 

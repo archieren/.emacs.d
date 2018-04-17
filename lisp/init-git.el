@@ -6,28 +6,34 @@
 (require-package 'git-blamed)
 (require-package 'gitignore-mode)
 (require-package 'gitconfig-mode)
-(maybe-require-package 'git-timemachine)
+(require-package 'git-timemachine)
+(require-package 'magit)
+(require-package 'fullframe)
+(require-package 'git-commit)
+(require-package 'git-messenger)
+(require-package 'yagist)
+(require-package 'bug-reference-github)
+(require-package 'github-clone)
+(require-package 'magithub)
 
 
-(when (maybe-require-package 'magit)
-  (setq-default magit-diff-refine-hunk t)
+(setq-default magit-diff-refine-hunk t)
 
-  ;; Hint: customize `magit-repository-directories' so that you can use C-u M-F12 to
-  ;; quickly open magit on any one of your projects.
-  (global-set-key [(meta f12)] 'magit-status)
-  (global-set-key (kbd "C-x g") 'magit-status)
-  (global-set-key (kbd "C-x M-g") 'magit-dispatch-popup))
+;; Hint: customize `magit-repository-directories' so that you can use C-u M-F12 to
+;; quickly open magit on any one of your projects.
+(global-set-key [(meta f12)] 'magit-status)
+(global-set-key (kbd "C-x g") 'magit-status)
+(global-set-key (kbd "C-x M-g") 'magit-dispatch-popup)
 
 (after-load 'magit
   (define-key magit-status-mode-map (kbd "C-M-<up>") 'magit-section-up)
   (add-hook 'magit-popup-mode-hook 'init-whitespace-no-trailing-whitespace))
 
-(require-package 'fullframe)
 (after-load 'magit
   (fullframe magit-status magit-mode-quit-window))
 
-(when (maybe-require-package 'git-commit)
-  (add-hook 'git-commit-mode-hook 'goto-address-mode))
+
+(add-hook 'git-commit-mode-hook 'goto-address-mode)
 
 ;; Convenient binding for vc-git-grep
 (after-load 'vc
@@ -71,12 +77,13 @@
     (compile (concat "git svn " command))))
 
 
-(maybe-require-package 'git-messenger)
+
 ;; Though see also vc-annotate's "n" & "p" bindings
 (after-load 'vc
   (setq git-messenger:show-detail t)
   (define-key vc-prefix-map (kbd "p") #'git-messenger:popup-message))
 
-
+;;; Github
+(add-hook 'prog-mode-hook 'bug-reference-prog-mode)
 (provide 'init-git)
 ;;; init-git ends here
