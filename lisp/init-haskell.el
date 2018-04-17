@@ -52,7 +52,7 @@
 
 
 (when (maybe-require-package 'dhall-mode)
-  (add-hook 'dhall-mode-hook 'sanityinc/no-trailing-whitespace))
+  (add-hook 'dhall-mode-hook 'init-whitespace-no-trailing-whitespace))
 
 ;;;Haskell 编程 : ghc-mode is a submode of haskell mode!!! I want it!
 ;;;
