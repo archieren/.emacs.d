@@ -57,7 +57,7 @@ DELTA should be a multiple of 10, in the units used by the
 (add-hook 'after-init-hook 'default-text-scale-mode)
 
 
-(defun sanityinc/maybe-adjust-visual-fill-column ()
+(defun  init-font-maybe-adjust-visual-fill-column ()
   "Readjust visual fill column when the global font size is modified.
 This is helpful for writeroom-mode, in particular."
   ;; TODO: submit as patch
@@ -66,7 +66,7 @@ This is helpful for writeroom-mode, in particular."
     (remove-hook 'after-setting-font-hook 'visual-fill-column--adjust-window t)))
 
 (add-hook 'visual-fill-column-mode-hook
-          'sanityinc/maybe-adjust-visual-fill-column)
+          ' init-font-maybe-adjust-visual-fill-column)
 
 
 

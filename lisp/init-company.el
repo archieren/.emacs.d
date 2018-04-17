@@ -31,20 +31,20 @@
 ;; (see https://github.com/company-mode/company-mode/issues/416)
 (after-load 'company
   (after-load 'page-break-lines
-    (defvar sanityinc/page-break-lines-on-p nil)
-    (make-variable-buffer-local 'sanityinc/page-break-lines-on-p)
+    (defvar init-company-page-break-lines-on-p nil)
+    (make-variable-buffer-local 'init-company-page-break-lines-on-p)
 
-    (defun sanityinc/page-break-lines-disable (&rest ignore)
-      (when (setq sanityinc/page-break-lines-on-p (bound-and-true-p page-break-lines-mode))
+    (defun init-company-page-break-lines-disable (&rest ignore)
+      (when (setq init-company-page-break-lines-on-p (bound-and-true-p page-break-lines-mode))
         (page-break-lines-mode -1)))
 
-    (defun sanityinc/page-break-lines-maybe-reenable (&rest ignore)
-      (when sanityinc/page-break-lines-on-p
+    (defun init-company-page-break-lines-maybe-reenable (&rest ignore)
+      (when init-company-page-break-lines-on-p
         (page-break-lines-mode 1)))
 
-    (add-hook 'company-completion-started-hook 'sanityinc/page-break-lines-disable)
-    (add-hook 'company-completion-finished-hook 'sanityinc/page-break-lines-maybe-reenable)
-    (add-hook 'company-completion-cancelled-hook 'sanityinc/page-break-lines-maybe-reenable)))
+    (add-hook 'company-completion-started-hook 'init-company-page-break-lines-disable)
+    (add-hook 'company-completion-finished-hook 'init-company-page-break-lines-maybe-reenable)
+    (add-hook 'company-completion-cancelled-hook 'init-company-page-break-lines-maybe-reenable)))
 
 
 
