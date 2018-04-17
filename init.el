@@ -13,12 +13,44 @@
 
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 
-;;; I erased all the code with respect to enviroment-compatibility!
-
+;;; Erase all the code with respect to enviroment-compatibility!
+;;; Move some utils from init-elpa.el.
+;;; Borrowed some code from redguardtoo's work.
+;;---------------------------------------------------------------------
 ;;; See redguardtoo's code.
 (defmacro require-init (pkg)
-  "PKG."
+  "PKG is the name of the related init file."
   `(load (file-truename (format "~/.emacs.d/lisp/%s" ,pkg))))
+
+
+;;; On-demand installation of packages
+(defun require-package (package &optional min-version no-refresh)
+  "Install given PACKAGE, optionally requiring MIN-VERSION.
+If NO-REFRESH is non-nil, the available package lists will not be
+re-downloaded in order to locate PACKAGE."
+  (if (package-installed-p package min-version)
+      t
+    (if (or (assoc package package-archive-contents) no-refresh)
+        (if (boundp 'package-selected-packages)
+            ;; Record this as a package the user installed explicitly
+            (package-install package nil)
+          (package-install package))
+      (progn
+        (package-refresh-contents)
+        (require-package package min-version t)))))
+
+(defun maybe-require-package (package &optional min-version no-refresh)
+  "Try to install PACKAGE, and return non-nil if successful.
+In the event of failure, return nil and print a warning message.
+Optionally require MIN-VERSION.  If NO-REFRESH is non-nil, the
+available package lists will not be re-downloaded in order to
+locate PACKAGE."
+  (condition-case err
+      (require-package package min-version no-refresh)
+    (error
+     (message "Couldn't install optional package `%s': %S" package err)
+     nil)))
+
 ;;----------------------------------------------------------------------------
 ;; Adjust garbage collection thresholds during startup, and thereafter
 ;;----------------------------------------------------------------------------
@@ -126,20 +158,15 @@
   (when (maybe-require-package 'uptimes)
     (setq-default uptimes-keep-count 200)
     (add-hook 'after-init-hook (lambda () (require 'uptimes))))
-  ;;----------------------------------------------------------------------------
-  ;; Allow access from emacsclient
-  ;;----------------------------------------------------------------------------
-  (require 'server)
-  (unless (server-running-p)
-    (server-start))
+
   ;; Variables configured via the interactive 'customize' interface
   (when (file-exists-p custom-file)
     (load custom-file))
   ;; Locales (setting them earlier in this file doesn't work in X)
-  (require 'init-locales)
+  (require-init 'init-locales)
   ;; Allow users to provide an optional "init-local" containing personal settings
-  (require 'init-local nil t)
-  (require 'init-themes)
+  (require-init 'init-local )
+  (require-init 'init-themes)
   )
 (provide 'init)
 ;;; init.el ends here
