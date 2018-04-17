@@ -34,15 +34,5 @@
 (global-set-key (kbd "s-'") 'mc/mark-previous-like-this)
 (global-set-key (kbd "C-c s-;") 'mc/mark-all-like-this)
 
-;;;Haskell 编程 : ghc-mode is a submode of haskell mode!!! I want it!
-
-(require-package 'ghc)
-
-(autoload 'ghc-init "ghc" nil t)
-(autoload 'ghc-debug "ghc" nil t)
-(add-hook 'haskell-mode-hook (lambda () (ghc-init)))
-
-
-
 (provide 'init-local)
 ;;; init-local.el ends here
