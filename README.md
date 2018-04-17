@@ -1,7 +1,9 @@
 
 
 # 这是我的Emacs的配置文件，來至Steven Purcell的配置。目前正在慢慢的学习、调整。
-
+# 不准备作为一个可公用的东西，所以我将很多环境相关的东西删掉了。我只用archlinux。
+# WWW的开发环境，留着无妨，但可能会被弱化。
+# 向高手们（Rdeguardtoo 等）致敬！所以不用解释我的抄袭行为！
 
 Emacs itself comes with support for many programming languages. This
 config adds improved defaults and extended support for the following, listed
@@ -32,10 +34,6 @@ degrade smoothly - see the Travis build - but note that Emacs 24.5 and
 above is required for an increasing number of key packages, so to get
 full functionality you should use the latest Emacs version available
 to you.
-
-Some Windows users might need to follow
-[these instructions](http://xn--9dbdkw.se/diary/how_to_enable_GnuTLS_for_Emacs_24_on_Windows/index.en.html)
-to get TLS (ie. SSL) support included in their Emacs.
 
 ## Other requirements
 

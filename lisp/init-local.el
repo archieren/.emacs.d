@@ -23,11 +23,7 @@
 (setq shell-file-name "/usr/bin/bash")
 (autoload 'ansi-color-for-comint-mode-on "ansi-color" nil t)
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on t)
-;;; 设置ido-mode 但这好像是内置模式，可能没必要！
-(setq ido-enable-flex-matching t)
-(setq ido-use-filename-at-point 'guess)
-(setq ido-everywhere t)
-(ido-mode 1)
+
 
 
 

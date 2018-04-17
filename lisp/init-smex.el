@@ -1,6 +1,12 @@
 ;;; init-smex --- Nothing
 ;;; Commentary:
 ;;; Code:
+;;; 设置ido-mode 但这好像是内置模式，可能没必要！
+(setq ido-enable-flex-matching t)
+(setq ido-use-filename-at-point 'guess)
+(setq ido-everywhere t)
+(ido-mode 1)
+
 
 ;; Use smex to handle M-x
 (when (maybe-require-package 'smex)
