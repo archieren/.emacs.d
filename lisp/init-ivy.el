@@ -14,8 +14,7 @@
 (add-hook 'after-init-hook (lambda () (ivy-historian-mode t)))
 (add-hook 'after-init-hook 'counsel-mode)
 
-(global-set-key (kbd "C-c C-r") 'ivy-resume)
-(global-set-key (kbd "C-x b") 'ivy-switch-buffer)
+
 
 (after-load 'ivy
   (setq-default ivy-use-virtual-buffers t
@@ -48,9 +47,14 @@
     (swiper sym))
 
   (define-key ivy-mode-map (kbd "M-s /") 'init-ivy-swiper-at-point))
+
+(global-set-key (kbd "C-c C-r") 'ivy-resume)
+(global-set-key (kbd "C-x b") 'ivy-switch-buffer)
 (global-set-key (kbd "C-s") 'swiper)  ;; replaces i-search with swiper
 (global-set-key (kbd "M-x") 'counsel-M-x) ;; Gives M-x command counsel features
 (global-set-key (kbd "C-x C-f") 'counsel-find-file) ;; gives C-x C-f counsel features
+(global-set-key (kbd "C-h v") 'counsel-describe-variable)
+(global-set-key (kbd "C-h f") 'counsel-describe-function)
 
 (setq xref-show-xrefs-function 'ivy-xref-show-xrefs)
 

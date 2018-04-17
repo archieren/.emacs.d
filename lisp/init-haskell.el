@@ -1,5 +1,8 @@
 ;;; init-haskell --- Nothing
+
 ;;; Commentary:
+;; Ghc-mode is a submode of haskell-mode.
+
 ;;; Code:
 (require-package 'haskell-mode)
 (require-package 'intero)
