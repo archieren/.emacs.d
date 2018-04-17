@@ -1,9 +1,6 @@
 ;;; init-local.el --- do some customizations
-
 ;;; Commentary:
-
 ;;; Code:
-
 ;; 杂项
 (delete-selection-mode t) ;; 选择一片区域后，用键入字符代替
 (global-linum-mode t) ;; 显示行号
@@ -21,13 +18,6 @@
   (find-file (expand-file-name "lisp/init-local.el" user-emacs-directory)))
 
 (global-set-key (kbd "s-f") 'init-local-open-init-local)
-
-;; 只在一个buffer 里打开 dired-mode!
-(put 'dired-find-alternate-file 'disabled nil)
-(after-load 'dired
-  (define-key dired-mode-map (kbd "RET") 'dired-find-alternate-file)
-  (define-key dired-mode-map (kbd "<mouse-2>") 'dired-find-alternate-file))
-
 
 ;;; 设置 shell
 (setq shell-file-name "/usr/bin/bash")
