@@ -1,5 +1,13 @@
 ;;; init-ivy ---  -*- lexical-binding: t -*-
+
 ;;; Commentary:
+;; Ivy relies on nothing.
+;; Swiper relies on Ivy,
+;; and Counsel relies on both Swiper and Ivy.
+;; Ivy helps you narrow down results when searching for something by typing.
+;; Swiper is a replacement for isearch.
+;; Counsel gives you extra functions that aren’t normally available.
+
 ;;; Code:
 
 (add-hook 'after-init-hook 'ivy-mode)
@@ -32,7 +40,7 @@
 (after-load 'counsel
   (diminish 'counsel-mode))
 
-
+;; With respect to swiper
 (after-load 'ivy
   (defun init-ivy-swiper-at-point (sym)
     "Use `swiper' to search for the symbol at point."
@@ -40,6 +48,9 @@
     (swiper sym))
 
   (define-key ivy-mode-map (kbd "M-s /") 'init-ivy-swiper-at-point))
+(global-set-key (kbd "C-s") 'swiper)  ;; replaces i-search with swiper
+(global-set-key (kbd "M-x") 'counsel-M-x) ;; Gives M-x command counsel features
+(global-set-key (kbd "C-x C-f") 'counsel-find-file) ;; gives C-x C-f counsel features
 
 (setq xref-show-xrefs-function 'ivy-xref-show-xrefs)
 
