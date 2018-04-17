@@ -29,10 +29,6 @@
 (setq ido-everywhere t)
 (ido-mode 1)
 
-;;; 设置 window-number
-(require 'window-number)
-(window-number-mode)
-(window-number-meta-mode)
 
 
 

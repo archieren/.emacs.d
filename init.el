@@ -87,7 +87,7 @@ locate PACKAGE."
   (require-init 'init-recentf)
   (require-init 'init-smex)
   (require-init 'init-ivy)
-  ;;(require 'init-helm)
+  (require 'init-helm)
   (require-init 'init-hippie-expand)
   (require-init 'init-company)
   (require-init 'init-windows)
