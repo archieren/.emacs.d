@@ -9,7 +9,7 @@
 (global-linum-mode t) ;; 显示行号
 (setq-default cursor-type 'bar ) ;;;; Set cursor-type
 (setq make-backup-files nil)  ;;;; 编辑时,不需要备份文件！
-(desktop-save-mode 1)
+(desktop-save-mode nil)
 
 
 
