@@ -1,9 +1,8 @@
 ;;; init-uniquify --- Nothing.
 ;;; Commentary:
 ;;; Code:
-;;----------------------------------------------------------------------------
 ;; Nicer naming of buffers for files with identical names
-;;----------------------------------------------------------------------------
+
 (require 'uniquify)
 
 (setq uniquify-buffer-name-style 'reverse)
@@ -13,4 +12,5 @@
 
 
 (provide 'init-uniquify)
+
 ;;; init-uniquify ends here
