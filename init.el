@@ -98,8 +98,13 @@ locate PACKAGE."
   (require-init 'init-vc)
   (require-init 'init-darcs)
   (require-init 'init-git)
-
   ;;; From now on ,packages are loaded by themself!
+  ;; Editing expandation
+  (require-init 'init-paredit)
+  (require-init 'init-slime)
+  (require-init 'init-misc)
+  (require-init 'init-folding)
+  ;;(require-init 'init-dash);; Dash, a new list api.
   ;; Programming language
   (require-init 'init-lisp)
   (require-init 'init-common-lisp)
@@ -127,18 +132,12 @@ locate PACKAGE."
   (require-init 'init-rails)
   (require-init 'init-sql)
   (require-init 'init-rust)
-  (require-init 'init-toml)
+  ;;(require-init 'init-toml)
   (require-init 'init-yaml)
   (require-init 'init-docker)
   (require-init 'init-terraform)
   ;;(require 'init-nix)
   (require-package 'nginx-mode)
-  ;; Editing expandation
-  (require-init 'init-paredit)
-  (require-init 'init-slime)
-  (require-init 'init-misc)
-  (require-init 'init-folding)
-  (require-init 'init-dash)
 
   ;;(require-init 'init-twitter)
   ;; (require-init 'init-mu)
