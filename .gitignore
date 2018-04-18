@@ -50,3 +50,11 @@ site-lisp/package/
 /rake.cache
 /plantuml.jar
 /magithub
+.agignore
+.dir-locals.el
+.directory
+.travis.yml
+/lisp/.dir-locals.el
+/lisp/.directory
+/site-lisp/
+/test-startup.sh
