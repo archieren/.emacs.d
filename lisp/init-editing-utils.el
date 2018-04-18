@@ -1,24 +1,6 @@
 ;;; init-editing-utils --- Nothing.
 ;;; Commentary:
 ;;; Code:
-(require-package 'unfill)
-(require-package 'list-unicode-display)
-(require-package 'vlf)  ;; Very large file.
-(require-package 'mode-line-bell)
-(require-package 'beacon)
-(require-package 'rainbow-delimiters)
-(require-package 'undo-tree)
-(require-package 'symbol-overlay)
-(require-package 'browse-kill-ring)
-(require-package 'expand-region)
-(require-package 'avy)
-(require-package 'multiple-cursors)
-(require-package 'page-break-lines)
-(require-package 'move-dup)
-(require-package 'whole-line-or-region)
-(require-package 'highlight-escape-sequences)
-(require-package 'guide-key)
-
 (when (fboundp 'electric-pair-mode)
   (add-hook 'after-init-hook 'electric-pair-mode))
 (add-hook 'after-init-hook 'electric-indent-mode)

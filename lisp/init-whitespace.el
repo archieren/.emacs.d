@@ -3,7 +3,6 @@
 ;;; Code:
 (setq-default show-trailing-whitespace t)
 
-
 ;;; Whitespace
 
 (defun  init-whitespace-no-trailing-whitespace ()
@@ -21,8 +20,6 @@
                 minibuffer-setup-hook))
   (add-hook hook #' init-whitespace-no-trailing-whitespace))
 
-
-(require-package 'whitespace-cleanup-mode)
 (add-hook 'after-init-hook 'global-whitespace-cleanup-mode)
 
 (global-set-key [remap just-one-space] 'cycle-spacing)

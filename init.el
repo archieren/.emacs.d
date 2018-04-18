@@ -105,6 +105,49 @@ locate PACKAGE."
   (require-package 'window-number)
   ;;; init-fonts
   (require-package 'default-text-scale)
+  ;;; init-mmm
+  (require-package 'mmm-mode)
+  ;;; init-editing-utils
+  (require-package 'unfill)
+  (require-package 'list-unicode-display)
+  (require-package 'vlf)  ;; Very large file.
+  (require-package 'mode-line-bell)
+  (require-package 'beacon)
+  (require-package 'rainbow-delimiters)
+  (require-package 'undo-tree)
+  (require-package 'symbol-overlay)
+  (require-package 'browse-kill-ring)
+  (require-package 'expand-region)
+  (require-package 'avy)
+  (require-package 'multiple-cursors)
+  (require-package 'page-break-lines)
+  (require-package 'move-dup)
+  (require-package 'whole-line-or-region)
+  (require-package 'highlight-escape-sequences)
+  (require-package 'guide-key)
+  ;;; init-whitespace
+  (require-package 'whitespace-cleanup-mode)
+  ;;; init-vc
+  (require-package 'diff-hl)
+  (require-package 'browse-at-remote)
+  ;;; init-darcs
+  (require-package 'darcsum)
+  (require-package 'vc-darcs)
+  ;;; init-git
+  (require-package 'git-blamed)
+  (require-package 'gitignore-mode)
+  (require-package 'gitconfig-mode)
+  (require-package 'git-timemachine)
+  (require-package 'magit)
+  (require-package 'fullframe)
+  (require-package 'git-commit)
+  (require-package 'git-messenger)
+  (require-package 'yagist)
+  (require-package 'bug-reference-github)
+  (require-package 'github-clone)
+  (require-package 'magithub)
+  (require-package 'git-gutter)
+  ;;
   ;; Emacs's expendation
   (require-init 'init-frame-hooks)
   (require-init 'init-xterm)

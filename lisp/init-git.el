@@ -5,22 +5,6 @@
 ;;; Code:
 ;; TODO: link commits from vc-log to magit-show-commit
 ;; TODO: smerge-mode
-(require-package 'git-blamed)
-(require-package 'gitignore-mode)
-(require-package 'gitconfig-mode)
-(require-package 'git-timemachine)
-(require-package 'magit)
-(require-package 'fullframe)
-(require-package 'git-commit)
-(require-package 'git-messenger)
-(require-package 'yagist)
-(require-package 'bug-reference-github)
-(require-package 'github-clone)
-(require-package 'magithub)
-(require-package 'git-gutter)
-;;{{ Comes from init-vc
-(require-package 'diff-hl)
-(require-package 'browse-at-remote)
 
 (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
 (add-hook 'after-init-hook 'global-diff-hl-mode)
