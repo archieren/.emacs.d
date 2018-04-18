@@ -1,7 +1,7 @@
 ;;; init-isearch --- Nothing.
 ;;; Commentary:
 ;;; Code:
-(require-package 'anzu)
+
 (add-hook 'after-init-hook 'global-anzu-mode)
 (setq anzu-mode-lighter "")
 (global-set-key [remap query-replace-regexp] 'anzu-query-replace-regexp)

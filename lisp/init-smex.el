@@ -1,8 +1,6 @@
 ;;; init-smex --- Nothing
 ;;; Commentary:
 ;;; Code:
-(require-package 'smex)
-
 ;; Use smex to handle M-x
 ;; Change path for ~/.smex-items
 (setq-default smex-save-file (expand-file-name ".smex-items" user-emacs-directory))

@@ -8,9 +8,9 @@
 (let ((gls (executable-find "gls")))
   (when gls (setq insert-directory-program gls)))
 
-(when (maybe-require-package 'diredfl)
-  (after-load 'dired
-    (diredfl-global-mode)))
+
+(after-load 'dired
+  (diredfl-global-mode))
 
 ;; 只在一个buffer 里打开 dired-mode!
 (put 'dired-find-alternate-file 'disabled nil)
@@ -22,9 +22,9 @@
   (add-hook 'dired-mode-hook
             (lambda () (guide-key/add-local-guide-key-sequence "%"))))
 
-(when (maybe-require-package 'diff-hl)
-  (after-load 'dired
-    (add-hook 'dired-mode-hook 'diff-hl-dired-mode)))
+
+(after-load 'dired
+  (add-hook 'dired-mode-hook 'diff-hl-dired-mode))
 
 
 (provide 'init-dired)

@@ -1,7 +1,7 @@
 ;;; init-ido --- Nothing
 ;;; Commentary:
 ;;; Code:
-(require-package 'flx-ido)
+
 (require 'flx-ido)
 (ido-mode 'file)  ; use 'buffer rather than t to use only buffer switching
 (flx-ido-mode 1)

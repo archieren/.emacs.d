@@ -75,12 +75,37 @@ locate PACKAGE."
   (require-package 'scratch)
   (require-package 'command-log-mode)
   (require-package 'disable-mouse)
+  ;;; init-frame-hooks init-xterm init-gui-frames
+  ;;; init-dired
+  (require-package 'diredfl)
+  (require-package 'diff-hl)
+  ;;; init-isearch
+  (require-package 'anzu)
+  ;;; init-grep init-uniquify
+  ;;; init-ibuffer
+  (require-package 'fullframe)
+  ;;; init-flycheck
+  (require-package 'flycheck)
+  ;;; init-recentf
+  ;;; init-ido
+  (require-package 'flx-ido)
+  ;;; init-smex
+  (require-package 'smex)
+  ;;;init-ivy
   (require-package 'ivy)
   (require-package 'ivy-historian)
   (require-package 'ivy-xref)
   (require-package 'counsel)
   (require-package 'projectile)
   (require-package 'swiper)
+  ;;; init-helm
+  ;;; init-hippie-expand init-company
+  ;;; init-window
+  (require-package 'switch-window)
+  (require-package 'window-number)
+  ;;; init-fonts
+  (require-package 'default-text-scale)
+  ;; Emacs's expendation
   (require-init 'init-frame-hooks)
   (require-init 'init-xterm)
   (require-init 'init-gui-frames)
@@ -90,7 +115,6 @@ locate PACKAGE."
   (require-init 'init-uniquify)
   (require-init 'init-ibuffer)
   (require-init 'init-flycheck)
-
   (require-init 'init-recentf)
   (require-init 'init-ido)
   (require-init 'init-smex)
@@ -105,20 +129,20 @@ locate PACKAGE."
 
   (require-init 'init-editing-utils)
   (require-init 'init-whitespace)
-
+  ;; Version Control
   (require-init 'init-vc)
   (require-init 'init-darcs)
   (require-init 'init-git)
-
-  (require-init 'init-erlang)
-  (require-init 'init-python)
-  (require-init 'init-haskell)
+  ;; Programming language
   (require-init 'init-lisp)
   (require-init 'init-common-lisp)
   (require-init 'init-clojure)
-
+  (require-init 'init-erlang)
+  (require-init 'init-python)
+  (require-init 'init-haskell)
   (require-init 'init-projectile)
-
+  ;;(require-init 'init-c)
+  ;; Web development
   (require-init 'init-compile)
   (require-init 'init-textile)
   (require-init 'init-markdown)
@@ -142,7 +166,7 @@ locate PACKAGE."
   (require-init 'init-terraform)
   ;;(require 'init-nix)
   (require-package 'nginx-mode)
-
+  ;; Editing expandation
   (require-init 'init-paredit)
   (require-init 'init-slime)
   (require-init 'init-misc)

@@ -13,7 +13,6 @@
 
 
 ;; Make "C-x o" prompt for a target window when there are more than 2
-(require-package 'switch-window)
 (setq-default switch-window-shortcut-style 'alphabet)
 (setq-default switch-window-timeout nil)
 (global-set-key (kbd "C-x o") 'switch-window)
@@ -71,7 +70,6 @@
 (global-set-key (kbd "C-x _") 'split-window-vertically-instead)
 
 ;;; 设置 window-number
-(require-package 'window-number)
 (require 'window-number)
 (window-number-mode)
 (window-number-meta-mode)

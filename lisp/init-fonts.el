@@ -2,9 +2,8 @@
 ;;; Commentary:
 ;; 目前不清楚想干什么！留给中文字体调整用！
 ;;; Code:
-(require 'cl)
-
 ;;
+(require 'cl)
 (defun font-name-replace-size (font-name new-size)
   "Replace the size part in the FONT-NAME with NEW-SIZE."
   (let ((parts (split-string font-name "-")))
@@ -52,8 +51,7 @@ DELTA should be a multiple of 10, in the units used by the
 ;;xft:-GOOG-Noto Sans CJK SC-normal-normal-normal-*-14-*-*-*-*-0-iso10646-1
 ;;xft:-PfEd-DejaVu Sans Mono-normal-normal-normal-*-13-*-*-*-m-0-iso10646-1
 (setq face-font-rescale-alist '(("DejaVu Sans Mono" . 1.0) ("Noto Sans Mono CJK SC" . 1.2)))
-
-(require-package 'default-text-scale)
+;;;
 (add-hook 'after-init-hook 'default-text-scale-mode)
 
 
