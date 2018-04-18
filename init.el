@@ -70,6 +70,8 @@ locate PACKAGE."
   ;; Load most of basic packages in elpa ,and then config for specific features and modes
   ;;----------------------------------------------------------------------------
   ;;
+  ;; Project
+  (require-init 'init-projectile)
   ;; Emacs's expendation
   (require-init 'init-frame-hooks)
   (require-init 'init-xterm)
@@ -112,7 +114,6 @@ locate PACKAGE."
   (require-init 'init-erlang)
   (require-init 'init-python)
   (require-init 'init-haskell)
-  (require-init 'init-projectile)
   ;;(require-init 'init-c)
   ;; Web development
   (require-init 'init-compile)

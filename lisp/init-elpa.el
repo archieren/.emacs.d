@@ -32,6 +32,8 @@
 (require-package 'scratch)
 (require-package 'command-log-mode)
 (require-package 'disable-mouse)
+  ;;; init-projectile
+(require-package 'projectile)
   ;;; init-frame-hooks init-xterm init-gui-frames
   ;;; init-dired
 (require-package 'diredfl)
@@ -53,7 +55,6 @@
 (require-package 'ivy-historian)
 (require-package 'ivy-xref)
 (require-package 'counsel)
-(require-package 'projectile)
 (require-package 'swiper)
   ;;; init-helm
   ;;; init-hippie-expand init-company
