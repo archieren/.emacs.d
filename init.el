@@ -110,14 +110,20 @@ locate PACKAGE."
   (require-init 'init-darcs)
   (require-init 'init-git)
 
+  (require-init 'init-erlang)
+  (require-init 'init-python)
+  (require-init 'init-haskell)
+  (require-init 'init-lisp)
+  (require-init 'init-common-lisp)
+  (require-init 'init-clojure)
+  (require-init 'init-clojure-cider)
+
   (require-init 'init-projectile)
 
   (require-init 'init-compile)
-  ;;(require-init 'init-crontab)
   (require-init 'init-textile)
   (require-init 'init-markdown)
   (require-init 'init-csv)
-  (require-init 'init-erlang)
   (require-init 'init-javascript)
   (require-init 'init-org)
   (require-init 'init-nxml)
@@ -125,8 +131,8 @@ locate PACKAGE."
   (require-init 'init-css)
   (require-init 'init-haml)
   (require-init 'init-http)
-  (require-init 'init-python)
-  (require-init 'init-haskell)
+
+
   (require-init 'init-elm)
   (require-init 'init-purescript)
   (require-init 'init-ruby)
@@ -141,11 +147,9 @@ locate PACKAGE."
   (require-package 'nginx-mode)
 
   (require-init 'init-paredit)
-  (require-init 'init-lisp)
+
   (require-init 'init-slime)
-  (require-init 'init-clojure)
-  (require-init 'init-clojure-cider)
-  (require-init 'init-common-lisp)
+
   (require-init 'init-misc)
 
   (require-init 'init-folding)
