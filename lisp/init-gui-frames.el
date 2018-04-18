@@ -1,7 +1,13 @@
-;;; init-gui-theme.el --- Nothing
+;;; init-gui-frames --- Nothing
 ;;; Commentary:
 ;;; Code:
 
+;;; Stop the C-z command.
+(defun init-gui-frames/doNothing ()
+  "Nothing."
+  (interactive)
+  )
+(global-set-key (kbd "C-z") 'init-gui-frames/doNothing)
 ;;----------------------------------------------------------------------------
 ;; Suppress GUI features
 ;;----------------------------------------------------------------------------

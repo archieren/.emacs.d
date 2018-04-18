@@ -119,7 +119,6 @@ locate PACKAGE."
   (require-init 'init-csv)
   (require-init 'init-erlang)
   (require-init 'init-javascript)
-  (require-init 'init-php)
   (require-init 'init-org)
   (require-init 'init-nxml)
   (require-init 'init-html)
