@@ -21,7 +21,7 @@
 
 (when (fboundp 'electric-pair-mode)
   (add-hook 'after-init-hook 'electric-pair-mode))
-
+(add-hook 'after-init-hook 'electric-indent-mode)
 ;; Some basic preferences
 (global-linum-mode t)
 (setq-default cursor-type 'bar)
