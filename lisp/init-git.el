@@ -1,5 +1,7 @@
 ;;; init-git --- Nothing
 ;;; Commentary:
+;; diff-hl:
+;; git-gutter:
 ;;; Code:
 ;; TODO: link commits from vc-log to magit-show-commit
 ;; TODO: smerge-mode
@@ -16,6 +18,18 @@
 (require-package 'github-clone)
 (require-package 'magithub)
 (require-package 'git-gutter)
+;;{{ Comes from init-vc
+(require-package 'diff-hl)
+(require-package 'browse-at-remote)
+
+(add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
+(add-hook 'after-init-hook 'global-diff-hl-mode)
+
+(after-load 'diff-hl
+  (define-key diff-hl-mode-map
+    (kbd "<left-fringe> <mouse-1>")
+    'diff-hl-diff-goto-hunk))
+;;}}
 
 (setq-default magit-diff-refine-hunk t)
 

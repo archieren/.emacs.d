@@ -131,8 +131,6 @@ locate PACKAGE."
   (require-init 'init-css)
   (require-init 'init-haml)
   (require-init 'init-http)
-
-
   (require-init 'init-elm)
   (require-init 'init-purescript)
   (require-init 'init-ruby)
@@ -147,11 +145,8 @@ locate PACKAGE."
   (require-package 'nginx-mode)
 
   (require-init 'init-paredit)
-
   (require-init 'init-slime)
-
   (require-init 'init-misc)
-
   (require-init 'init-folding)
   (require-init 'init-dash)
 
