@@ -24,14 +24,89 @@
 
 (setq package-enable-at-startup nil)
 (package-initialize)
-
-
-
+;;;{{{
 (require-package 'fullframe)
-(fullframe list-packages quit-window)
-
-
 (require-package 'cl-lib)
+(require-package 'wgrep)
+(require-package 'diminish)
+(require-package 'scratch)
+(require-package 'command-log-mode)
+(require-package 'disable-mouse)
+  ;;; init-frame-hooks init-xterm init-gui-frames
+  ;;; init-dired
+(require-package 'diredfl)
+(require-package 'diff-hl)
+  ;;; init-isearch
+(require-package 'anzu)
+  ;;; init-grep init-uniquify
+  ;;; init-ibuffer
+                                        ;(require-package 'fullframe)
+  ;;; init-flycheck
+(require-package 'flycheck)
+  ;;; init-recentf
+  ;;; init-ido
+(require-package 'flx-ido)
+  ;;; init-smex
+(require-package 'smex)
+  ;;;init-ivy
+(require-package 'ivy)
+(require-package 'ivy-historian)
+(require-package 'ivy-xref)
+(require-package 'counsel)
+(require-package 'projectile)
+(require-package 'swiper)
+  ;;; init-helm
+  ;;; init-hippie-expand init-company
+  ;;; init-window
+(require-package 'switch-window)
+(require-package 'window-number)
+  ;;; init-fonts
+(require-package 'default-text-scale)
+  ;;; init-mmm
+(require-package 'mmm-mode)
+  ;;; init-editing-utils
+(require-package 'unfill)
+(require-package 'list-unicode-display)
+(require-package 'vlf)  ;; Very large file.
+(require-package 'mode-line-bell)
+(require-package 'beacon)
+(require-package 'rainbow-delimiters)
+(require-package 'undo-tree)
+(require-package 'symbol-overlay)
+(require-package 'browse-kill-ring)
+(require-package 'expand-region)
+(require-package 'avy)
+(require-package 'multiple-cursors)
+(require-package 'page-break-lines)
+(require-package 'move-dup)
+(require-package 'whole-line-or-region)
+(require-package 'highlight-escape-sequences)
+(require-package 'guide-key)
+  ;;; init-whitespace
+(require-package 'whitespace-cleanup-mode)
+  ;;; init-vc
+(require-package 'diff-hl)
+(require-package 'browse-at-remote)
+  ;;; init-darcs
+(require-package 'darcsum)
+(require-package 'vc-darcs)
+  ;;; init-git
+(require-package 'git-blamed)
+(require-package 'gitignore-mode)
+(require-package 'gitconfig-mode)
+(require-package 'git-timemachine)
+(require-package 'magit)
+(require-package 'fullframe)
+(require-package 'git-commit)
+(require-package 'git-messenger)
+(require-package 'yagist)
+(require-package 'bug-reference-github)
+(require-package 'github-clone)
+(require-package 'magithub)
+(require-package 'git-gutter)
+;;;}}}
+
+(fullframe list-packages quit-window)
 (require 'cl-lib)
 
 (defun sanityinc/set-tabulated-list-column-width (col-name width)
