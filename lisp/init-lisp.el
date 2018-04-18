@@ -130,6 +130,7 @@
   (add-hook 'after-save-hook #'check-parens nil t))
 
 (defun sanityinc/disable-indent-guide ()
+  "Nothing."
   (when (bound-and-true-p indent-guide-mode)
     (indent-guide-mode -1)))
 

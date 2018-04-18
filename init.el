@@ -116,7 +116,6 @@ locate PACKAGE."
   (require-init 'init-lisp)
   (require-init 'init-common-lisp)
   (require-init 'init-clojure)
-  (require-init 'init-clojure-cider)
 
   (require-init 'init-projectile)
 
