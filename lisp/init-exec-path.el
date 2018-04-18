@@ -1,6 +1,8 @@
 ;;; init-exec-path --- Nothing.
 ;;; Commentary:
 ;;; Code:
+
+;; 包 exec-path-from-shell 也是 Steve Purcell的产品.
 (require-package 'exec-path-from-shell)
 
 (after-load 'exec-path-from-shell
