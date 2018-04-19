@@ -45,6 +45,7 @@
                                         ;(require-package 'fullframe)
   ;;; init-flycheck
 (require-package 'flycheck)
+(require-package 'flycheck-color-mode-line)
   ;;; init-recentf
   ;;; init-ido
 (require-package 'flx-ido)
