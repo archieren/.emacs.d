@@ -15,11 +15,9 @@
 
 ;;; Mirrors of Standard package repositories
 ;;; 我使用清华的镜像
-(add-to-list 'package-archives '("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/"))
-(add-to-list 'package-archives '("gnu" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/"))
-(add-to-list 'package-archives '("org" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/org/"))
-
-
+(setq package-archives '(("gnu"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
+                         ("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
+                         ("org" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/org/")))
 ;;; Fire up package.el
 
 (setq package-enable-at-startup nil)
@@ -42,7 +40,6 @@
 (require-package 'anzu)
   ;;; init-grep init-uniquify
   ;;; init-ibuffer
-                                        ;(require-package 'fullframe)
   ;;; init-flycheck
 (require-package 'flycheck)
 (require-package 'flycheck-color-mode-line)
