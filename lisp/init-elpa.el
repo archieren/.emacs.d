@@ -15,9 +15,11 @@
 
 ;;; Mirrors of Standard package repositories
 ;;; 我使用清华的镜像
-(setq package-archives '(("gnu"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
-                         ("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
-                         ("org" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/org/")))
+;;(setq package-archives '(("gnu"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
+;;                         ("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
+;;                         ("org" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/org/")))
+(setq package-archives '(("gnu"   . "https://elpa.gnu.org/packages/")
+                        ("melpa" . "https://melpa.org/packages/")))
 ;;; Fire up package.el
 
 (setq package-enable-at-startup nil)
