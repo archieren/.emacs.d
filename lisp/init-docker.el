@@ -1,6 +1,5 @@
 ;;; init-docker  --- Nothing.
 ;;; Commentary:
-;; 暂时放在这儿，以后可能有用。
 ;;; Code:
 
 (require-package 'docker)

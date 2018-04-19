@@ -134,7 +134,7 @@ locate PACKAGE."
 (require-init 'init-rust)
 ;;(require-init 'init-toml)
 (require-init 'init-yaml)
-(require-init 'init-docker)
+;;(require-init 'init-docker)
 (require-init 'init-terraform)
 ;;(require 'init-nix)
 (require-package 'nginx-mode)
