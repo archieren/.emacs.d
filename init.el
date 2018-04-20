@@ -64,6 +64,7 @@ locate PACKAGE."
 (require-init 'init-utils)
 (require-init 'init-site-lisp)
 (require-init 'init-elpa)
+(require-package 'exec-path-from-shell)
 (require-init 'init-exec-path)
 ;;----------------------------------------------------------------------------
 ;; Load most of basic packages in elpa ,and then config for specific features and modes
@@ -120,7 +121,7 @@ locate PACKAGE."
 ;;(require-init 'init-markdown)
 ;;(require-init 'init-csv)
 ;;(require-init 'init-javascript)
-;;(require-init 'init-org)
+(require-init 'init-org)
 ;;(require-init 'init-nxml)
 ;;(require-init 'init-html)
 ;;(require-init 'init-css)
@@ -142,13 +143,7 @@ locate PACKAGE."
 ;;(require-init 'init-twitter)
 ;; (require-init 'init-mu)
 ;;(require-init 'init-ledger)
-;; Extra packages which don't require any configuration
-(require-package 'gnuplot)
-;;(require-package 'lua-mode)
-;;(require-package 'htmlize)
-;;(require-package 'dsvn)
-;;(require-package 'daemons)
-;;(require-package 'dotenv-mode)
+
 (require-package 'uptimes)
 (setq-default uptimes-keep-count 200)
 (add-hook 'after-init-hook (lambda () (require 'uptimes)))

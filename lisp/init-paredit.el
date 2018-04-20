@@ -1,9 +1,6 @@
 ;;; init-paredit --- Nothing.
 ;;; Commentary:
 ;;; Code:
-(require-package 'paredit)
-(require-package 'paredit-everywhere)
-
 (autoload 'enable-paredit-mode "paredit")
 
 (defun maybe-map-paredit-newline ()

@@ -1,16 +1,13 @@
 ;;; init-slime --- Nothing.
 ;;; Commentary:
 ;;; Code:
-(require-package 'slime)
+
 ;; package.el compiles the contrib subdir, but the compilation order
 ;; causes problems, so we remove the .elc files there. See
 ;; http://lists.common-lisp.net/pipermail/slime-devel/2012-February/018470.html
 ;; 这是什么bug？
 (mapc #'delete-file
       (file-expand-wildcards (concat user-emacs-directory "elpa/slime-2*/contrib/*.elc")))
-
-(require-package 'hippie-expand-slime)
-(require-package 'slime-company)
 
 
 ;;; Lisp buffers
