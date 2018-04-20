@@ -64,7 +64,6 @@ locate PACKAGE."
 (require-init 'init-utils)
 (require-init 'init-site-lisp)
 (require-init 'init-elpa)
-(require-package 'exec-path-from-shell)
 (require-init 'init-exec-path)
 ;;----------------------------------------------------------------------------
 ;; Load most of basic packages in elpa ,and then config for specific features and modes
@@ -73,6 +72,7 @@ locate PACKAGE."
 ;; Project
 (require-init 'init-projectile)
 ;; Emacs's expendation
+(require-init 'init-mode-line)
 (require-init 'init-frame-hooks)
 (require-init 'init-xterm)
 (require-init 'init-gui-frames)

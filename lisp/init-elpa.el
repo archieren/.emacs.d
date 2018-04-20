@@ -25,6 +25,7 @@
 (setq package-enable-at-startup nil)
 (package-initialize)
 ;;;{{{  Install some basic packages.
+(require-package 'exec-path-from-shell)
 (require-package 'fullframe)
 (require-package 'cl-lib)
 (require-package 'wgrep)
@@ -32,6 +33,7 @@
 (require-package 'scratch)
 (require-package 'command-log-mode)
 (require-package 'disable-mouse)
+(require-package 'powerline)
   ;;; init-projectile
 (require-package 'projectile)
   ;;; init-frame-hooks init-xterm init-gui-frames
@@ -118,6 +120,21 @@
 ;;; init-org
 (require-package 'org-cliplink)
 (require-package 'writeroom-mode)
+;; init-lisp
+(require-package 'elisp-slime-nav)
+(require-package 'ipretty)
+(require-package 'auto-compile)
+(require-package 'immortal-scratch)
+(require-package 'aggressive-indent)
+(require-package 'eldoc-eval)
+(require-package 'cl-lib-highlight)
+(require-package 'macrostep)
+(require-package 'rainbow-mode)
+(require-package 'aggressive-indent)
+(require-package 'highlight-quoted)
+;;(require-package 'flycheck)
+(require-package 'flycheck-package)
+(require-package 'cask-mode)
 ;; Extra packages which don't require any configuration
 (require-package 'gnuplot)
 ;;(require-package 'lua-mode)
@@ -125,6 +142,7 @@
 ;;(require-package 'dsvn)
 ;;(require-package 'daemons)
 ;;(require-package 'dotenv-mode)
+
 ;;; init-themes
 (require-package 'xresources-theme)
 (require-package 'spacemacs-theme)

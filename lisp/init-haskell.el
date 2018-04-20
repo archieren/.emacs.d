@@ -11,6 +11,7 @@
 (require-package 'dhall-mode)
 
 ;; Use intero for completion and flycheck
+(require 'haskell-mode)
 (after-load 'haskell-mode
   (intero-global-mode)
   (add-hook 'haskell-mode-hook 'eldoc-mode))
