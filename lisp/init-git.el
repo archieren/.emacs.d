@@ -5,11 +5,17 @@
 ;;; Code:
 ;; TODO: link commits from vc-log to magit-show-commit
 ;; TODO: smerge-mode
-
+(require 'diff-hl)
+(require 'magit)
+(require 'compile)
+(require 'vc)
+(require 'git-gutter)
+(require 'git-messenger)
+(require 'init-utils)
 (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
 (add-hook 'after-init-hook 'global-diff-hl-mode)
 
-(after-load 'diff-hl
+(with-eval-after-load 'diff-hl
   (define-key diff-hl-mode-map
     (kbd "<left-fringe> <mouse-1>")
     'diff-hl-diff-goto-hunk))
@@ -23,18 +29,18 @@
 (global-set-key (kbd "C-x g") 'magit-status)
 (global-set-key (kbd "C-x M-g") 'magit-dispatch-popup)
 
-(after-load 'magit
+(with-eval-after-load 'magit
   (define-key magit-status-mode-map (kbd "C-M-<up>") 'magit-section-up)
   (add-hook 'magit-popup-mode-hook 'init-whitespace-no-trailing-whitespace))
 
-(after-load 'magit
+(with-eval-after-load 'magit
   (fullframe magit-status magit-mode-quit-window))
 
 
 (add-hook 'git-commit-mode-hook 'goto-address-mode)
 
 ;; Convenient binding for vc-git-grep
-(after-load 'vc
+(with-eval-after-load 'vc
   (define-key vc-prefix-map (kbd "f") 'vc-git-grep))
 
 
@@ -49,7 +55,7 @@
 ;;       (magit-svn-mode)))
 ;;   (add-hook 'magit-status-mode-hook #'sanityinc/maybe-enable-magit-svn-mode))
 
-(after-load 'compile
+(with-eval-after-load 'compile
   (dolist (defn (list '(git-svn-updated "^\t[A-Z]\t\\(.*\\)$" 1 nil nil 0 1)
                       '(git-svn-needs-update "^\\(.*\\): needs update$" 1 nil nil 2 1)))
     (add-to-list 'compilation-error-regexp-alist-alist defn)
@@ -77,7 +83,7 @@
 
 
 ;; Though see also vc-annotate's "n" & "p" bindings
-(after-load 'vc
+(with-eval-after-load 'vc
   (setq git-messenger:show-detail t)
   (define-key vc-prefix-map (kbd "p") #'git-messenger:popup-message))
 

@@ -54,6 +54,4 @@ site-lisp/package/
 .dir-locals.el
 .directory
 .travis.yml
-/lisp/.dir-locals.el
-/lisp/.directory
 /test-startup.sh
