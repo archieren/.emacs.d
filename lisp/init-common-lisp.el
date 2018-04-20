@@ -8,8 +8,8 @@
                             (unless (featurep 'slime)
                               (require 'slime)
                               (normal-mode))))
-
-(after-load 'slime
+(require 'slime)
+(with-eval-after-load 'slime
   (when (executable-find "sbcl")
     (add-to-list 'slime-lisp-implementations
                  '(sbcl ("sbcl") :coding-system utf-8-unix)))

@@ -5,7 +5,6 @@
 
 (define-key global-map (kbd "C-c l") 'org-store-link)
 (define-key global-map (kbd "C-c a") 'org-agenda)
-
 ;; Various preferences
 (setq org-log-done t
       org-edit-timestamp-down-means-later t
@@ -287,7 +286,8 @@ typical word processor."
 (setq org-archive-mark-done nil)
 (setq org-archive-location "%s_archive::* Archive")
 ;;;
-(require-package 'org-pomodoro)
+;;;
+(require 'org-pomodoro)
 (setq org-pomodoro-keep-killed-pomodoro-time t)
 (after-load 'org-agenda
   (define-key org-agenda-mode-map (kbd "P") 'org-pomodoro))

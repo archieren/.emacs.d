@@ -4,20 +4,17 @@
 ;; Ghc-mode is a submode of haskell-mode.
 
 ;;; Code:
-(require-package 'haskell-mode)
-(require-package 'intero)
-(require-package 'hindent)
-(require-package 'ghc)
-(require-package 'dhall-mode)
+
 
 ;; Use intero for completion and flycheck
 (require 'haskell-mode)
-(after-load 'haskell-mode
+(require 'intero)
+(with-eval-after-load 'haskell-mode
   (intero-global-mode)
   (add-hook 'haskell-mode-hook 'eldoc-mode))
-(after-load 'haskell-cabal
+(with-eval-after-load 'haskell-cabal
   (define-key haskell-cabal-mode-map (kbd "C-c C-l") 'intero-restart))
-(after-load 'intero
+(with-eval-after-load 'intero
   (define-key intero-mode-map (kbd "M-?") nil)
   (after-load 'flycheck
     (flycheck-add-next-checker 'intero
@@ -34,7 +31,7 @@
 (add-hook 'haskell-mode-hook 'haskell-auto-insert-module-template)
 (add-hook 'haskell-mode-hook 'hindent-mode)
 
-(after-load 'hindent
+(with-eval-after-load 'hindent
   (when (require 'nadvice)
     (defun  init-haskell-hindent--before-save-wrapper (oldfun &rest args)
       (with-demoted-errors "Error invoking hindent: %s"
@@ -42,11 +39,11 @@
           (apply oldfun args))))
     (advice-add 'hindent--before-save :around ' init-haskell-hindent--before-save-wrapper)))
 
-(after-load 'haskell-mode
+(with-eval-after-load 'haskell-mode
   (define-key haskell-mode-map (kbd "C-c h") 'hoogle)
   (define-key haskell-mode-map (kbd "C-o") 'open-line))
 
-(after-load 'page-break-lines
+(with-eval-after-load 'page-break-lines
   (push 'haskell-mode page-break-lines-modes))
 
 

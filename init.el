@@ -1,7 +1,8 @@
 ;;; init.el --- Bootstrap the configurations.
 ;;; Commentary:
 ;; S.Purcell modulizes the configurations.It's a good method.
-
+;;; Version: 0.0.1
+;;; HomePage: http://to
 ;;; Code:
 
 (setq lexical-binding t)
@@ -21,35 +22,6 @@
 (defmacro require-init (pkg)
   "PKG is the name of the related init file."
   `(load (file-truename (format "~/.emacs.d/lisp/%s" ,pkg))))
-
-
-;;; On-demand installation of packages
-(defun require-package (package &optional min-version no-refresh)
-  "Install given PACKAGE, optionally requiring MIN-VERSION.
-If NO-REFRESH is non-nil, the available package lists will not be
-re-downloaded in order to locate PACKAGE."
-  (if (package-installed-p package min-version)
-      t
-    (if (or (assoc package package-archive-contents) no-refresh)
-        (if (boundp 'package-selected-packages)
-            ;; Record this as a package the user installed explicitly
-            (package-install package nil)
-          (package-install package))
-      (progn
-        (package-refresh-contents)
-        (require-package package min-version t)))))
-
-(defun maybe-require-package (package &optional min-version no-refresh)
-  "Try to install PACKAGE, and return non-nil if successful.
-In the event of failure, return nil and print a warning message.
-Optionally require MIN-VERSION.  If NO-REFRESH is non-nil, the
-available package lists will not be re-downloaded in order to
-locate PACKAGE."
-  (condition-case err
-      (require-package package min-version no-refresh)
-    (error
-     (message "Couldn't install optional package `%s': %S" package err)
-     nil)))
 
 ;;----------------------------------------------------------------------------
 ;; Adjust garbage collection thresholds during startup, and thereafter
@@ -138,13 +110,12 @@ locate PACKAGE."
 ;;(require-init 'init-docker)
 ;;(require-init 'init-terraform)
 ;;(require 'init-nix)
-;;(require-package 'nginx-mode)
+
 
 ;;(require-init 'init-twitter)
 ;; (require-init 'init-mu)
 ;;(require-init 'init-ledger)
 
-(require-package 'uptimes)
 (setq-default uptimes-keep-count 200)
 (add-hook 'after-init-hook (lambda () (require 'uptimes)))
 

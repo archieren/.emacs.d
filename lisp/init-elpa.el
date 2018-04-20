@@ -19,9 +19,37 @@
 ;;                         ("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
 ;;                         ("org" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/org/")))
 (setq package-archives '(("gnu"   . "https://elpa.gnu.org/packages/")
-                        ("melpa" . "https://melpa.org/packages/")))
+                         ("melpa" . "https://melpa.org/packages/")))
 ;;; Fire up package.el
+;;;
+;;; On-demand installation of packages
+(defun require-package (package &optional min-version no-refresh)
+  "Install given PACKAGE, optionally requiring MIN-VERSION.
+If NO-REFRESH is non-nil, the available package lists will not be
+re-downloaded in order to locate PACKAGE."
+  (if (package-installed-p package min-version)
+      t
+    (if (or (assoc package package-archive-contents) no-refresh)
+        (if (boundp 'package-selected-packages)
+            ;; Record this as a package the user installed explicitly
+            (package-install package nil)
+          (package-install package))
+      (progn
+        (package-refresh-contents)
+        (require-package package min-version t)))))
 
+(defun maybe-require-package (package &optional min-version no-refresh)
+  "Try to install PACKAGE, and return non-nil if successful.
+In the event of failure, return nil and print a warning message.
+Optionally require MIN-VERSION.  If NO-REFRESH is non-nil, the
+available package lists will not be re-downloaded in order to
+locate PACKAGE."
+  (condition-case err
+      (require-package package min-version no-refresh)
+    (error
+     (message "Couldn't install optional package `%s': %S" package err)
+     nil)))
+;;;
 (setq package-enable-at-startup nil)
 (package-initialize)
 ;;;{{{  Install some basic packages.
@@ -125,6 +153,7 @@
 (require-package 'ipretty)
 (require-package 'auto-compile)
 (require-package 'immortal-scratch)
+(require-package 'indent-guide)
 (require-package 'aggressive-indent)
 (require-package 'eldoc-eval)
 (require-package 'cl-lib-highlight)
@@ -135,6 +164,26 @@
 ;;(require-package 'flycheck)
 (require-package 'flycheck-package)
 (require-package 'cask-mode)
+;; init-common-lisp
+;; init-clojure
+(require-package 'clojure-mode)
+(require-package 'cljsbuild-mode)
+(require-package 'elein)
+(require-package 'cider)
+(require-package 'flycheck-clojure)
+;; init-python
+(require-package 'elpy)
+(require-package 'py-autopep8)
+;; init-erlang
+(require-package 'erlang)
+;; init-haskell
+(require-package 'haskell-mode)
+(require-package 'intero)
+(require-package 'hindent)
+(require-package 'ghc)
+(require-package 'dhall-mode)
+;; init-org
+(require-package 'org-pomodoro)
 ;; Extra packages which don't require any configuration
 (require-package 'gnuplot)
 ;;(require-package 'lua-mode)
@@ -143,6 +192,10 @@
 ;;(require-package 'daemons)
 ;;(require-package 'dotenv-mode)
 
+
+
+;;(require-package 'nginx-mode)
+(require-package 'uptimes)
 ;;; init-themes
 (require-package 'xresources-theme)
 (require-package 'spacemacs-theme)

@@ -2,9 +2,7 @@
 ;;; Commentary:
 ;;; Code:
 
-
-(require-package 'elpy)
-(require-package 'py-autopep8)
+(require 'elpy)
 (setq interpreter-mode-alist
       (cons '("python" . python-mode) interpreter-mode-alist))
 

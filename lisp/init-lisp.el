@@ -9,12 +9,10 @@
 
 ;;(setq-default initial-scratch-message (concat ";; Happy hacking, " user-login-name " - Emacs ♥ you!\n\n"))
 
-
-
 ;; Make C-x C-e run 'eval-region if the region is active
 
 (defun sanityinc/eval-last-sexp-or-region (prefix)
-  "Eval region from BEG to END if active, otherwise the last sexp."
+  "PREFIX:?.Eval region from BEG to END if active, otherwise the last sexp."
   (interactive "P")
   (if (and (mark) (use-region-p))
       (eval-region (min (point) (mark)) (max (point) (mark)))
@@ -23,7 +21,7 @@
 (global-set-key [remap eval-expression] 'pp-eval-expression)
 
 (require 'lisp-mode)
-(after-load 'lisp-mode
+(with-eval-after-load 'lisp-mode
   (define-key emacs-lisp-mode-map (kbd "C-x C-e") 'sanityinc/eval-last-sexp-or-region))
 
 
@@ -32,12 +30,10 @@
 
 
 (defadvice pp-display-expression (after sanityinc/make-read-only (expression out-buffer-name) activate)
-  "Enable `view-mode' in the output buffer - if any - so it can be closed with `\"q\"."
+  "Enable VIEW-MODE in the output buffer - if any - so it can be closed with `\"q\"."
   (when (get-buffer out-buffer-name)
     (with-current-buffer out-buffer-name
       (view-mode 1))))
-
-
 
 (defun sanityinc/maybe-set-bundled-elisp-readonly ()
   "If this elisp appears to be part of Emacs, then disallow editing."
@@ -73,10 +69,10 @@
       (funcall sanityinc/repl-switch-function sanityinc/repl-original-buffer)
     (error "No original buffer")))
 (require 'elisp-mode)
-(after-load 'elisp-mode
+(with-eval-after-load 'elisp-mode
   (define-key emacs-lisp-mode-map (kbd "C-c C-z") 'sanityinc/switch-to-ielm))
 (require 'ielm)
-(after-load 'ielm
+(with-eval-after-load 'ielm
   (define-key ielm-map (kbd "C-c C-z") 'sanityinc/repl-switch-back))
 
 ;; ----------------------------------------------------------------------------
@@ -103,12 +99,6 @@
 ;; ----------------------------------------------------------------------------
 (setq load-prefer-newer t)
 
-
-
-(require 'immortal-scratch)
-(add-hook 'after-init-hook 'immortal-scratch-mode)
-
-
 ;;; Support byte-compilation in a sub-process, as
 ;;; required by highlight-cl
 
@@ -128,6 +118,8 @@
 ;; ----------------------------------------------------------------------------
 ;; Enable desired features for all lisp modes
 ;; ----------------------------------------------------------------------------
+
+(require 'indent-guide)
 (defun sanityinc/enable-check-parens-on-save ()
   "Run `check-parens' when the current buffer is saved."
   (add-hook 'after-save-hook #'check-parens nil t))
@@ -143,8 +135,6 @@
     sanityinc/disable-indent-guide
     sanityinc/enable-check-parens-on-save)
   "Hook run in all Lisp modes.")
-
-
 
 (require 'aggressive-indent)
 (add-to-list 'sanityinc/lispy-modes-hook 'aggressive-indent-mode)
@@ -166,6 +156,26 @@
           '(lisp-mode inferior-lisp-mode lisp-interaction-mode))
   "All lispy major modes.")
 
+
+;;;{{ REPL 来自原来的init-slime.el,我觉得移到这儿，好些.
+(require 'slime-repl)
+(require 'paredit)
+(defun sanityinc/slime-repl-setup ()
+  "Mode setup function for slime REPL."
+  (sanityinc/lisp-setup)
+  (set-up-slime-hippie-expand)
+  (setq show-trailing-whitespace nil))
+
+(with-eval-after-load 'slime-repl
+  ;; Stop SLIME's REPL from grabbing DEL, which is annoying when backspacing over a '('
+  (with-eval-after-load 'paredit
+    (define-key slime-repl-mode-map (read-kbd-macro paredit-backward-delete-key) nil))
+
+  ;; Bind TAB to `indent-for-tab-command', as in regular Slime buffers.
+  (define-key slime-repl-mode-map (kbd "TAB") 'indent-for-tab-command)
+
+  (add-hook 'slime-repl-mode-hook 'sanityinc/slime-repl-setup))
+;;;}}
 (require 'derived)
 
 (dolist (hook (mapcar #'derived-mode-hook-name sanityinc/lispy-modes))
@@ -183,51 +193,12 @@
 (add-to-list 'auto-mode-alist '("archive-contents\\'" . emacs-lisp-mode))
 
 (require 'cl-lib-highlight)
-(after-load 'lisp-mode
+(with-eval-after-load 'lisp-mode
   (cl-lib-highlight-initialize))
 
-;; ----------------------------------------------------------------------------
-;; Delete .elc files when reverting the .el from VC or magit
-;; ----------------------------------------------------------------------------
-
-;; When .el files are open, we can intercept when they are modified
-;; by VC or magit in order to remove .elc files that are likely to
-;; be out of sync.
-
-;; This is handy while actively working on elisp files, though
-;; obviously it doesn't ensure that unopened files will also have
-;; their .elc counterparts removed - VC hooks would be necessary for
-;; that.
-
-(defvar sanityinc/vc-reverting nil
-  "Whether or not VC or Magit is currently reverting buffers.")
-
-(defadvice revert-buffer (after sanityinc/maybe-remove-elc activate)
-  "If reverting from VC, delete any .elc file that will now be out of sync."
-  (when sanityinc/vc-reverting
-    (when (and (eq 'emacs-lisp-mode major-mode)
-               buffer-file-name
-               (string= "el" (file-name-extension buffer-file-name)))
-      (let ((elc (concat buffer-file-name "c")))
-        (when (file-exists-p elc)
-          (message "Removing out-of-sync elc file %s" (file-name-nondirectory elc))
-          (delete-file elc))))))
-
-(defadvice magit-revert-buffers (around sanityinc/reverting activate)
-  (let ((sanityinc/vc-reverting t))
-    ad-do-it))
-(defadvice vc-revert-buffer-internal (around sanityinc/reverting activate)
-  (let ((sanityinc/vc-reverting t))
-    ad-do-it))
-
-
-
-
 (require 'macrostep)
-(after-load 'lisp-mode
+(with-eval-after-load 'lisp-mode
   (define-key emacs-lisp-mode-map (kbd "C-c e") 'macrostep-expand))
-
-
 
 ;; A quick way to jump to the definition of a function given its key binding
 (global-set-key (kbd "C-h K") 'find-function-on-key)
@@ -237,41 +208,13 @@
 
 
 (require 'flycheck-package)
-(after-load 'flycheck
+(with-eval-after-load 'flycheck
   (flycheck-package-setup))
 
-
 ;; ERT
 (require 'ert)
-(after-load 'ert
+(with-eval-after-load 'ert
   (define-key ert-results-mode-map (kbd "g") 'ert-results-rerun-all-tests))
-
-
-(defun sanityinc/cl-libify-next ()
-  "Find next symbol from 'cl and replace it with the 'cl-lib equivalent."
-  (interactive)
-  (let ((case-fold-search nil))
-    (re-search-forward
-     (concat
-      "("
-      (regexp-opt
-       ;; Not an exhaustive list
-       '("loop" "incf" "plusp" "first" "decf" "minusp" "assert"
-         "case" "destructuring-bind" "second" "third" "defun*"
-         "defmacro*" "return-from" "labels" "cadar" "fourth"
-         "cadadr") t)
-      "\\_>")))
-  (let ((form (match-string 1)))
-    (backward-sexp)
-    (cond
-     ((string-match "^\\(defun\\|defmacro\\)\\*$")
-      (kill-sexp)
-      (insert (concat "cl-" (match-string 1))))
-     (t
-      (insert "cl-")))
-    (when (fboundp 'aggressive-indent-indent-defun)
-      (aggressive-indent-indent-defun))))
-
 
 (provide 'init-lisp)
 ;;; init-lisp ends here
