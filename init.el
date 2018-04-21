@@ -18,7 +18,7 @@
 ;;; Move some utils from init-elpa.el.
 ;;; Borrowed some code from redguardtoo's work.
 ;;---------------------------------------------------------------------
-;;; See redguardtoo's code.
+;;; See redguardtoo's code.但最终感觉不是个好多少的方法.
 (defmacro init-init (pkg)
   "PKG is the name of the related init file."
   `(load (file-truename (format "%s/lisp/%s",user-emacs-directory ,pkg))))

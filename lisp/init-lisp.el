@@ -1,5 +1,6 @@
 ;;; init-lisp --- Nothing.
 ;;; Commentary:
+;;; 主要和Emacs Lisp的编辑有关.
 ;;; Code:
 (require 'elisp-slime-nav)
 (dolist (hook '(emacs-lisp-mode-hook ielm-mode-hook))
@@ -12,7 +13,8 @@
 ;; Make C-x C-e run 'eval-region if the region is active
 
 (defun sanityinc/eval-last-sexp-or-region (prefix)
-  "PREFIX:?.Eval region from BEG to END if active, otherwise the last sexp."
+  "PREFIX:the last sexp.
+Eval region from begin-mark to end-mark if active, otherwise the last sexp."
   (interactive "P")
   (if (and (mark) (use-region-p))
       (eval-region (min (point) (mark)) (max (point) (mark)))
@@ -24,7 +26,7 @@
 (with-eval-after-load 'lisp-mode
   (define-key emacs-lisp-mode-map (kbd "C-x C-e") 'sanityinc/eval-last-sexp-or-region))
 
-
+;;;
 (require 'ipretty)
 (add-hook 'after-init-hook 'ipretty-mode)
 
@@ -75,10 +77,8 @@
 (with-eval-after-load 'ielm
   (define-key ielm-map (kbd "C-c C-z") 'sanityinc/repl-switch-back))
 
-;; ----------------------------------------------------------------------------
-;; Hippie-expand
-;; ----------------------------------------------------------------------------
 
+;; Hippie-expand
 (defun set-up-hippie-expand-for-elisp ()
   "Locally set `hippie-expand' completion functions for use with Emacs Lisp."
   (make-local-variable 'hippie-expand-try-functions-list)
@@ -86,17 +86,12 @@
   (add-to-list 'hippie-expand-try-functions-list 'try-complete-lisp-symbol-partially t)
   (add-to-list 'hippie-expand-try-functions-list 'my/try-complete-lisp-symbol-without-namespace t))
 
-
-;; ----------------------------------------------------------------------------
 ;; Automatic byte compilation
-;; ----------------------------------------------------------------------------
 (require 'auto-compile)
 (add-hook 'after-init-hook 'auto-compile-on-save-mode)
 (add-hook 'after-init-hook 'auto-compile-on-load-mode)
 
-;; ----------------------------------------------------------------------------
 ;; Load .el if newer than corresponding .elc
-;; ----------------------------------------------------------------------------
 (setq load-prefer-newer t)
 
 ;;; Support byte-compilation in a sub-process, as
@@ -114,55 +109,54 @@
        (list "-Q" "-batch" "-f" "batch-byte-compile" filename)
        " ")))))
 
-
-;; ----------------------------------------------------------------------------
 ;; Enable desired features for all lisp modes
-;; ----------------------------------------------------------------------------
 
 (require 'indent-guide)
-(defun sanityinc/enable-check-parens-on-save ()
+(defun init-lisp-enable-check-parens-on-save ()
   "Run `check-parens' when the current buffer is saved."
   (add-hook 'after-save-hook #'check-parens nil t))
 
-(defun sanityinc/disable-indent-guide ()
+(defun init-lisp-disable-indent-guide ()
   "Nothing."
   (when (bound-and-true-p indent-guide-mode)
     (indent-guide-mode -1)))
 
-(defvar sanityinc/lispy-modes-hook
+(defvar init-lisp-lispy-modes-hook
   '(enable-paredit-mode
     turn-on-eldoc-mode
-    sanityinc/disable-indent-guide
-    sanityinc/enable-check-parens-on-save)
+    init-lisp-disable-indent-guide
+    init-lisp-enable-check-parens-on-save)
   "Hook run in all Lisp modes.")
 
 (require 'aggressive-indent)
-(add-to-list 'sanityinc/lispy-modes-hook 'aggressive-indent-mode)
+(add-to-list 'init-lisp-lispy-modes-hook 'aggressive-indent-mode)
 
-(defun sanityinc/lisp-setup ()
+(defun  init-lisp-lisp-setup ()
   "Enable features useful in any Lisp mode."
-  (run-hooks 'sanityinc/lispy-modes-hook))
+  (run-hooks 'init-lisp-lispy-modes-hook))
 
-(defun sanityinc/emacs-lisp-setup ()
+(defun init-lisp-emacs-setup ()
   "Enable features useful when working with elisp."
   (set-up-hippie-expand-for-elisp))
 
-(defconst sanityinc/elispy-modes
+(defconst init-lisp-emacs-lispy-modes
   '(emacs-lisp-mode ielm-mode)
   "Major modes relating to elisp.")
 
-(defconst sanityinc/lispy-modes
-  (append sanityinc/elispy-modes
+(defconst init-lisp-lispy-modes
+  (append init-lisp-emacs-lispy-modes
           '(lisp-mode inferior-lisp-mode lisp-interaction-mode))
   "All lispy major modes.")
 
 
 ;;;{{ REPL 来自原来的init-slime.el,我觉得移到这儿，好些.
+;;;init-slime.el 在前，却在搞些和emacs lisp 有关的事，不合适。
+;;;所以移到这儿.
 (require 'slime-repl)
 (require 'paredit)
-(defun sanityinc/slime-repl-setup ()
+(defun init-lisp-slime-repl-setup ()
   "Mode setup function for slime REPL."
-  (sanityinc/lisp-setup)
+  ( init-lisp-lisp-setup)
   (set-up-slime-hippie-expand)
   (setq show-trailing-whitespace nil))
 
@@ -174,15 +168,15 @@
   ;; Bind TAB to `indent-for-tab-command', as in regular Slime buffers.
   (define-key slime-repl-mode-map (kbd "TAB") 'indent-for-tab-command)
 
-  (add-hook 'slime-repl-mode-hook 'sanityinc/slime-repl-setup))
+  (add-hook 'slime-repl-mode-hook 'init-lisp-slime-repl-setup))
 ;;;}}
 (require 'derived)
 
-(dolist (hook (mapcar #'derived-mode-hook-name sanityinc/lispy-modes))
-  (add-hook hook 'sanityinc/lisp-setup))
+(dolist (hook (mapcar #'derived-mode-hook-name init-lisp-lispy-modes))
+  (add-hook hook ' init-lisp-lisp-setup))
 
-(dolist (hook (mapcar #'derived-mode-hook-name sanityinc/elispy-modes))
-  (add-hook hook 'sanityinc/emacs-lisp-setup))
+(dolist (hook (mapcar #'derived-mode-hook-name init-lisp-emacs-lispy-modes))
+  (add-hook hook 'init-lisp-emacs-setup))
 
 (if (boundp 'eval-expression-minibuffer-setup-hook)
     (add-hook 'eval-expression-minibuffer-setup-hook #'eldoc-mode)

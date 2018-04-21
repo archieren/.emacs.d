@@ -5,7 +5,6 @@
   (add-hook 'after-init-hook 'electric-pair-mode))
 (add-hook 'after-init-hook 'electric-indent-mode)
 ;; Some basic preferences
-(global-linum-mode t)
 (setq-default cursor-type 'bar)
 (setq-default blink-cursor-interval 0.4)
 (setq-default bookmark-default-file (expand-file-name ".bookmarks.el" user-emacs-directory))
@@ -28,7 +27,7 @@
 (setq-default truncate-partial-width-windows nil)
 
 
-
+(require 'autorevert);;build-in
 (add-hook 'after-init-hook 'global-auto-revert-mode)
 (setq global-auto-revert-non-file-buffers t
       auto-revert-verbose nil)
@@ -36,6 +35,8 @@
 (add-hook 'after-init-hook 'transient-mark-mode)
 
 ;;; Very large file.
+;;; 此处定义了一个交互式命令，没有和键绑定.
+(require 'ffap)
 (defun ffap-vlf ()
   "Find file at point with VLF."
   (interactive)
@@ -59,24 +60,22 @@
   (newline-and-indent))
 (global-set-key (kbd "S-<return>") 'init-editing-utils-newline-at-end-of-line)
 ;;; Subword
-(after-load 'subword
+(with-eval-after-load 'subword
   (diminish 'subword-mode))
-;;;
-(unless (fboundp 'display-line-numbers-mode)
-  (require-package 'nlinum))
-;;;
+
 (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
 
 (when (fboundp 'global-prettify-symbols-mode)
   (add-hook 'after-init-hook 'global-prettify-symbols-mode))
 ;;;
 (add-hook 'after-init-hook 'global-undo-tree-mode)
-(after-load 'undo-tree
+(with-eval-after-load 'undo-tree
   (diminish 'undo-tree-mode))
 ;;; symbol-overlay
+(require 'symbol-overlay)
 (dolist (hook '(prog-mode-hook html-mode-hook css-mode-hook yaml-mode-hook conf-mode-hook))
   (add-hook hook 'symbol-overlay-mode))
-(after-load 'symbol-overlay
+(with-eval-after-load 'symbol-overlay
   (diminish 'symbol-overlay-mode)
   (define-key symbol-overlay-mode-map (kbd "M-i") 'symbol-overlay-put)
   (define-key symbol-overlay-mode-map (kbd "M-n") 'symbol-overlay-jump-next)
@@ -85,13 +84,14 @@
 (autoload 'zap-up-to-char "misc" "Kill up to, but not including ARGth occurrence of CHAR.")
 (global-set-key (kbd "M-Z") 'zap-up-to-char)
 ;;; browse-kill-ring
+(require 'browse-kill-ring)
 (setq browse-kill-ring-separator "\f")
 (global-set-key (kbd "M-Y") 'browse-kill-ring)
-(after-load 'browse-kill-ring
+(with-eval-after-load 'browse-kill-ring
   (define-key browse-kill-ring-mode-map (kbd "C-g") 'browse-kill-ring-quit)
   (define-key browse-kill-ring-mode-map (kbd "M-n") 'browse-kill-ring-forward)
   (define-key browse-kill-ring-mode-map (kbd "M-p") 'browse-kill-ring-previous))
-(after-load 'page-break-lines
+(with-eval-after-load 'page-break-lines
   (push 'browse-kill-ring-mode page-break-lines-modes))
 ;; Don't disable narrowing commands
 (put 'narrow-to-region 'disabled nil)
@@ -118,16 +118,16 @@
 ;; (global-set-key (kbd "C->") 'mc/mark-next-like-this)
 ;; (global-set-key (kbd "C-+") 'mc/mark-next-like-this)
 ;; (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
+;; 重新定义为
+(global-set-key (kbd "s-;") 'mc/mark-next-like-this)
+(global-set-key (kbd "s-'") 'mc/mark-previous-like-this)
+(global-set-key (kbd "C-c s-;") 'mc/mark-all-like-this)
 ;; From active region to multiple cursors:
 (global-set-key (kbd "C-c m r") 'set-rectangular-region-anchor)
 (global-set-key (kbd "C-c m c") 'mc/edit-lines)
 (global-set-key (kbd "C-c m e") 'mc/edit-ends-of-lines)
 (global-set-key (kbd "C-c m a") 'mc/edit-beginnings-of-lines)
 
-
-(global-set-key (kbd "s-;") 'mc/mark-next-like-this)
-(global-set-key (kbd "s-'") 'mc/mark-previous-like-this)
-(global-set-key (kbd "C-c s-;") 'mc/mark-all-like-this)
 ;; Train myself to use M-f and M-b instead
 (global-unset-key [M-left])
 (global-unset-key [M-right])
@@ -148,7 +148,7 @@
 ;; Page break lines
 ;;----------------------------------------------------------------------------
 (add-hook 'after-init-hook 'global-page-break-lines-mode)
-(after-load 'page-break-lines
+(with-eval-after-load 'page-break-lines
   (diminish 'page-break-lines-mode))
 
 ;;----------------------------------------------------------------------------
@@ -181,7 +181,7 @@
 
 ;; whole-line-or-region :Cut/copy the current line if no region is active
 (add-hook 'after-init-hook 'whole-line-or-region-mode)
-(after-load 'whole-line-or-region
+(with-eval-after-load 'whole-line-or-region
   (diminish 'whole-line-or-region-mode))
 
 (defun suspend-mode-during-cua-rect-selection (mode-name)
@@ -202,8 +202,6 @@
 
 (suspend-mode-during-cua-rect-selection 'whole-line-or-region-mode)
 
-
-
 
 (defun init-editing-utils-open-line-with-reindent (n)
   "A version of `open-line' which reindents the start and end positions.
@@ -253,10 +251,11 @@ With arg N, insert N newlines."
 ;;; highlight-escape-sequence
 (add-hook 'after-init-hook 'hes-mode)
 ;;;
+(require 'guide-key)
 (setq guide-key/guide-key-sequence
       '("C-x" "C-c" "C-x 4" "C-x 5" "C-c ;" "C-c ; f" "C-c ' f" "C-x n" "C-x C-r" "C-x r" "M-s" "C-h" "C-c C-a"))
 (add-hook 'after-init-hook 'guide-key-mode)
-(after-load 'guide-key
+(with-eval-after-load 'guide-key
   (diminish 'guide-key-mode))
 
 

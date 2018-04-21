@@ -1,5 +1,6 @@
 ;;; init-slime --- Nothing.
 ;;; Commentary:
+;; SLIME:The Superior Lisp Interaction Mode for Emacs
 ;;; Code:
 
 ;; package.el compiles the contrib subdir, but the compilation order
@@ -17,8 +18,9 @@
 (require 'hippie-expand-slime)
 ;;(require 'slime-repl)
 (require 'slime-c-p-c)
-(defun sanityinc/slime-setup ()
-  "Mode setup function for slime Lisp buffers."
+(defun init-slime-hippie-setup ()
+  "Call set-up-slime-hippie-expand in hippie-expand-slime.
+Hippie Mode setup function for slime Lisp buffers."
   (set-up-slime-hippie-expand))
 
 (with-eval-after-load 'slime
@@ -31,7 +33,7 @@
   ;; The custom variable "slime-complete-symbol-function" was obsoleted.
   ;; Use slime-completion-at-point-functions instead.
   (setq slime-completion-at-point-functions 'slime-fuzzy-complete-symbol)
-  (add-hook 'slime-mode-hook 'sanityinc/slime-setup))
+  (add-hook 'slime-mode-hook 'init-slime-hippie-setup))
 
 
 

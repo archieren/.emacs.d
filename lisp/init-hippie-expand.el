@@ -1,6 +1,7 @@
 ;;; init-hippie-expand --- Nothing
 ;;; Commentary:
 ;;; Code:
+;;hippie-exp is a build-in package.
 (global-set-key (kbd "M-/") 'hippie-expand)
 
 (setq hippie-expand-try-functions-list

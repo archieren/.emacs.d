@@ -4,15 +4,16 @@
 
 ;;; Code:
 
-;;(require-package 'projectile)
+(require 'projectile)
 (add-hook 'after-init-hook 'projectile-mode)
 
 ;; The following code means you get a menu if you hit "C-c p" and wait
-(after-load 'guide-key
+(require 'guide-key)
+(with-eval-after-load 'guide-key
   (add-to-list 'guide-key/guide-key-sequence "C-c p"))
 
 ;; Shorter modeline
-(after-load 'projectile
+(with-eval-after-load 'projectile
   (setq-default
    projectile-mode-line
    '(:eval

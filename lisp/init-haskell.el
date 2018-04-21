@@ -7,6 +7,7 @@
 
 
 ;; Use intero for completion and flycheck
+(require 'init-utils)
 (require 'haskell-mode)
 (require 'intero)
 (with-eval-after-load 'haskell-mode
@@ -16,7 +17,7 @@
   (define-key haskell-cabal-mode-map (kbd "C-c C-l") 'intero-restart))
 (with-eval-after-load 'intero
   (define-key intero-mode-map (kbd "M-?") nil)
-  (after-load 'flycheck
+  (with-eval-after-load 'flycheck
     (flycheck-add-next-checker 'intero
                                '(warning . haskell-hlint))))
 

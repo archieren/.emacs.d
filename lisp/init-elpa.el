@@ -15,11 +15,12 @@
 
 ;;; Mirrors of Standard package repositories
 ;;; 我使用清华的镜像
-;;(setq package-archives '(("gnu"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
-;;                         ("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
-;;                         ("org" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/org/")))
-(setq package-archives '(("gnu"   . "https://elpa.gnu.org/packages/")
-                         ("melpa" . "https://melpa.org/packages/")))
+(setq package-archives '(("gnu"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
+                         ("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
+                         ("org" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/org/")))
+;;(setq package-archives '(("gnu"   . "https://elpa.gnu.org/packages/")
+;;("melpa" . "https://melpa.org/packages/")
+;;))
 ;;; Fire up package.el
 ;;;
 ;;; On-demand installation of packages
@@ -57,13 +58,19 @@ locate PACKAGE."
 (require-package 'fullframe)
 (require-package 'cl-lib)
 (require-package 'wgrep)
+;;When we diminish a mode,
+;;we are saying we want it to continue doing its work for us,
+;;but we no longer want to be reminded of it.
 (require-package 'diminish)
 (require-package 'scratch)
 (require-package 'command-log-mode)
 (require-package 'disable-mouse)
-(require-package 'powerline)
   ;;; init-projectile
 (require-package 'projectile)
+ ;;; init-mode-line
+(require-package 'powerline)
+;;(require-package 'smart-mode-line)
+;;(require-package 'smart-mode-line-powerline-theme)
   ;;; init-frame-hooks init-xterm init-gui-frames
   ;;; init-dired
 (require-package 'diredfl)
@@ -87,7 +94,11 @@ locate PACKAGE."
 (require-package 'counsel)
 (require-package 'swiper)
   ;;; init-helm
-  ;;; init-hippie-expand init-company
+  ;;; init-hippie-expand
+;;; It's a build-in package.
+  ;;; init-company
+(require-package 'company)
+(require-package 'company-quickhelp)
   ;;; init-window
 (require-package 'switch-window)
 (require-package 'window-number)
@@ -96,6 +107,7 @@ locate PACKAGE."
   ;;; init-mmm
 (require-package 'mmm-mode)
   ;;; init-editing-utils
+;; It's quite a little of complification.
 (require-package 'unfill)
 (require-package 'list-unicode-display)
 (require-package 'vlf)  ;; Very large file.
@@ -113,6 +125,7 @@ locate PACKAGE."
 (require-package 'whole-line-or-region)
 (require-package 'highlight-escape-sequences)
 (require-package 'guide-key)
+;;(require-package 'nlinum)
   ;;; init-whitespace
 (require-package 'whitespace-cleanup-mode)
   ;;; init-vc
@@ -171,6 +184,7 @@ locate PACKAGE."
 (require-package 'elein)
 (require-package 'cider)
 (require-package 'flycheck-clojure)
+;;(require-package 'nrepl-sync) ;;-- Remove it.
 ;; init-python
 (require-package 'elpy)
 (require-package 'py-autopep8)
