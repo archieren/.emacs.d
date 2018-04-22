@@ -7,8 +7,8 @@
 (setq-default flycheck-emacs-lisp-load-path 'inherit)
 
 
-;;(require 'flycheck-color-mode-line)
-;;(add-hook 'flycheck-mode-hook 'flycheck-color-mode-line-mode)
+(require 'flycheck-color-mode-line)
+(add-hook 'flycheck-mode-hook 'flycheck-color-mode-line-mode)
 ;; Flycheck使用的搜索目录.
 
 

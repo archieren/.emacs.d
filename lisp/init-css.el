@@ -2,16 +2,21 @@
 ;;; Commentary:
 ;;; Code:
 ;;; Colourise CSS colour literals
-(require-package 'rainbow-mode)
-(require-package 'mmm-mode)
-(require-package 'sass-mode)
+
+(require 'init-utils)
+(require 'rainbow-mode)
+(require 'mmm-mode)
+(require 'sass-mode)
+(require 'skewer-mode)
+(require 'skewer-less)
+(require 'css-eldoc)
 (dolist (hook '(css-mode-hook html-mode-hook sass-mode-hook))
   (add-hook hook 'rainbow-mode))
 
-
+
 ;;; Embedding in html
 
-(after-load 'mmm-vars
+(with-eval-after-load 'mmm-vars
   (mmm-add-group
    'html-css
    '((css-cdata
@@ -38,32 +43,23 @@
 
 
 
-
-;;; SASS and SCSS
 
-(unless (fboundp 'scss-mode)
-  ;; Prefer the scss-mode built into Emacs
-  (require-package 'scss-mode))
+;;; SASS and SCSS
+;; Prefer the scss-mode built into Emacs
+;; Emacs 自己启用了 scss-mode.
+;;(unless (fboundp 'scss-mode)  (require-package 'scss-mode))
 (setq-default scss-compile-at-save nil)
 
-
-
 ;;; LESS
-(unless (fboundp 'less-css-mode)
-  ;; Prefer the scss-mode built into Emacs
-  (require-package 'less-css-mode))
-(when (maybe-require-package 'skewer-less)
-  (add-hook 'less-css-mode-hook 'skewer-less-mode))
+;; Prefer the scss-mode built into Emacs
+;; Emacs自己启用了less-css-mode.
+;;(unless (fboundp 'less-css-mode)   (require-package 'less-css-mode))
+(add-hook 'less-css-mode-hook 'skewer-less-mode)
 
-
-
 ;; Skewer CSS
-(require-package 'skewer-mode)
 (add-hook 'css-mode-hook 'skewer-css-mode)
 
-
 ;;; Use eldoc for syntax hints
-(require-package 'css-eldoc)
 (autoload 'turn-on-css-eldoc "css-eldoc")
 (add-hook 'css-mode-hook 'turn-on-css-eldoc)
 

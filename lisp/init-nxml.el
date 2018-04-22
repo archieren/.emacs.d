@@ -1,7 +1,9 @@
 ;;; init-nxml --- Nothing.
 ;;; Commentary:
+;; nXML mode is an Emacs major-mode for editing XML documents.
 ;;; Code:
-
+(require 'nxml-mode)
+(require 'init-utils);; add-auto-mode
 (add-auto-mode
  'nxml-mode
  (concat "\\."
@@ -13,7 +15,7 @@
 (fset 'xml-mode 'nxml-mode)
 (setq nxml-slash-auto-complete-flag t)
 
-
+;;; 提供两个小功能.
 ;; See: http://sinewalker.wordpress.com/2008/06/26/pretty-printing-xml-with-emacs-nxml-mode/
 (defun sanityinc/pp-xml-region (beg end)
   "Pretty format XML markup in region from BEG to ENDs.
@@ -24,19 +26,16 @@ between them.  It then indents the markup by using nxml's indentation rules."
     (setq beg (point-min)
           end (point-max)))
   ;; Use markers because our changes will move END
-  (setq beg (set-marker (make-marker) begin)
+  (setq beg (set-marker (make-marker) beg)
         end (set-marker (make-marker) end))
   (save-excursion
     (goto-char beg)
     (while (search-forward-regexp "\>[ \\t]*\<" end t)
       (backward-char) (insert "\n"))
     (nxml-mode)
-    (indent-region begin end)))
+    (indent-region beg end)))
 
-;;----------------------------------------------------------------------------
 ;; Integration with tidy for html + xml
-;;----------------------------------------------------------------------------
-
 (defun sanityinc/tidy-buffer-xml (beg end)
   "Run \"tidy -xml\" on the region from BEG to END, or whole buffer."
   (interactive "r")

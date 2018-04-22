@@ -37,14 +37,14 @@ Eval region from begin-mark to end-mark if active, otherwise the last sexp."
     (with-current-buffer out-buffer-name
       (view-mode 1))))
 
-(defun sanityinc/maybe-set-bundled-elisp-readonly ()
+(defun init-lisp-maybe-set-bundled-elisp-readonly ()
   "If this elisp appears to be part of Emacs, then disallow editing."
   (when (and (buffer-file-name)
              (string-match-p "\\.el\\.gz\\'" (buffer-file-name)))
     (setq buffer-read-only t)
     (view-mode 1)))
 
-(add-hook 'emacs-lisp-mode-hook 'sanityinc/maybe-set-bundled-elisp-readonly)
+(add-hook 'emacs-lisp-mode-hook 'init-lisp-maybe-set-bundled-elisp-readonly)
 
 ;; Use C-c C-z to toggle between elisp files and an ielm session
 ;; I might generalise this to ruby etc., or even just adopt the repl-toggle package.

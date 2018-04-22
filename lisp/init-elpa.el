@@ -50,10 +50,11 @@ locate PACKAGE."
     (error
      (message "Couldn't install optional package `%s': %S" package err)
      nil)))
-;;;
+;;; 千万不要修改下面两句,和emacs的初始化机制有关。
 (setq package-enable-at-startup nil)
 (package-initialize)
-;;;{{{  Install some basic packages.
+;;;{{{
+;;;;Install some basic packages.
 (require-package 'exec-path-from-shell)
 (require-package 'fullframe)
 (require-package 'cl-lib)
@@ -65,20 +66,28 @@ locate PACKAGE."
 (require-package 'scratch)
 (require-package 'command-log-mode)
 (require-package 'disable-mouse)
+(require-package 'evil)
   ;;; init-projectile
 (require-package 'projectile)
  ;;; init-mode-line
 (require-package 'powerline)
 ;;(require-package 'smart-mode-line)
 ;;(require-package 'smart-mode-line-powerline-theme)
+(require-package 'airline-themes)
   ;;; init-frame-hooks init-xterm init-gui-frames
   ;;; init-dired
 (require-package 'diredfl)
 (require-package 'diff-hl)
   ;;; init-isearch
 (require-package 'anzu)
-  ;;; init-grep init-uniquify
+;;; init-grep
+;;(require-package 'wgrep)
+(require-package 'ag)
+(require-package 'wgrep-ag)
+(require-package 'rg)
+;;;init-uniquify
   ;;; init-ibuffer
+(require-package 'ibuffer-vc)
   ;;; init-flycheck
 (require-package 'flycheck)
 (require-package 'flycheck-color-mode-line)
@@ -103,6 +112,7 @@ locate PACKAGE."
 (require-package 'switch-window)
 (require-package 'window-number)
   ;;; init-fonts
+(require-package 'visual-fill-column)
 (require-package 'default-text-scale)
   ;;; init-mmm
 (require-package 'mmm-mode)
@@ -196,8 +206,48 @@ locate PACKAGE."
 (require-package 'hindent)
 (require-package 'ghc)
 (require-package 'dhall-mode)
+;; init-compile
+(require-package 'alert)
+(require-package 'cmd-to-echo)
+;; init-textfile
+(require-package 'textile-mode)
+;; init-markdown
+(maybe-require-package 'markdown-mode)
+;; init-csv
+(require-package 'csv-mode)
+;; init-javascript
+(require-package 'json-mode)
+(require-package 'js2-mode)
+(require-package 'coffee-mode)
+(require-package 'typescript-mode)
+(require-package 'prettier-js)
+(require-package 'xref-js2)
+(require-package 'js-comint)
+(require-package 'skewer-mode)
+(maybe-require-package 'add-node-modules-path)
+
 ;; init-org
 (require-package 'org-pomodoro)
+;; init-nxml
+;; init-html
+(require-package 'tagedit)
+;; init-css
+(require-package 'rainbow-mode)
+(require-package 'mmm-mode)
+(require-package 'sass-mode)
+;;(require-package 'skewer-mode)
+(require-package 'css-eldoc)
+(require-package 'skewer-less)
+;; init-haml
+(require-package 'haml-mode)
+;; init-http
+(require-package 'httprepl)
+(require-package 'restclient)
+;; init-elm
+(require-package 'elm-mode)
+(require-package 'flycheck-elm)
+;; init-yaml
+(require-package 'yaml-mode)
 ;; Extra packages which don't require any configuration
 (require-package 'gnuplot)
 ;;(require-package 'lua-mode)

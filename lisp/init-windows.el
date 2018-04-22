@@ -8,19 +8,19 @@
 ;;----------------------------------------------------------------------------
 ;; Navigate window layouts with "C-c <left>" and "C-c <right>"
 ;;----------------------------------------------------------------------------
+
+(require 'winner)
+
 (add-hook 'after-init-hook 'winner-mode)
 
-
-
 ;; Make "C-x o" prompt for a target window when there are more than 2
 (setq-default switch-window-shortcut-style 'alphabet)
 (setq-default switch-window-timeout nil)
 (global-set-key (kbd "C-x o") 'switch-window)
 
 
-;;----------------------------------------------------------------------------
+
 ;; When splitting window, show (other-buffer) in the new window
-;;----------------------------------------------------------------------------
 (defun split-window-func-with-other-buffer (split-function)
   "SPLIT-FUNCTION."
   (lambda (&optional arg)
@@ -35,7 +35,7 @@
 (global-set-key (kbd "C-x 2") (split-window-func-with-other-buffer 'split-window-vertically))
 (global-set-key (kbd "C-x 3") (split-window-func-with-other-buffer 'split-window-horizontally))
 
-(defun sanityinc/toggle-delete-other-windows ()
+(defun init-window-toggle-delete-other-windows ()
   "Delete other windows in frame if any, or restore previous window config."
   (interactive)
   (if (and winner-mode
@@ -43,7 +43,7 @@
       (winner-undo)
     (delete-other-windows)))
 
-(global-set-key (kbd "C-x 1") 'sanityinc/toggle-delete-other-windows)
+(global-set-key (kbd "C-x 1") 'init-window-toggle-delete-other-windows)
 
 ;;----------------------------------------------------------------------------
 ;; Rearrange split windows

@@ -4,11 +4,12 @@
 ;;  Elm is transpiled into JavaScript so it can run in all modern browsers.
 ;;  See https://legacy.gitbook.com/@csmith111
 ;;; Code:
-(require-package 'elm-mode)
-(require-package 'flycheck-elm)
-
+(require 'init-utils)
+(require 'init-company);;sanityinc/local-push-company-backend
+(require 'elm-mode)
+(require 'flycheck-elm)
 (setq-default elm-format-on-save t)
-(after-load 'elm-mode
+(with-eval-after-load 'elm-mode
   (diminish 'elm-indent-mode)
   (add-hook 'elm-mode-hook
             (lambda () (sanityinc/local-push-company-backend 'company-elm)))

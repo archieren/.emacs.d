@@ -1,5 +1,6 @@
 ;;; init-uniquify --- Nothing.
 ;;; Commentary:
+;; 同名文件的buffer命名
 ;;; Code:
 ;; Nicer naming of buffers for files with identical names
 

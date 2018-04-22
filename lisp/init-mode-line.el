@@ -2,8 +2,9 @@
 ;;; Commentary:
 ;;; Code:
 
-(require 'powerline)
-(powerline-default-theme)
+;;; Powerline
+;;(require 'powerline)
+;;(powerline-default-theme)
 
 ;; These three lines you really need.
 ;; 不费那个劲，smart-mode-line 配起来费劲.
@@ -13,6 +14,10 @@
 ;;(setq sml/no-confirm-load-theme t)
 ;;(setq sml/theme 'respectful)
 ;;(sml/setup)
+
+;;; airline-themes
+;;(require 'airline-themes)
+;;(load-theme 'airline-solarized-alternate-gui)
 
 (provide 'init-modeline)
 ;;; init-mode-line ends here

@@ -1,8 +1,8 @@
 ;;; init-http --- Nothing.
 ;;; Commentary:
 ;;; Code:
-(require-package 'httprepl)
-(require-package 'restclient)
+(require 'init-utils)
+(require 'restclient)
 (add-auto-mode 'restclient-mode "\\.rest\\'")
 
 (defun sanityinc/restclient ()

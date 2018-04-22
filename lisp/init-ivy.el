@@ -9,14 +9,14 @@
 ;; Counsel gives you extra functions that aren’t normally available.
 
 ;;; Code:
-
+(require 'ivy)
 (add-hook 'after-init-hook 'ivy-mode)
 (add-hook 'after-init-hook (lambda () (ivy-historian-mode t)))
 (add-hook 'after-init-hook 'counsel-mode)
 
 
 
-(after-load 'ivy
+(with-eval-after-load 'ivy
   (setq-default ivy-use-virtual-buffers t
                 ivy-virtual-abbreviate 'fullpath
                 ivy-count-format ""
@@ -36,11 +36,11 @@
 
 
 (setq-default counsel-mode-override-describe-bindings t)
-(after-load 'counsel
+(with-eval-after-load 'counsel
   (diminish 'counsel-mode))
 
 ;; With respect to swiper
-(after-load 'ivy
+(with-eval-after-load 'ivy
   (defun init-ivy-swiper-at-point (sym)
     "Use `swiper' to search for the symbol at point."
     (interactive (list (thing-at-point 'symbol)))
@@ -57,6 +57,7 @@
 (global-set-key (kbd "C-h v") 'counsel-describe-variable)
 (global-set-key (kbd "C-h f") 'counsel-describe-function)
 
+(require 'xref)
 (setq xref-show-xrefs-function 'ivy-xref-show-xrefs)
 
 (provide 'init-ivy)

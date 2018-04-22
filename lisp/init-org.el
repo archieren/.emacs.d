@@ -2,6 +2,19 @@
 ;;; Commentary:
 ;;; Code:
 
+(require 'org)
+(require 'org-agenda)
+(require 'org-clock)
+(require 'org-archive)
+(require 'org-capture)
+;; ob = org-babel
+(require 'ob-ditaa)
+(require 'ob-plantuml)
+;; ox = org export
+(require 'ox)
+;;
+(require 'org-pomodoro)
+(require 'init-utils)
 
 (define-key global-map (kbd "C-c l") 'org-store-link)
 (define-key global-map (kbd "C-c a") 'org-agenda)
@@ -14,7 +27,7 @@
       org-export-coding-system 'utf-8
       org-fast-tag-selection-single-key 'expert
       org-html-validation-link nil
-      org-export-kill-product-buffer-when-displayed t
+      ;;org-export-kill-product-buffer-when-displayed t
       org-tags-column 80)
 
 
@@ -24,7 +37,7 @@
 (defun sanityinc/grab-ditaa (url jar-name)
   "Download URL and extract JAR-NAME as `org-ditaa-jar-path'."
   ;; TODO: handle errors
-  (message "Grabbing " jar-name " for org.")
+  (message "%s%s%s" "Grabbing " jar-name " for org.")
   (let ((zip-temp (make-temp-name "emacs-ditaa")))
     (unwind-protect
         (progn

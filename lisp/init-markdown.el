@@ -1,9 +1,11 @@
 ;;; init-markdown --- Nothing.
 ;;; Commentary:
 ;;; Code:
-(maybe-require-package 'markdown-mode)
+(require 'init-utils)
+(require 'markdown-mode)
+(require 'whitespace-cleanup-mode)
 (add-auto-mode 'markdown-mode "\\.md\\.html\\'")
-(after-load 'whitespace-cleanup-mode
+(with-eval-after-load 'whitespace-cleanup-mode
   (push 'markdown-mode whitespace-cleanup-mode-ignore-modes))
 
 

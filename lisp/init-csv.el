@@ -1,8 +1,8 @@
 ;;; init-csv --- Nothing
 ;;; Commentary:
 ;;; Code:
-(require-package 'csv-mode)
-
+(require 'csv-mode)
+(require 'init-utils)
 (add-auto-mode 'csv-mode "\\.[Cc][Ss][Vv]\\'")
 
 (setq csv-separators '("," ";" "|" " "))

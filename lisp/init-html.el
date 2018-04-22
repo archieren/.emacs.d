@@ -1,8 +1,9 @@
 ;;; init-html --- Nothing.
 ;;; Commentary:
 ;;; Code:
-(require-package 'tagedit)
-(after-load 'sgml-mode
+(require 'init-utils)
+(require 'tagedit)
+(with-eval-after-load 'sgml-mode
   (tagedit-add-paredit-like-keybindings)
   (define-key tagedit-mode-map (kbd "M-?") nil)
   (add-hook 'sgml-mode-hook (lambda () (tagedit-mode 1))))

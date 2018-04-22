@@ -1,10 +1,8 @@
 ;;; init-compile --- Nothing.
 ;;; Commentary:
 ;;; Code:
-
-(require-package 'alert)
-(require-package 'cmd-to-echo)
-
+(require 'init-utils)
+(require 'compile)
 (setq-default compilation-scroll-output t)
 ;; Customize `alert-default-style' to get messages after compilation
 
@@ -20,14 +18,14 @@
              :buffer buf
              :category 'compilation))))
 
-(after-load 'compile
+(with-eval-after-load 'compile
   (add-hook 'compilation-finish-functions
             'sanitynic/alert-after-compilation-finish))
 
 (defvar sanityinc/last-compilation-buffer nil
   "The last buffer in which compilation took place.")
 
-(after-load 'compile
+(with-eval-after-load 'compile
   (defadvice compilation-start (after sanityinc/save-compilation-buffer activate)
     "Save the compilation buffer to find it later."
     (setq sanityinc/last-compilation-buffer next-error-last-buffer))
@@ -54,7 +52,7 @@
       (view-mode 1))))
 
 
-(after-load 'compile
+(with-eval-after-load 'compile
   (require 'ansi-color)
   (defun sanityinc/colourise-compilation-buffer ()
     (when (eq major-mode 'compilation-mode)

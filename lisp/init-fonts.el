@@ -3,7 +3,6 @@
 ;; 目前不清楚想干什么！留给中文字体调整用！
 ;;; Code:
 ;;
-(require 'cl)
 (defun font-name-replace-size (font-name new-size)
   "Replace the size part in the FONT-NAME with NEW-SIZE."
   (let ((parts (split-string font-name "-")))
@@ -54,6 +53,7 @@ DELTA should be a multiple of 10, in the units used by the
 ;;;
 (add-hook 'after-init-hook 'default-text-scale-mode)
 
+(require 'visual-fill-column)
 
 (defun  init-font-maybe-adjust-visual-fill-column ()
   "Readjust visual fill column when the global font size is modified.
