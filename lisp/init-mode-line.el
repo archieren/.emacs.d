@@ -6,8 +6,8 @@
 (require 'powerline)
 (powerline-default-theme)
 (custom-set-faces
- '(powerline-active1 ((t (:background "grey4" :foreground "#839496"))))
- '(powerline-active2 ((t (:background "grey20" :foreground "#839496")))))
+ '(powerline-active1 ((t (:background "#783e57" :foreground "#fffff"))))
+ '(powerline-active2 ((t (:background "grey20" :foreground "#ffffff")))))
 
 ;; These three lines you really need.
 ;; 不费那个劲，smart-mode-line 配起来费劲.

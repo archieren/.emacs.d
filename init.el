@@ -105,10 +105,11 @@
 ;;(init-init 'init-rails)
 ;;(init-init 'init-sql)
 (init-init 'init-rust)
-;;(init-init 'init-toml)
+(init-init 'init-toml)
 (init-init 'init-yaml)
+(init-init 'init-toml)
 ;;(init-init 'init-docker)
-;;(init-init 'init-terraform)
+(init-init 'init-terraform)
 ;;(require 'init-nix)
 
 

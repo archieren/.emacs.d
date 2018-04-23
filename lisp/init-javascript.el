@@ -70,6 +70,10 @@
 
 ;;; Coffee-mode for Coffeescript
 ;; 这是个什么东东?
+;; CoffeeScript是逐句编译为JavaScript的一种小型语言，且没有运行时的解释器.
+;; CoffeeScript旨在编译人类可读,美观优雅且速度不输原生的代码,
+;; 且编译后的代码可以在任何JavaScript运行时正确运行.
+;; 作者是GitHub!
 ;; An Emacs major mode for CoffeeScript and IcedCoffeeScript.
 (with-eval-after-load 'coffee-mode
   (setq coffee-js-mode preferred-javascript-mode
@@ -81,9 +85,10 @@
 
 ;; Run and interact with an inferior JS via js-comint.el
 ;;(require-package 'js-comint)
-;; 真找不到 inferior-js-program-command的定义
 ;; 那么就看 https://github.com/redguardtoo/js-comint 里的介绍吧.
 ;; 在 js-comint 中,倒是定义了custom变量js-comint-program-{command,arguments}
+;; 真找不到 inferior-js-program-command的定义,也不知道谁会用.
+;; 在 Linux 下,屏蔽它,好像也无事.
 ;;(setq inferior-js-program-command "node")
 
 (defun inferior-js-mode-hook-setup ()

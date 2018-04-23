@@ -1,13 +1,26 @@
 ;;; init-editing-utils --- Nothing.
 ;;; Commentary:
 ;;; Code:
+
+;;
+(require 'fill-column-indicator)
+(setq fci-rule-column 80)
+(setq fci-rule-color "#783e57")
+(setq fci-rule-width 1)
+;; fci-mode is not a global-minor-mode,so make it be.
+;;(define-globalized-minor-mode init-editing-utils-global-fci-mode fci-mode turn-on-fci-mode)
+;;(init-editing-utils-global-fci-mode 1)
+(add-hook 'prog-mode-hook 'fci-mode)
+
+;;
 (when (fboundp 'electric-pair-mode)
   (add-hook 'after-init-hook 'electric-pair-mode))
 (add-hook 'after-init-hook 'electric-indent-mode)
 ;; Some basic preferences
 (setq-default cursor-type 'bar)
 (setq-default blink-cursor-interval 0.4)
-(setq-default bookmark-default-file (expand-file-name ".bookmarks.el" user-emacs-directory))
+(setq-default bookmark-default-file
+              (expand-file-name ".bookmarks.el" user-emacs-directory))
 (setq-default buffers-menu-max-size 30)
 (setq-default case-fold-search t)
 ;;(global-linum-mode t)
@@ -58,7 +71,8 @@
   (interactive)
   (move-end-of-line 1)
   (newline-and-indent))
-(global-set-key (kbd "S-<return>") 'init-editing-utils-newline-at-end-of-line)
+(global-set-key
+ (kbd "S-<return>") 'init-editing-utils-newline-at-end-of-line)
 ;;; Subword
 (with-eval-after-load 'subword
   (diminish 'subword-mode))
@@ -73,24 +87,35 @@
   (diminish 'undo-tree-mode))
 ;;; symbol-overlay
 (require 'symbol-overlay)
-(dolist (hook '(prog-mode-hook html-mode-hook css-mode-hook yaml-mode-hook conf-mode-hook))
+(dolist (hook '(prog-mode-hook
+                html-mode-hook
+                css-mode-hook
+                yaml-mode-hook
+                conf-mode-hook))
   (add-hook hook 'symbol-overlay-mode))
 (with-eval-after-load 'symbol-overlay
   (diminish 'symbol-overlay-mode)
-  (define-key symbol-overlay-mode-map (kbd "M-i") 'symbol-overlay-put)
-  (define-key symbol-overlay-mode-map (kbd "M-n") 'symbol-overlay-jump-next)
-  (define-key symbol-overlay-mode-map (kbd "M-p") 'symbol-overlay-jump-prev))
+  (define-key
+    symbol-overlay-mode-map (kbd "M-i") 'symbol-overlay-put)
+  (define-key
+    symbol-overlay-mode-map (kbd "M-n") 'symbol-overlay-jump-next)
+  (define-key
+    symbol-overlay-mode-map (kbd "M-p") 'symbol-overlay-jump-prev))
 ;; Zap *up* to char is a handy pair for zap-to-char
-(autoload 'zap-up-to-char "misc" "Kill up to, but not including ARGth occurrence of CHAR.")
+(autoload 'zap-up-to-char "misc"
+  "Kill up to, but not including ARGth occurrence of CHAR.")
 (global-set-key (kbd "M-Z") 'zap-up-to-char)
 ;;; browse-kill-ring
 (require 'browse-kill-ring)
 (setq browse-kill-ring-separator "\f")
 (global-set-key (kbd "M-Y") 'browse-kill-ring)
 (with-eval-after-load 'browse-kill-ring
-  (define-key browse-kill-ring-mode-map (kbd "C-g") 'browse-kill-ring-quit)
-  (define-key browse-kill-ring-mode-map (kbd "M-n") 'browse-kill-ring-forward)
-  (define-key browse-kill-ring-mode-map (kbd "M-p") 'browse-kill-ring-previous))
+  (define-key
+    browse-kill-ring-mode-map (kbd "C-g") 'browse-kill-ring-quit)
+  (define-key
+    browse-kill-ring-mode-map (kbd "M-n") 'browse-kill-ring-forward)
+  (define-key
+    browse-kill-ring-mode-map (kbd "M-p") 'browse-kill-ring-previous))
 (with-eval-after-load 'page-break-lines
   (push 'browse-kill-ring-mode page-break-lines-modes))
 ;; Don't disable narrowing commands
@@ -186,8 +211,10 @@
 
 (defun suspend-mode-during-cua-rect-selection (mode-name)
   "Add an advice to suspend `MODE-NAME' while selecting a CUA rectangle."
-  (let ((flagvar (intern (format "%s-was-active-before-cua-rectangle" mode-name)))
-        (advice-name (intern (format "suspend-%s" mode-name))))
+  (let ((flagvar
+         (intern (format "%s-was-active-before-cua-rectangle" mode-name)))
+        (advice-name
+         (intern (format "suspend-%s" mode-name))))
     (eval-after-load 'cua-rect
       `(progn
          (defvar ,flagvar nil)
@@ -253,7 +280,19 @@ With arg N, insert N newlines."
 ;;;
 (require 'guide-key)
 (setq guide-key/guide-key-sequence
-      '("C-x" "C-c" "C-x 4" "C-x 5" "C-c ;" "C-c ; f" "C-c ' f" "C-x n" "C-x C-r" "C-x r" "M-s" "C-h" "C-c C-a"))
+      '("C-x"
+        "C-c"
+        "C-x 4"
+        "C-x 5"
+        "C-c ;"
+        "C-c ; f"
+        "C-c ' f"
+        "C-x n"
+        "C-x C-r"
+        "C-x r"
+        "M-s"
+        "C-h"
+        "C-c C-a"))
 (add-hook 'after-init-hook 'guide-key-mode)
 (with-eval-after-load 'guide-key
   (diminish 'guide-key-mode))
