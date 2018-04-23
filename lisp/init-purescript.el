@@ -1,8 +1,8 @@
 ;;; init-purescript --- Nothing.
 ;;; Commentary:
 ;;; Code:
-(maybe-require-package 'purescript-mode)
-(maybe-require-package 'psc-ide)
+(require 'purescript-mode)
+(require 'psc-ide)
 (add-hook 'purescript-mode-hook
           (lambda ()
             (psc-ide-mode)

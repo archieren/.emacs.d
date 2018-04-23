@@ -10,7 +10,7 @@
 (require 'prettier-js)
 (require 'xref-js2)
 (require 'js-comint)
-
+(require 'add-node-modules-path)
 
 (require 'flycheck)
 (require 'init-utils)
@@ -69,7 +69,7 @@
               (lambda () (add-hook 'xref-backend-functions #'xref-js2-xref-backend nil t)))))
 
 ;;; Coffee-mode for Coffeescript
-;; 这是个什么东东？被禁用.
+;; 这是个什么东东?
 ;; An Emacs major mode for CoffeeScript and IcedCoffeeScript.
 (with-eval-after-load 'coffee-mode
   (setq coffee-js-mode preferred-javascript-mode
@@ -82,8 +82,15 @@
 ;; Run and interact with an inferior JS via js-comint.el
 ;;(require-package 'js-comint)
 ;; 真找不到 inferior-js-program-command的定义
+;; 那么就看 https://github.com/redguardtoo/js-comint 里的介绍吧.
 ;; 在 js-comint 中,倒是定义了custom变量js-comint-program-{command,arguments}
-(setq inferior-js-program-command "node")
+;;(setq inferior-js-program-command "node")
+
+(defun inferior-js-mode-hook-setup ()
+  "In order to get cleaner output when using NodeJS.
+Suggested by chenbin"
+  (add-hook 'comint-output-filter-functions 'js-comint-process-output))
+(add-hook 'inferior-js-mode-hook 'inferior-js-mode-hook-setup t)
 
 (defvar inferior-js-minor-mode-map (make-sparse-keymap))
 (define-key inferior-js-minor-mode-map "\C-x\C-e" 'js-send-last-sexp)

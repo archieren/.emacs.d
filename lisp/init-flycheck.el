@@ -9,6 +9,8 @@
 
 (require 'flycheck-color-mode-line)
 (add-hook 'flycheck-mode-hook 'flycheck-color-mode-line-mode)
+(with-eval-after-load 'flycheck-color-mode-line
+  (custom-set-variables '(flycheck-color-mode-line-face-to-color (quote mode-line-buffer-id))))
 ;; Flycheck使用的搜索目录.
 
 

@@ -212,7 +212,7 @@ locate PACKAGE."
 ;; init-textfile
 (require-package 'textile-mode)
 ;; init-markdown
-(maybe-require-package 'markdown-mode)
+(require-package 'markdown-mode)
 ;; init-csv
 (require-package 'csv-mode)
 ;; init-javascript
@@ -224,7 +224,7 @@ locate PACKAGE."
 (require-package 'xref-js2)
 (require-package 'js-comint)
 (require-package 'skewer-mode)
-(maybe-require-package 'add-node-modules-path)
+(require-package 'add-node-modules-path)
 
 ;; init-org
 (require-package 'org-pomodoro)
@@ -246,6 +246,14 @@ locate PACKAGE."
 ;; init-elm
 (require-package 'elm-mode)
 (require-package 'flycheck-elm)
+;; init-purescript
+(require-package 'purescript-mode)
+(require-package 'psc-ide)
+;; init-rust
+(require-package 'rust-mode)
+(require-package 'racer)
+;;(require-package 'company)
+(require-package 'flycheck-rust)
 ;; init-yaml
 (require-package 'yaml-mode)
 ;; Extra packages which don't require any configuration

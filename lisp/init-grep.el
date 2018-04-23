@@ -14,6 +14,8 @@
   (setq-default ag-highlight-search t)
   (global-set-key (kbd "M-?") 'ag-project))
 
+;; rg is the ripgrep
+;; See https://github.com/BurntSushi/ripgrep
 (when (executable-find "rg")
   (global-set-key (kbd "M-?") 'rg-project))
 
