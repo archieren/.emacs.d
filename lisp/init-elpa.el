@@ -210,6 +210,8 @@ locate PACKAGE."
 ;; init-compile
 (require-package 'alert)
 (require-package 'cmd-to-echo)
+;; init-crontab
+;;(require-package 'crontab-mode)
 ;; init-textfile
 (require-package 'textile-mode)
 ;; init-markdown

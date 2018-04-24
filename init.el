@@ -15,6 +15,7 @@
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 
 ;;; Erase all the code with respect to enviroment-compatibility!
+;;; Emacs > 25.3.
 ;;; Move some utils from init-elpa.el.
 ;;; Borrowed some code from redguardtoo's work.
 ;;---------------------------------------------------------------------
@@ -89,6 +90,7 @@
 ;;(init-init 'init-c)
 ;; Web development
 (init-init 'init-compile)
+;;(init-init 'init-crontab)
 (init-init 'init-textile)
 (init-init 'init-markdown)
 (init-init 'init-csv)
