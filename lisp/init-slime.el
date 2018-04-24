@@ -16,8 +16,10 @@
 (require 'slime-company)
 (require 'paredit)
 (require 'hippie-expand-slime)
-;;(require 'slime-repl)
+(require 'slime-repl)
+;; Lisp Buffers
 (require 'slime-c-p-c)
+(require 'init-lisp)
 (defun init-slime-hippie-setup ()
   "Call set-up-slime-hippie-expand in hippie-expand-slime.
 Hippie Mode setup function for slime Lisp buffers."
@@ -34,7 +36,23 @@ Hippie Mode setup function for slime Lisp buffers."
   ;; Use slime-completion-at-point-functions instead.
   (setq slime-completion-at-point-functions 'slime-fuzzy-complete-symbol)
   (add-hook 'slime-mode-hook 'init-slime-hippie-setup))
+;;; REPL
 
+(defun init-slime-slime-repl-setup ()
+  "Mode setup function for slime REPL."
+  (init-lisp-lisp-setup)
+  (set-up-slime-hippie-expand)
+  (setq show-trailing-whitespace nil))
+
+(with-eval-after-load 'slime-repl
+  (with-eval-after-load 'paredit
+    (define-key slime-repl-mode-map (read-kbd-macro paredit-backward-delete-key) nil))
+
+  ;; Bind TAB to `indent-for-tab-command', as in regular Slime buffers.
+  (define-key slime-repl-mode-map (kbd "TAB") 'indent-for-tab-command)
+
+  (add-hook 'slime-repl-mode-hook 'init-slime-slime-repl-setup)
+  )
 
 
 (provide 'init-slime)

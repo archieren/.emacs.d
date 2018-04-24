@@ -112,6 +112,7 @@ Eval region from begin-mark to end-mark if active, otherwise the last sexp."
 ;; Enable desired features for all lisp modes
 
 (require 'indent-guide)
+(require 'paredit)
 (defun init-lisp-enable-check-parens-on-save ()
   "Run `check-parens' when the current buffer is saved."
   (add-hook 'after-save-hook #'check-parens nil t))

@@ -166,6 +166,9 @@ locate PACKAGE."
 (require-package 'slime)
 (require-package 'hippie-expand-slime)
 (require-package 'slime-company)
+;; slime-repl is in slime package.
+;; it's not an individual package.
+;;(require-package 'slime-repl)
 ;;; init-misc
 ;;; init-folding
 (require-package 'origami)

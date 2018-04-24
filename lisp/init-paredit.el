@@ -1,6 +1,13 @@
 ;;; init-paredit --- Nothing.
 ;;; Commentary:
+;;If you think paredit is not for you,
+;; then you need to become the kind of person that paredit is for.
+;; 专门处理成对符号的.
 ;;; Code:
+
+(require 'paredit)
+(require 'paredit-everywhere)
+(require 'init-editing-utils)
 (autoload 'enable-paredit-mode "paredit")
 
 (defun maybe-map-paredit-newline ()
@@ -11,7 +18,7 @@
 
 (add-hook 'paredit-mode-hook 'maybe-map-paredit-newline)
 
-(after-load 'paredit
+(with-eval-after-load 'paredit
   (diminish 'paredit-mode " Par")
   ;; Suppress certain paredit keybindings to avoid clashes, including
   ;; my global binding of M-?
@@ -20,7 +27,7 @@
 
 
 ;; Compatibility with other modes
-
+;; defined in init-editing-utils
 (suspend-mode-during-cua-rect-selection 'paredit-mode)
 
 
@@ -45,7 +52,7 @@
 ;; Enable some handy paredit functions in all prog modes
 ;; ----------------------------------------------------------------------------
 
-(after-load 'paredit-everywhere
+(with-eval-after-load 'paredit-everywhere
   (define-key paredit-everywhere-mode-map (kbd "M-s") nil))
 (add-hook 'prog-mode-hook 'paredit-everywhere-mode)
 (add-hook 'css-mode-hook 'paredit-everywhere-mode)
