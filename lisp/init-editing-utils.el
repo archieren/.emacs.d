@@ -2,15 +2,12 @@
 ;;; Commentary:
 ;;; Code:
 
-;;
-(require 'fill-column-indicator)
-(setq fci-rule-column 80)
-(setq fci-rule-color "#783e57")
-(setq fci-rule-width 1)
-;; fci-mode is not a global-minor-mode,so make it be.
-;;(define-globalized-minor-mode init-editing-utils-global-fci-mode fci-mode turn-on-fci-mode)
-;;(init-editing-utils-global-fci-mode 1)
-(add-hook 'prog-mode-hook 'fci-mode)
+;; FCI will cause some strange actions.
+;;(require 'fill-column-indicator)
+;;(setq fci-rule-column 80)
+;;(setq fci-rule-color "#783e57")
+;;(setq fci-rule-width 1)
+;;(add-hook 'prog-mode-hook 'fci-mode)
 
 ;;
 (when (fboundp 'electric-pair-mode)

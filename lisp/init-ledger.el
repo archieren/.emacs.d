@@ -1,22 +1,19 @@
 ;;; init-ledger --- Nothing.
 ;;; Commentary:
+;; 一个会计模式.
 ;;; Code:
-(require-package 'ledger-mode)
-(require-package 'flycheck-ledger)
-(after-load 'flycheck
-  (after-load 'ledger-mode
-    (require 'flycheck-ledger)))
+(require 'ledger-mode)
+(require 'flycheck-ledger)
 
-(after-load 'ledger-mode
+(with-eval-after-load 'ledger-mode
   (define-key ledger-mode-map (kbd "RET") 'newline)
   (define-key ledger-mode-map (kbd "C-o") 'open-line))
 
 (setq ledger-highlight-xact-under-point nil
-      ledger-use-iso-dates nil)
+      ;;ledger-use-iso-dates nil
+      ;; Is it a free variable?
+      )
 
-(after-load 'ledger-mode
-  (when (memq window-system '(mac ns))
-    (exec-path-from-shell-copy-env "LEDGER_FILE")))
 
 (add-hook 'ledger-mode-hook 'goto-address-prog-mode)
 (provide 'init-ledger)

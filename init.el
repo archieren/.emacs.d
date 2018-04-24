@@ -117,7 +117,7 @@
 
 ;;(init-init 'init-twitter)
 ;; (init-init 'init-mu)
-;;(init-init 'init-ledger)
+(init-init 'init-ledger)
 
 (setq-default uptimes-keep-count 200)
 (add-hook 'after-init-hook (lambda () (require 'uptimes)))

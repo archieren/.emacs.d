@@ -118,7 +118,7 @@ locate PACKAGE."
 (require-package 'mmm-mode)
   ;;; init-editing-utils
 ;; It's quite a little of complification.
-(require-package 'fill-column-indicator)
+;;(require-package 'fill-column-indicator)
 (require-package 'unfill)
 (require-package 'list-unicode-display)
 (require-package 'vlf)  ;; Very large file.
@@ -264,6 +264,13 @@ locate PACKAGE."
 ;; init-terraform
 (require-package 'terraform-mode)
 (require-package 'company-terraform)
+;;init 'init-nix
+;;init 'init-twitter
+;;init 'init-mu
+;;init 'init-ledger
+(require-package 'ledger-mode)
+(require-package 'flycheck-ledger)
+
 ;; Extra packages which don't require any configuration
 (require-package 'gnuplot)
 ;;(require-package 'lua-mode)
