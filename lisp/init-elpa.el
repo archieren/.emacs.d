@@ -202,6 +202,17 @@ locate PACKAGE."
 ;; init-python
 (require-package 'elpy)
 (require-package 'py-autopep8)
+;; Required Packages for IPython/Jupyter...
+;;See https://github.com/millejoh/emacs-ipython-notebook
+(require-package 'ein)
+(require-package 'dash)
+(require-package 'websocket)
+(require-package 'request)
+(require-package 'request-deferred)
+(require-package 's)
+(require-package 'auto-complete)
+(require-package 'skewer-mode)
+
 ;; init-erlang
 (require-package 'erlang)
 ;; init-haskell
@@ -241,7 +252,7 @@ locate PACKAGE."
 (require-package 'rainbow-mode)
 (require-package 'mmm-mode)
 (require-package 'sass-mode)
-;;(require-package 'skewer-mode)
+(require-package 'skewer-mode)
 (require-package 'css-eldoc)
 (require-package 'skewer-less)
 ;; init-haml
@@ -258,7 +269,7 @@ locate PACKAGE."
 ;; init-rust
 (require-package 'rust-mode)
 (require-package 'racer)
-;;(require-package 'company)
+(require-package 'company)
 (require-package 'flycheck-rust)
 ;; init-yaml
 (require-package 'yaml-mode)
