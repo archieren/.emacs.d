@@ -2,7 +2,8 @@
 ;;; Commentary:
 ;;  和自动补全相关的有company,auto-complete和hippie.
 ;;  About Company
-;;  Company is a text completion framework for Emacs.The name stands for "complete anything".
+;;  Company is a text completion framework for Emacs.
+;;  The name stands for "complete anything".
 ;;  It uses pluggable back-ends and front-ends to retrieve and display completion candidates.
 ;;  It comes with several back-ends such as
 ;;  Elisp,Clang,Semantic,Eclim,Ropemacs,Ispell,CMake,BBDB,Yasnippet,dabbrev,etags,gtags,files,keywords
@@ -47,15 +48,19 @@
 (with-eval-after-load 'company
   (with-eval-after-load 'page-break-lines
     (defun init-company-page-break-lines-disable (&rest ignore)
-      (when (setq init-company-page-break-lines-on-p (bound-and-true-p page-break-lines-mode))
+      (when (setq init-company-page-break-lines-on-p
+                  (bound-and-true-p page-break-lines-mode))
         (page-break-lines-mode -1)))
 
     (defun init-company-page-break-lines-maybe-reenable (&rest ignore)
       (when init-company-page-break-lines-on-p
         (page-break-lines-mode 1)))
-    (add-hook 'company-completion-started-hook 'init-company-page-break-lines-disable)
-    (add-hook 'company-completion-finished-hook 'init-company-page-break-lines-maybe-reenable)
-    (add-hook 'company-completion-cancelled-hook 'init-company-page-break-lines-maybe-reenable)))
+    (add-hook 'company-completion-started-hook
+              'init-company-page-break-lines-disable)
+    (add-hook 'company-completion-finished-hook
+              'init-company-page-break-lines-maybe-reenable)
+    (add-hook 'company-completion-cancelled-hook
+              'init-company-page-break-lines-maybe-reenable)))
 
 ;;;没看到怎么针对后端.
 

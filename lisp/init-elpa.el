@@ -242,7 +242,10 @@ locate PACKAGE."
 (require-package 'js-comint)
 (require-package 'skewer-mode)
 (require-package 'add-node-modules-path)
-
+;; init-php
+(require-package 'php-mode)
+(require-package 'smarty-mode)
+(require-package 'company-php)
 ;; init-org
 (require-package 'org-pomodoro)
 ;; init-nxml
@@ -327,7 +330,7 @@ locate PACKAGE."
 ;;--(require-package 'hemisu-theme)
 ;;--(require-package 'distinguished-theme)
 ;;--(require-package 'challenger-deep-theme)
-;;--(require-package 'dimmer)
+(require-package 'dimmer)
 ;;;}}}
 (fullframe list-packages quit-window)
 (require 'cl-lib)

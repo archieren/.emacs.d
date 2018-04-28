@@ -38,13 +38,17 @@ DELTA should be a multiple of 10, in the units used by the
 
 ;; 用等宽字体，比较好对齐中英文！
 ;; Fonts settings
-(defun init-local-set-font (English-font Chinese-font English-font-size Chinese-font-size)
+(defun init-fonts-set-font (English-font Chinese-font English-font-size Chinese-font-size)
   "Set ENGLISH-FONT CHINESE-FONT ENGLISH-FONT-SIZE CHINESE-FONT-SIZE."
-  (set-face-attribute  'default   nil  :font  (font-spec :family English-font :size English-font-size))
+  (set-face-attribute  'default
+                       nil
+                       :font  (font-spec :family English-font :size English-font-size))
   (dolist (script '(kana han symbol cjk-misc bopomofo))
-    (set-fontset-font  (frame-parameter nil 'font) script (font-spec :family Chinese-font :size Chinese-font-size))))
+    (set-fontset-font  (frame-parameter nil 'font)
+                       script
+                       (font-spec :family Chinese-font :size Chinese-font-size))))
 
-(init-local-set-font    "DejaVu Sans Mono" "Noto Sans Mono CJK SC" 14 14)
+(init-fonts-set-font    "DejaVu Sans Mono" "Noto Sans Mono CJK SC" 12 12)
 ;;Let the Latin and han 's font the same,it is not good idea.
 ;;(init-local-set-font "Noto Sans Mono CJK SC" "Noto Sans Mono CJK SC" 14 14)
 ;;xft:-GOOG-Noto Sans CJK SC-normal-normal-normal-*-14-*-*-*-*-0-iso10646-1
