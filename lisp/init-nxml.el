@@ -36,6 +36,7 @@ between them.  It then indents the markup by using nxml's indentation rules."
     (indent-region beg end)))
 
 ;; Integration with tidy for html + xml
+;; tidy should be installed on system.
 (defun sanityinc/tidy-buffer-xml (beg end)
   "Run \"tidy -xml\" on the region from BEG to END, or whole buffer."
   (interactive "r")

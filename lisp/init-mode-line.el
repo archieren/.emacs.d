@@ -6,7 +6,7 @@
 (require 'powerline)
 (powerline-default-theme)
 (custom-set-faces
- '(powerline-active1 ((t (:background "#783e57" :foreground "#fffff"))))
+ '(powerline-active1 ((t (:background "#783e57" :foreground "#ffffff"))))
  '(powerline-active2 ((t (:background "grey20" :foreground "#ffffff")))))
 
 ;; These three lines you really need.

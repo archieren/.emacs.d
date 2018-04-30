@@ -21,7 +21,7 @@
 (setq-default buffers-menu-max-size 30)
 (setq-default case-fold-search t)
 ;;(global-linum-mode t)
-(add-hook 'after-init-hook 'global-linum-mode)
+;;(add-hook 'after-init-hook 'global-linum-mode)
 (add-hook 'after-init-hook 'column-number-mode)
 (add-hook 'after-init-hook 'delete-selection-mode)
 (setq-default ediff-split-window-function 'split-window-horizontally)

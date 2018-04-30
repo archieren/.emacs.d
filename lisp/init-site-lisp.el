@@ -3,7 +3,7 @@
 ;;; Code:
 ;;; Set load path
 
-(eval-when-compile (require 'cl))
+(require 'cl)
 (defun sanityinc/add-subdirs-to-load-path (parent-dir)
   "Add every non-hidden subdir of PARENT-DIR to `load-path'."
   (let* ((default-directory parent-dir))
