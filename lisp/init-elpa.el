@@ -199,6 +199,8 @@ locate PACKAGE."
 (require-package 'cider)
 (require-package 'flycheck-clojure)
 ;;(require-package 'nrepl-sync) ;;-- Remove it.
+;; init-racket
+(require-package 'racket-mode)
 ;; init-python
 (require-package 'elpy)
 (require-package 'py-autopep8)
@@ -226,6 +228,7 @@ locate PACKAGE."
 (require-package 'cmd-to-echo)
 ;; init-crontab
 ;;(require-package 'crontab-mode)
+;; There is no package named "crontab-mode" in the elpa.
 ;; init-textfile
 (require-package 'textile-mode)
 ;; init-markdown

@@ -26,14 +26,17 @@
 (add-hook 'after-init-hook 'delete-selection-mode)
 (setq-default ediff-split-window-function 'split-window-horizontally)
 (setq-default ediff-window-setup-function 'ediff-setup-windows-plain)
+;;; No tabs in source code
 (setq-default indent-tabs-mode nil)
+;;; No backup files in the backend
 (setq-default make-backup-files nil)
 (setq-default mouse-yank-at-point t)
 (setq-default save-interprogram-paste-before-kill t)
 (setq-default scroll-preserve-screen-position 'always)
 (setq-default set-mark-command-repeat-pop t)
 (setq-default tooltip-delay 1.5)
-(setq-default truncate-lines nil)
+;;; No wraping.
+(setq-default truncate-lines t)
 (setq-default truncate-partial-width-windows nil)
 
 
@@ -276,6 +279,7 @@ With arg N, insert N newlines."
 (add-hook 'after-init-hook 'hes-mode)
 ;;;
 (require 'guide-key)
+(setq guide-key/popup-window-position 'bottom)
 (setq guide-key/guide-key-sequence
       '("C-x"
         "C-c"

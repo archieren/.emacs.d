@@ -23,7 +23,8 @@
 
 
 (add-auto-mode 'haskell-mode "\\.ghci\\'")
-
+;; Mode-name
+(add-hook 'haskell-mode-hook (lambda () (setq mode-name "λλ")))
 ;; Indentation
 (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
 

@@ -83,6 +83,7 @@
 ;; Programming language
 (init-init 'init-lisp)
 (init-init 'init-common-lisp)
+(init-init 'init-racket)
 (init-init 'init-clojure)
 (init-init 'init-erlang)
 (init-init 'init-python)

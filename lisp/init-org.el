@@ -28,7 +28,8 @@
       org-fast-tag-selection-single-key 'expert
       org-html-validation-link nil
       ;;org-export-kill-product-buffer-when-displayed t
-      org-tags-column 80)
+      org-tags-column 80
+      org-startup-indented t)
 
 
 ;; Lots of stuff from http://doc.norang.ca/org-mode.html
@@ -54,14 +55,16 @@
                (file-exists-p org-ditaa-jar-path))
     (let ((jar-name "ditaa0_9.jar")
           (url "http://jaist.dl.sourceforge.net/project/ditaa/ditaa/0.9/ditaa0_9.zip"))
-      (setq org-ditaa-jar-path (expand-file-name jar-name (file-name-directory user-init-file)))
+      (setq org-ditaa-jar-path
+            (expand-file-name jar-name (file-name-directory user-init-file)))
       (unless (file-exists-p org-ditaa-jar-path)
         (sanityinc/grab-ditaa url jar-name)))))
 
 (after-load 'ob-plantuml
   (let ((jar-name "plantuml.jar")
         (url "http://jaist.dl.sourceforge.net/project/plantuml/plantuml.jar"))
-    (setq org-plantuml-jar-path (expand-file-name jar-name (file-name-directory user-init-file)))
+    (setq org-plantuml-jar-path
+          (expand-file-name jar-name (file-name-directory user-init-file)))
     (unless (file-exists-p org-plantuml-jar-path)
       (url-copy-file url org-plantuml-jar-path))))
 ;;;
@@ -122,7 +125,8 @@ typical word processor."
 (setq org-refile-use-cache nil)
 
 ;; Targets include this file and any file contributing to the agenda - up to 5 levels deep
-(setq org-refile-targets '((nil :maxlevel . 5) (org-agenda-files :maxlevel . 5)))
+(setq org-refile-targets '((nil :maxlevel . 5)
+                           (org-agenda-files :maxlevel . 5)))
 
 (after-load 'org-agenda
   (add-to-list 'org-agenda-after-show-hook 'org-show-entry))
@@ -160,9 +164,19 @@ typical word processor."
 ;;; To-do settings
 
 (setq org-todo-keywords
-      (quote ((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d!/!)")
-              (sequence "PROJECT(p)" "|" "DONE(d!/!)" "CANCELLED(c@/!)")
-              (sequence "WAITING(w@/!)" "DELEGATED(e!)" "HOLD(h)" "|" "CANCELLED(c@/!)")))
+      (quote ((sequence "TODO(t)"
+                        "NEXT(n)"
+                        "|"
+                        "DONE(d!/!)")
+              (sequence "PROJECT(p)"
+                        "|"
+                        "DONE(d!/!)"
+                        "CANCELLED(c@/!)")
+              (sequence "WAITING(w@/!)"
+                        "DELEGATED(e!)"
+                        "HOLD(h)"
+                        "|"
+                        "CANCELLED(c@/!)")))
       org-todo-repeat-to-state "NEXT")
 
 (setq org-todo-keyword-faces
@@ -209,8 +223,12 @@ typical word processor."
                         (org-agenda-todo-ignore-scheduled 'future)
                         (org-agenda-skip-function
                          '(lambda ()
-                            (or (org-agenda-skip-subtree-if 'todo '("HOLD" "WAITING"))
-                                (org-agenda-skip-entry-if 'nottodo '("NEXT")))))
+                            (or (org-agenda-skip-subtree-if
+                                 'todo
+                                 '("HOLD" "WAITING"))
+                                (org-agenda-skip-entry-if
+                                 'nottodo
+                                 '("NEXT")))))
                         (org-tags-match-list-sublevels t)
                         (org-agenda-sorting-strategy
                          '(todo-state-down effort-up category-keep))))
@@ -225,8 +243,11 @@ typical word processor."
                         (org-agenda-todo-ignore-scheduled 'future)
                         (org-agenda-skip-function
                          '(lambda ()
-                            (or (org-agenda-skip-subtree-if 'todo '("PROJECT" "HOLD" "WAITING" "DELEGATED"))
-                                (org-agenda-skip-subtree-if 'nottododo '("TODO")))))
+                            (or (org-agenda-skip-subtree-if
+                                 'todo
+                                 '("PROJECT" "HOLD" "WAITING" "DELEGATED"))
+                                (org-agenda-skip-subtree-if
+                                 'nottododo '("TODO")))))
                         (org-tags-match-list-sublevels t)
                         (org-agenda-sorting-strategy
                          '(category-keep))))
@@ -331,6 +352,7 @@ typical word processor."
      (sql . nil)
      (sqlite . t))))
 
-
+(after-load 'org
+  (add-hook 'org-mode-hook (lambda () (setq mode-name "Ⓞ卍"))))
 (provide 'init-org)
 ;;; init-org ends here
