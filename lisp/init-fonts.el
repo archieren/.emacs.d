@@ -64,23 +64,6 @@ This is helpful for writeroom-mode, in particular."
 
 (declare-function ivy-read "ivy")
 
-(defsubst fontawesome--font-names ()
-  "Nothing."
-  (cl-loop for (name . _code) in fontawesome-alist
-           collect name))
-
-(defun fontawesome--completing-read ()
-  "Nothing."
-  (let ((comp-func (if ido-mode 'ido-completing-read 'completing-read)))
-    (funcall comp-func "Font name: " (fontawesome--font-names) nil t)))
-
-;;;###autoload
-(defun fontawesome (font-name)
-  "Return fontawesome code point of FONT-NAME."
-  (interactive
-   (list (fontawesome--completing-read)))
-  (assoc-default font-name fontawesome-alist))
-
 (defun fontawesome--propertize (glyph)
   "GLYPH is the unicode of a awesome font."
   (propertize glyph ))
@@ -88,10 +71,10 @@ This is helpful for writeroom-mode, in particular."
 (defun fontawesome--construct-candidates ()
   "Nothing."
   (mapcar (lambda (fontawesome)
-            (cons (concat (car fontawesome)
-                          " -> "
-                          (fontawesome--propertize
-                           (cdr fontawesome)))
+            (cons (concat
+                   (car fontawesome)
+                   "->"
+                   (fontawesome--propertize (cdr fontawesome)))
                   (cdr fontawesome)))
           fontawesome-alist))
 
