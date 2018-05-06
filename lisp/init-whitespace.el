@@ -1,7 +1,7 @@
 ;;; init-whitespace --- Nothing.
 ;;; Commentary:
 ;;; Code:
-;;; 一行超过80,则变色
+;;; 一行超过80列,则变色
 (require 'whitespace)
 (setq whitespace-style '(face lines-tail))
 (setq whitespace-line-column 80)
