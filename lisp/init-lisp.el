@@ -5,10 +5,10 @@
 (require 'elisp-slime-nav)
 (dolist (hook '(emacs-lisp-mode-hook ielm-mode-hook))
   (add-hook hook 'turn-on-elisp-slime-nav-mode))
-(add-hook 'emacs-lisp-mode-hook (lambda () (setq mode-name "♥")))
+(add-hook 'emacs-lisp-mode-hook (lambda () (setq mode-name "")))
 
 
-;;(setq-default initial-scratch-message (concat ";; Happy hacking, " user-login-name " - Emacs ♥ you!\n\n"))
+;;(setq-default initial-scratch-message (concat ";; Happy hacking, " user-login-name " - Emacs  you!\n\n"))
 
 ;; Make C-x C-e run 'eval-region if the region is active
 

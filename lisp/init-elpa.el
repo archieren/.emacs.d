@@ -4,15 +4,12 @@
 ;;; Code:
 (require 'package)
 
-
 ;;; Install into separate package dirs for each Emacs version, to prevent bytecode incompatibility
 (let ((versioned-package-dir
        (expand-file-name (format "elpa-%s.%s" emacs-major-version emacs-minor-version)
                          user-emacs-directory)))
   (setq package-user-dir versioned-package-dir))
 
-
-
 ;;; Mirrors of Standard package repositories
 ;;; 我使用清华的镜像
 (setq package-archives '(("gnu"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
@@ -67,18 +64,15 @@ locate PACKAGE."
 (require-package 'command-log-mode)
 (require-package 'disable-mouse)
 (require-package 'evil)
-  ;;; init-projectile
+;;; init-projectile
 (require-package 'projectile)
- ;;; init-mode-line
+;;; init-mode-line
 (require-package 'powerline)
-;;(require-package 'smart-mode-line)
-;;(require-package 'smart-mode-line-powerline-theme)
-(require-package 'airline-themes)
-  ;;; init-frame-hooks init-xterm init-gui-frames
-  ;;; init-dired
+;;; init-frame-hooks init-xterm init-gui-frames
+;;; init-dired
 (require-package 'diredfl)
 (require-package 'diff-hl)
-  ;;; init-isearch
+;;; init-isearch
 (require-package 'anzu)
 ;;; init-grep
 ;;(require-package 'wgrep)

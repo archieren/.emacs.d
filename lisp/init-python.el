@@ -25,6 +25,8 @@
 
 ;;(elpy-use-ipython) ;;deprecated!
 
+;; Just for fun.
+(add-hook 'python-mode-hook (lambda () (setq mode-name "")))
 ;;ein
 ;;See https://github.com/millejoh/emacs-ipython-notebook
 (require 'ein)
