@@ -61,22 +61,22 @@ This is helpful for writeroom-mode, in particular."
 
 (require 'cl-lib)
 (require 'init-fontawesome-data)
-
+(require 'init-yi-data)
 (declare-function ivy-read "ivy")
 
-(defun fontawesome--propertize (glyph)
-  "GLYPH is the unicode of a awesome font."
+(defun glyph-propertize (glyph)
+  "GLYPH is the unicode of a font."
   (propertize glyph ))
 
-(defun fontawesome--construct-candidates ()
-  "Nothing."
+(defun init-fonts-construct-candidates (fonts-alist)
+  "FONTS-ALIST."
   (mapcar (lambda (fontawesome)
             (cons (concat
                    (car fontawesome)
                    "->"
-                   (fontawesome--propertize (cdr fontawesome)))
+                   (glyph-propertize (cdr fontawesome)))
                   (cdr fontawesome)))
-          fontawesome-alist))
+          fonts-alist))
 
 
 
@@ -85,7 +85,15 @@ This is helpful for writeroom-mode, in particular."
   "Nothing."
   (interactive)
   (require 'ivy)
-  (ivy-read "Font awesome> " (fontawesome--construct-candidates)
+  (ivy-read "Font awesome> " (init-fonts-construct-candidates fontawesome-alist)
+            :action (lambda (font)
+                      (insert (cdr font)))))
+
+(defun counsel-yi()
+  "Nothing."
+  (interactive)
+  (require 'ivy)
+  (ivy-read "Yi > " (init-fonts-construct-candidates yi-alist)
             :action (lambda (font)
                       (insert (cdr font)))))
 
