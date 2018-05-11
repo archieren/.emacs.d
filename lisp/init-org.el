@@ -353,6 +353,6 @@ typical word processor."
      (sqlite . t))))
 
 (after-load 'org
-  (add-hook 'org-mode-hook (lambda () (setq mode-name "Ⓞ卍"))))
+  (add-hook 'org-mode-hook (lambda () (setq mode-name ""))))
 (provide 'init-org)
 ;;; init-org ends here

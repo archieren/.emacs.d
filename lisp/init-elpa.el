@@ -216,7 +216,7 @@ locate PACKAGE."
 (require-package 'intero)
 (require-package 'hindent)
 (require-package 'ghc)
-(require-package 'dhall-mode)
+;;(require-package 'dhall-mode)
 ;; init-compile
 (require-package 'alert)
 (require-package 'cmd-to-echo)

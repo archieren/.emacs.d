@@ -16,7 +16,7 @@
   (set-fontset-font  t  ;;(frame-parameter nil 'font)
                      script
                      (font-spec :family "Noto Sans Mono CJK SC"
-                                :size 12)))
+                                :size 14)))
 ;;; Fall Back!
 (set-fontset-font t
                   '(#xf000 . #xf8ff)
