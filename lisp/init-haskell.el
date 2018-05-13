@@ -5,42 +5,50 @@
 
 ;;; Code:
 
-
-;; Use intero for completion and flycheck
 (require 'init-utils)
 (require 'haskell-mode)
+(require 'hindent)
+(require 'rainbow-delimiters)
+(require 'flycheck)
 (require 'intero)
-(with-eval-after-load 'haskell-mode
-  (intero-global-mode)
-  (add-hook 'haskell-mode-hook 'eldoc-mode))
-(with-eval-after-load 'haskell-cabal
-  (define-key haskell-cabal-mode-map (kbd "C-c C-l") 'intero-restart))
-(with-eval-after-load 'intero
-  (define-key intero-mode-map (kbd "M-?") nil)
-  (with-eval-after-load 'flycheck
-    (flycheck-add-next-checker 'intero
-                               '(warning . haskell-hlint))))
-
-
+(require 'diminish)
+(custom-set-variables '(haskell-tags-on-save t))
 (add-auto-mode 'haskell-mode "\\.ghci\\'")
-;; Mode-name
 (add-hook 'haskell-mode-hook (lambda () (setq mode-name "")))
+
+(intero-global-mode)
+(diminish 'intero-mode "")
+(define-key haskell-cabal-mode-map (kbd "C-c C-l") 'intero-restart)
+(define-key intero-mode-map (kbd "M-?") nil)
+(flycheck-add-next-checker 'intero  '(warning . haskell-hlint))
+
+(add-hook 'haskell-mode-hook 'eldoc-mode)
+(add-hook 'haskell-mode-hook 'haskell-indentation-mode)
+(add-hook 'haskell-mode-hook 'rainbow-delimiters-mode)
+(add-hook 'haskell-mode-hook 'haskell-decl-scan-mode) ;;; C-M-a C-M-e C-M-h
+(add-hook 'haskell-mode-hook 'haskell-auto-insert-module-template)
+;;(add-hook 'haskell-mode-hook (lambda () (flycheck-select-checker 'haskell-hlint)))
+
+;;;;;
+
 ;; Indentation. But turn-on-haskell-indentation was made obsolete since 2015.
 ;;(add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
-(add-hook 'haskell-mode-hook 'haskell-indentation-mode)
+
 ;;; Using external formatters. Stylish-haskell should be intsalled!
 ;;(custom-set-variables '(haskell-stylish-on-save t))
 
 ;; Source code helpers
-(add-hook 'haskell-mode-hook 'turn-on-haskell-unicode-input-method)
+;; 奇怪，unicode-input-method对company-ghc有影响。
+;;(add-hook 'haskell-mode-hook 'turn-on-haskell-unicode-input-method)
 
-(add-hook 'haskell-mode-hook 'haskell-decl-scan-mode) ;;; C-M-a C-M-e C-M-h
+;; speedbar 华而不实，暂不用。
 ;;(require 'speedbar)
 ;;(speedbar-add-supported-extension ".hs")
 
-(add-hook 'haskell-mode-hook 'haskell-auto-insert-module-template)
-(add-hook 'haskell-mode-hook 'hindent-mode)
 
+
+;; hindent-mode 不是 haskell-indent-mode
+(add-hook 'haskell-mode-hook 'hindent-mode)
 (with-eval-after-load 'hindent
   (when (require 'nadvice)
     (defun  init-haskell-hindent--before-save-wrapper (oldfun &rest args)
@@ -80,11 +88,15 @@
 ;;(add-hook 'dhall-mode-hook 'init-whitespace-no-trailing-whitespace)
 
 ;;; Ghc-mode is a submode of haskell mode!!! I want it!
-;;; 但他覆盖了多少命令呢？
+;;; 但估计不会在有所进展，开发者好像在往Hie方面发展。
+;;(require 'ghc)
+;;(require 'company
+;;(require 'company-ghc)
 
-(autoload 'ghc-init "ghc" nil t)
-(autoload 'ghc-debug "ghc" nil t)
-(add-hook 'haskell-mode-hook (lambda () (ghc-init)))
+;;(autoload 'ghc-init "ghc" nil t)
+;;(autoload 'ghc-debug "ghc" nil t)
+
+;;(add-hook 'haskell-mode-hook (lambda () (ghc-init) (add-to-list 'company-backends 'company-ghc) (custom-set-variables '(company-ghc-show-info t))))
 
 (provide 'init-haskell)
 ;;; init-haskell ends here

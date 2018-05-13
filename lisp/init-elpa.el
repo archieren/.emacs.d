@@ -215,7 +215,8 @@ locate PACKAGE."
 (require-package 'haskell-mode)
 (require-package 'intero)
 (require-package 'hindent)
-(require-package 'ghc)
+;;(require-package 'ghc)
+;;(require-package 'company-ghc)
 ;;(require-package 'dhall-mode)
 ;; init-compile
 (require-package 'alert)
