@@ -20,7 +20,8 @@
                 comint-mode-hook
                 compilation-mode-hook
                 twittering-mode-hook
-                minibuffer-setup-hook))
+                minibuffer-setup-hook
+                eshell-mode-hook))
   (add-hook hook #' init-whitespace-no-trailing-whitespace))
 
 (add-hook 'after-init-hook 'global-whitespace-cleanup-mode)

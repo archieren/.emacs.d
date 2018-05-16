@@ -56,6 +56,7 @@
 (global-set-key (kbd "C-x C-f") 'counsel-find-file) ;; gives C-x C-f counsel features
 (global-set-key (kbd "C-h v") 'counsel-describe-variable)
 (global-set-key (kbd "C-h f") 'counsel-describe-function)
+(global-set-key (kbd "M-y") 'counsel-yank-pop)
 
 (require 'xref)
 (setq xref-show-xrefs-function 'ivy-xref-show-xrefs)

@@ -293,7 +293,8 @@ With arg N, insert N newlines."
         "C-x r"
         "M-s"
         "C-h"
-        "C-c C-a"))
+        "C-c C-a"
+        "C-u"))
 (add-hook 'after-init-hook 'guide-key-mode)
 (with-eval-after-load 'guide-key
   (diminish 'guide-key-mode))

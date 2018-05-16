@@ -23,10 +23,21 @@
 (flycheck-add-next-checker 'intero  '(warning . haskell-hlint))
 
 (add-hook 'haskell-mode-hook 'eldoc-mode)
-(add-hook 'haskell-mode-hook 'haskell-indentation-mode)
+;;(add-hook 'haskell-mode-hook 'haskell-indentation-mode)
 (add-hook 'haskell-mode-hook 'rainbow-delimiters-mode)
 (add-hook 'haskell-mode-hook 'haskell-decl-scan-mode) ;;; C-M-a C-M-e C-M-h
 (add-hook 'haskell-mode-hook 'haskell-auto-insert-module-template)
+
+(require 'haskell-compile)
+(defun init-haskell-haskell-compile ()
+  "Nothing."
+  (interactive)
+  (save-some-buffers (not compilation-ask-about-save)
+                     compilation-save-buffers-predicate)
+  (let* ((prjdir (intero-project-root))
+         (command (format "cd %s && stack build" prjdir)))
+    (compilation-start command 'haskell-compilation-mode)))
+(define-key intero-mode-map (kbd "C-c s-c") 'init-haskell-haskell-compile)
 ;;(add-hook 'haskell-mode-hook (lambda () (flycheck-select-checker 'haskell-hlint)))
 
 ;;;;;
@@ -48,14 +59,14 @@
 
 
 ;; hindent-mode 不是 haskell-indent-mode
+;; 需要系统按装hindent
 (add-hook 'haskell-mode-hook 'hindent-mode)
-(with-eval-after-load 'hindent
-  (when (require 'nadvice)
-    (defun  init-haskell-hindent--before-save-wrapper (oldfun &rest args)
-      (with-demoted-errors "Error invoking hindent: %s"
-        (let ((debug-on-error nil))
-          (apply oldfun args))))
-    (advice-add 'hindent--before-save :around 'init-haskell-hindent--before-save-wrapper)))
+(when (require 'nadvice)
+  (defun  init-haskell-hindent--before-save-wrapper (oldfun &rest args)
+    (with-demoted-errors "Error invoking hindent: %s"
+      (let ((debug-on-error nil))
+        (apply oldfun args))))
+  (advice-add 'hindent--before-save :around 'init-haskell-hindent--before-save-wrapper))
 
 (with-eval-after-load 'haskell-mode
   (define-key haskell-mode-map (kbd "C-c h") 'hoogle)
