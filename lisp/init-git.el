@@ -5,6 +5,8 @@
 ;;; Code:
 ;; TODO: link commits from vc-log to magit-show-commit
 ;; TODO: smerge-mode
+(require 'diminish)
+
 (require 'diff-hl)
 (require 'magit)
 (require 'compile)
@@ -92,7 +94,7 @@
 
 ;; {{ git-gutter
 (require 'git-gutter)
-
+(diminish 'git-gutter-mode)
 (defun git-gutter-reset-to-head-parent()
   (interactive)
   (let (parent (filename (buffer-file-name)))

@@ -55,7 +55,9 @@ locate PACKAGE."
 (require-package 'exec-path-from-shell)
 (require-package 'fullframe)
 (require-package 'cl-lib)
+(require-package 'f)
 (require-package 'wgrep)
+(require-package 'company)
 ;;When we diminish a mode,
 ;;we are saying we want it to continue doing its work for us,
 ;;but we no longer want to be reminded of it.

@@ -42,6 +42,7 @@
 
 (require 'autorevert);;build-in
 (add-hook 'after-init-hook 'global-auto-revert-mode)
+(diminish 'auto-revert-mode)
 (setq global-auto-revert-non-file-buffers t
       auto-revert-verbose nil)
 
@@ -207,7 +208,7 @@
 ;; whole-line-or-region :Cut/copy the current line if no region is active
 (add-hook 'after-init-hook 'whole-line-or-region-mode)
 (with-eval-after-load 'whole-line-or-region
-  (diminish 'whole-line-or-region-mode))
+  (diminish 'whole-line-or-region-local-mode ""))
 
 (defun suspend-mode-during-cua-rect-selection (mode-name)
   "Add an advice to suspend `MODE-NAME' while selecting a CUA rectangle."
@@ -280,21 +281,7 @@ With arg N, insert N newlines."
 ;;;
 (require 'guide-key)
 (setq guide-key/popup-window-position 'bottom)
-(setq guide-key/guide-key-sequence
-      '("C-x"
-        "C-c"
-        "C-x 4"
-        "C-x 5"
-        "C-c ;"
-        "C-c ; f"
-        "C-c ' f"
-        "C-x n"
-        "C-x C-r"
-        "C-x r"
-        "M-s"
-        "C-h"
-        "C-c C-a"
-        "C-u"))
+(setq guide-key/guide-key-sequence t)
 (add-hook 'after-init-hook 'guide-key-mode)
 (with-eval-after-load 'guide-key
   (diminish 'guide-key-mode))

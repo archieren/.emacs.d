@@ -6,7 +6,7 @@
 (setq flycheck-display-errors-function
       #'flycheck-display-error-messages-unless-error-list)
 (setq-default flycheck-emacs-lisp-load-path 'inherit)
-
+(custom-set-variables '(flycheck-mode-line ""))
 
 (require 'flycheck-color-mode-line)
 (add-hook 'flycheck-mode-hook

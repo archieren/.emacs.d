@@ -19,10 +19,10 @@
 (add-hook 'paredit-mode-hook 'maybe-map-paredit-newline)
 
 (with-eval-after-load 'paredit
-  (diminish 'paredit-mode "Par")
+  (diminish 'paredit-mode)
   ;; Suppress certain paredit keybindings to avoid clashes, including
   ;; my global binding of M-?
-  (dolist (binding '("C-<left>" "C-<right>" "C-M-<left>" "C-M-<right>" "M-s" "M-?"))
+  (dolist (binding '("C-<2left>" "C-<right>" "C-M-<left>" "C-M-<right>" "M-s" "M-?"))
     (define-key paredit-mode-map (read-kbd-macro binding) nil)))
 
 
@@ -53,7 +53,8 @@
 ;; ----------------------------------------------------------------------------
 
 (with-eval-after-load 'paredit-everywhere
-  (define-key paredit-everywhere-mode-map (kbd "M-s") nil))
+  (define-key paredit-everywhere-mode-map (kbd "M-s") nil)
+  (diminish 'paredit-everywhere-mode))
 
 (add-hook 'prog-mode-hook 'paredit-everywhere-mode)
 (add-hook 'css-mode-hook 'paredit-everywhere-mode)

@@ -2,10 +2,14 @@
 ;;; Commentary:
 ;;; Code:
 ;;; 一行超过80列,则变色
+
+(require 'diminish)
+
 (require 'whitespace)
 (setq whitespace-style '(face lines-tail))
 (setq whitespace-line-column 80)
 (global-whitespace-mode t)
+(diminish 'global-whitespace-mode)
 ;;; 尾部的空格
 (setq-default show-trailing-whitespace t)
 ;;; Whitespace
@@ -24,7 +28,9 @@
                 eshell-mode-hook))
   (add-hook hook #' init-whitespace-no-trailing-whitespace))
 
+(require 'whitespace-cleanup-mode)
 (add-hook 'after-init-hook 'global-whitespace-cleanup-mode)
+(diminish 'whitespace-cleanup-mode)
 (global-set-key [remap just-one-space] 'cycle-spacing)
 
 (provide 'init-whitespace)

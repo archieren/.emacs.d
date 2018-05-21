@@ -12,7 +12,8 @@
 
 (defun python-mode-hook-setup ()
   "Nothing."
-  (setq electric-indent-chars (delq ?: electric-indent-chars)))
+  (setq electric-indent-chars (delq ?: electric-indent-chars))
+  )
 
 (when (require 'flycheck nil t)
   (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
@@ -30,17 +31,20 @@
 ;;ein
 ;;See https://github.com/millejoh/emacs-ipython-notebook
 (require 'ein)
-;;(require 'ein-loaddefs)
-;;(require 'ein-notebook)
+(require 'ein-loaddefs)
+(require 'ein-notebook)
 (require 'ein-subpackages)
-;;(require 'dash)
-;;(require 'websocket)
-;;(require 'request)
-;;(require 'request-deferred)
-;;(require 's)
-;;(require 'auto-complete)
-;;(require 'skewer-mode)
+(require 'dash)
+(require 'websocket)
+(require 'request)
+(require 'request-deferred)
+(require 's)
+(require 'auto-complete)
+(require 'skewer-mode)
 
+(custom-set-variables '(ein:jupyter-default-server-command "jupyter")
+                                        ;'(ein:jupyter-server-args "notebook")
+                      '(ein:jupyter-default-notebook-directory "~/Projects/NoteBook/"))
 ;; Choose the comletion-backend
 ;; Look up and See the code in ein-subpackages.el.
 ;; At least,it has four completion-backend.
@@ -48,7 +52,7 @@
 (with-eval-after-load 'company
   (with-eval-after-load 'ein
     (setq ein:completion-backend 'ein:use-company-backend)
-    (setq ein:use-smartrep t)))
+    (setq ein:use-smartrep nil)))
 
 ;;; See http://millejoh.github.io/emacs-ipython-notebook/#
 ;;; {{Key-Binding Reference

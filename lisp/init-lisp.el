@@ -6,7 +6,7 @@
 (dolist (hook '(emacs-lisp-mode-hook ielm-mode-hook))
   (add-hook hook 'turn-on-elisp-slime-nav-mode))
 (add-hook 'emacs-lisp-mode-hook (lambda () (setq mode-name "")))
-
+(diminish 'elisp-slime-nav-mode)
 
 ;;(setq-default initial-scratch-message (concat ";; Happy hacking, " user-login-name " - Emacs  you!\n\n"))
 
@@ -130,6 +130,7 @@ Eval region from begin-mark to end-mark if active, otherwise the last sexp."
   "Hook run in all Lisp modes.")
 
 (require 'aggressive-indent)
+(diminish 'aggressive-indent-mode)
 (add-to-list 'init-lisp-lispy-modes-hook 'aggressive-indent-mode)
 
 (defun  init-lisp-lisp-setup ()

@@ -15,12 +15,15 @@
 (custom-set-variables '(haskell-tags-on-save t))
 (add-auto-mode 'haskell-mode "\\.ghci\\'")
 (add-hook 'haskell-mode-hook (lambda () (setq mode-name "")))
+(diminish 'hindent-mode)
+
 
 (intero-global-mode)
 (diminish 'intero-mode "")
 (define-key haskell-cabal-mode-map (kbd "C-c C-l") 'intero-restart)
 (define-key intero-mode-map (kbd "M-?") nil)
 (flycheck-add-next-checker 'intero  '(warning . haskell-hlint))
+;;(setq intero-debug t)
 
 (add-hook 'haskell-mode-hook 'eldoc-mode)
 ;;(add-hook 'haskell-mode-hook 'haskell-indentation-mode)
@@ -38,19 +41,20 @@
          (command (format "cd %s && stack build" prjdir)))
     (compilation-start command 'haskell-compilation-mode)))
 (define-key intero-mode-map (kbd "C-c s-c") 'init-haskell-haskell-compile)
-;;(add-hook 'haskell-mode-hook (lambda () (flycheck-select-checker 'haskell-hlint)))
+;;; 其实禁用了 haskell-mode 定义的几个checker.
+;;; 上面有关intero checker的情况也是如此.
+;;; (add-hook 'haskell-mode-hook (lambda () (flycheck-select-checker 'haskell-hlint)))
 
-;;;;;
-
-;; Indentation. But turn-on-haskell-indentation was made obsolete since 2015.
-;;(add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
+;;;
+;;; Indentation. But turn-on-haskell-indentation was made obsolete since 2015.
+;;  (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
 
 ;;; Using external formatters. Stylish-haskell should be intsalled!
-;;(custom-set-variables '(haskell-stylish-on-save t))
+;;  (custom-set-variables '(haskell-stylish-on-save t))
 
 ;; Source code helpers
 ;; 奇怪，unicode-input-method对company-ghc有影响。
-;;(add-hook 'haskell-mode-hook 'turn-on-haskell-unicode-input-method)
+;; (add-hook 'haskell-mode-hook 'turn-on-haskell-unicode-input-method)
 
 ;; speedbar 华而不实，暂不用。
 ;;(require 'speedbar)
@@ -92,22 +96,6 @@
 
 (add-hook 'haskell-mode-hook 'stack-exec-path-mode)
 
-
-;;; Dhall is a programmable configuration language that is not Turing-complete
-;;; You can think of Dhall as: JSON + functions + types + imports
-;; 暂时不考虑dhall-mode
-;;(add-hook 'dhall-mode-hook 'init-whitespace-no-trailing-whitespace)
-
-;;; Ghc-mode is a submode of haskell mode!!! I want it!
-;;; 但估计不会在有所进展，开发者好像在往Hie方面发展。
-;;(require 'ghc)
-;;(require 'company
-;;(require 'company-ghc)
-
-;;(autoload 'ghc-init "ghc" nil t)
-;;(autoload 'ghc-debug "ghc" nil t)
-
-;;(add-hook 'haskell-mode-hook (lambda () (ghc-init) (add-to-list 'company-backends 'company-ghc) (custom-set-variables '(company-ghc-show-info t))))
 
 (provide 'init-haskell)
 ;;; init-haskell ends here
