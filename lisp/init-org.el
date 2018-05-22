@@ -1,12 +1,14 @@
 ;;; init-org --- Nothing
 ;;; Commentary:
 ;;; Code:
+(require 'diminish)
 
 (require 'org)
 (require 'org-agenda)
 (require 'org-clock)
 (require 'org-archive)
 (require 'org-capture)
+(require 'org-indent)
 ;; ob = org-babel
 (require 'ob-ditaa)
 (require 'ob-plantuml)
@@ -30,7 +32,8 @@
       ;;org-export-kill-product-buffer-when-displayed t
       org-tags-column 80
       org-startup-indented t)
-
+(with-eval-after-load 'org
+  (diminish 'org-indent-mode))
 
 ;; Lots of stuff from http://doc.norang.ca/org-mode.html
 

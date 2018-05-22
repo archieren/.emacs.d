@@ -66,6 +66,8 @@ locate PACKAGE."
 (require-package 'command-log-mode)
 (require-package 'disable-mouse)
 (require-package 'evil)
+(require-package 'yasnippet)
+(require-package 'yasnippet-snippets)
 ;;; init-projectile
 (require-package 'projectile)
 ;;; init-mode-line
