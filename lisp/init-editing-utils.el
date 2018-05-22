@@ -286,6 +286,10 @@ With arg N, insert N newlines."
 (with-eval-after-load 'guide-key
   (diminish 'guide-key-mode))
 
+(require 'yasnippet)
+(yas-reload-all)
+(add-hook 'prog-mode-hook #'yas-minor-mode)
+(require 'yasnippet-snippets)
 
 (provide 'init-editing-utils)
 ;;; init-editing-utils ends here

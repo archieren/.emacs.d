@@ -201,6 +201,7 @@ locate PACKAGE."
 (require-package 'racket-mode)
 ;; init-python
 (require-package 'elpy)
+(require-package 'highlight-indentation)
 (require-package 'py-autopep8)
 ;; Required Packages for IPython/Jupyter...
 ;;See https://github.com/millejoh/emacs-ipython-notebook

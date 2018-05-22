@@ -1,6 +1,7 @@
 ;;; init-python --- Nothing.
 ;;; Commentary:
 ;;; Code:
+(require 'diminish)
 
 (require 'elpy)
 (setq interpreter-mode-alist
@@ -23,6 +24,13 @@
 
 (require 'py-autopep8)
 (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
+
+;;; elpy 使用了 highlight-indentation 包
+;;; (require 'highlight-indentation)
+(with-eval-after-load 'elpy
+  (diminish 'elpy-mode)
+  (diminish 'highlight-indentation-mode))
+
 
 ;;(elpy-use-ipython) ;;deprecated!
 
