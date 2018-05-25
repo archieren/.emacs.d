@@ -15,21 +15,12 @@
 (custom-set-variables '(haskell-tags-on-save t))
 (add-auto-mode 'haskell-mode "\\.ghci\\'")
 (add-hook 'haskell-mode-hook (lambda () (setq mode-name "")))
-(diminish 'hindent-mode)
-
-
-(intero-global-mode)
-(diminish 'intero-mode "")
-(define-key haskell-cabal-mode-map (kbd "C-c C-l") 'intero-restart)
-(define-key intero-mode-map (kbd "M-?") nil)
-(flycheck-add-next-checker 'intero  '(warning . haskell-hlint))
-;;(setq intero-debug t)
-
 (add-hook 'haskell-mode-hook 'eldoc-mode)
-;;(add-hook 'haskell-mode-hook 'haskell-indentation-mode)
+(add-hook 'haskell-mode-hook 'haskell-indentation-mode)
 (add-hook 'haskell-mode-hook 'rainbow-delimiters-mode)
 (add-hook 'haskell-mode-hook 'haskell-decl-scan-mode) ;;; C-M-a C-M-e C-M-h
 (add-hook 'haskell-mode-hook 'haskell-auto-insert-module-template)
+(diminish 'hindent-mode)
 
 (require 'haskell-compile)
 (defun init-haskell-haskell-compile ()
@@ -40,9 +31,10 @@
   (let* ((prjdir (intero-project-root))
          (command (format "cd %s && stack build" prjdir)))
     (compilation-start command 'haskell-compilation-mode)))
-(define-key intero-mode-map (kbd "C-c s-c") 'init-haskell-haskell-compile)
+(define-key haskell-mode-map (kbd "C-c s-c") 'init-haskell-haskell-compile)
+
 ;;; 其实禁用了 haskell-mode 定义的几个checker.
-;;; 上面有关intero checker的情况也是如此.
+;;; 下面有关intero checker的情况也是如此.
 ;;; (add-hook 'haskell-mode-hook (lambda () (flycheck-select-checker 'haskell-hlint)))
 
 ;;;
@@ -96,6 +88,25 @@
 
 (add-hook 'haskell-mode-hook 'stack-exec-path-mode)
 
+;;; intero
+;;; 采用 intero,则交互模式只有两种,inferior-haskell-mode和intero-mode,
+;;; inferior-haskell-mode基于Comint-mode和eshell,简单好用.
+;;; 而interactive-haskell-mode被intero屏蔽了
+(intero-global-mode)
+(diminish 'intero-mode "")
+(define-key haskell-cabal-mode-map (kbd "C-c C-l") 'intero-restart)
+(define-key intero-mode-map (kbd "M-?") nil)
+(flycheck-add-next-checker 'intero  '(warning . haskell-hlint))
+;;(setq intero-debug t)
 
+;;; hie
+;;(require 'lsp-mode)
+;;(require 'lsp-ui)
+;;(require 'lsp-haskell)
+;;
+;;(add-hook 'lsp-mode-hook 'lsp-ui-mode)
+;;(add-hook 'haskell-mode-hook #'lsp-haskell-enable)
+;;(add-hook 'haskell-mode-hook 'flycheck-mode)
+;;(diminish 'lsp-mode)
 (provide 'init-haskell)
 ;;; init-haskell ends here

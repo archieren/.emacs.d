@@ -218,8 +218,11 @@ locate PACKAGE."
 (require-package 'erlang)
 ;; init-haskell
 (require-package 'haskell-mode)
-(require-package 'intero)
+;;(require-package 'intero)
 (require-package 'hindent)
+(require-package 'lsp-mode)
+(require-package 'lsp-ui)
+(require-package 'lsp-haskell)
 ;;(require-package 'ghc)
 ;;(require-package 'company-ghc)
 ;;(require-package 'dhall-mode)
