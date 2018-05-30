@@ -20,6 +20,15 @@
 (add-hook 'haskell-mode-hook 'rainbow-delimiters-mode)
 (add-hook 'haskell-mode-hook 'haskell-decl-scan-mode) ;;; C-M-a C-M-e C-M-h
 (add-hook 'haskell-mode-hook 'haskell-auto-insert-module-template)
+(add-hook 'haskell-mode-hook 'hindent-mode)
+;; hindent-mode 不是 haskell-indent-mode
+;; 需要系统按装hindent
+(when (require 'nadvice)
+  (defun  init-haskell-hindent--before-save-wrapper (oldfun &rest args)
+    (with-demoted-errors "Error invoking hindent: %s"
+      (let ((debug-on-error nil))
+        (apply oldfun args))))
+  (advice-add 'hindent--before-save :around 'init-haskell-hindent--before-save-wrapper))
 (diminish 'hindent-mode)
 
 (require 'haskell-compile)
@@ -54,15 +63,6 @@
 
 
 
-;; hindent-mode 不是 haskell-indent-mode
-;; 需要系统按装hindent
-(add-hook 'haskell-mode-hook 'hindent-mode)
-(when (require 'nadvice)
-  (defun  init-haskell-hindent--before-save-wrapper (oldfun &rest args)
-    (with-demoted-errors "Error invoking hindent: %s"
-      (let ((debug-on-error nil))
-        (apply oldfun args))))
-  (advice-add 'hindent--before-save :around 'init-haskell-hindent--before-save-wrapper))
 
 (with-eval-after-load 'haskell-mode
   (define-key haskell-mode-map (kbd "C-c h") 'hoogle)

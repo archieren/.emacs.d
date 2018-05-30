@@ -218,7 +218,7 @@ locate PACKAGE."
 (require-package 'erlang)
 ;; init-haskell
 (require-package 'haskell-mode)
-;;(require-package 'intero)
+(require-package 'intero)
 (require-package 'hindent)
 (require-package 'lsp-mode)
 (require-package 'lsp-ui)
@@ -277,6 +277,7 @@ locate PACKAGE."
 (require-package 'psc-ide)
 ;; init-rust
 (require-package 'rust-mode)
+(require-package 'cargo)
 (require-package 'racer)
 (require-package 'company)
 (require-package 'flycheck-rust)
