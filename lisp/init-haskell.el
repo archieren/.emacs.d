@@ -91,7 +91,7 @@
             (replace-regexp-in-string
              "[\r\n]+\\'" ""
              (shell-command-to-string "stack path --bin-path"))))
-          'string-equal)
+          'string-equal )
          ))
     (kill-local-variable 'exec-path)))
 
