@@ -279,7 +279,6 @@ locate PACKAGE."
 (require-package 'rust-mode)
 (require-package 'cargo)
 (require-package 'racer)
-(require-package 'company-racer)
 (require-package 'flycheck-rust)
 ;; init-yaml
 (require-package 'yaml-mode)
