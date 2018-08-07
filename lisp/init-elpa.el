@@ -190,12 +190,6 @@ locate PACKAGE."
 (require-package 'flycheck-package)
 (require-package 'cask-mode)
 ;; init-common-lisp
-;; init-clojure
-(require-package 'clojure-mode)
-(require-package 'cljsbuild-mode)
-(require-package 'elein)
-(require-package 'cider)
-(require-package 'flycheck-clojure)
 ;;(require-package 'nrepl-sync) ;;-- Remove it.
 ;; init-racket
 (require-package 'racket-mode)
