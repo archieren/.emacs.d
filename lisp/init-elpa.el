@@ -229,9 +229,6 @@ locate PACKAGE."
 ;; init-compile
 (require-package 'alert)
 (require-package 'cmd-to-echo)
-;; init-crontab
-;;(require-package 'crontab-mode)
-;; There is no package named "crontab-mode" in the elpa.
 ;; init-textfile
 (require-package 'textile-mode)
 ;; init-markdown

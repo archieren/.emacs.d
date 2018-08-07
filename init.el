@@ -91,7 +91,6 @@
 ;;(init-init 'init-c)
 ;; Web development
 (init-init 'init-compile)
-;;(init-init 'init-crontab)
 (init-init 'init-textile)
 (init-init 'init-markdown)
 (init-init 'init-csv)
