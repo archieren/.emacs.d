@@ -280,11 +280,11 @@ With arg N, insert N newlines."
 (add-hook 'after-init-hook 'hes-mode)
 ;;;
 (require 'guide-key)
-(setq guide-key/popup-window-position 'bottom)
-(setq guide-key/guide-key-sequence t)
-(add-hook 'after-init-hook 'guide-key-mode)
 (with-eval-after-load 'guide-key
-  (diminish 'guide-key-mode))
+  (diminish 'guide-key-mode)
+  (setq guide-key/popup-window-position 'bottom)
+  (setq guide-key/guide-key-sequence t)
+  (add-hook 'after-init-hook 'guide-key-mode))
 
 (require 'yasnippet)
 (yas-reload-all)
