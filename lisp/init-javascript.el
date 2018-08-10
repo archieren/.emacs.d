@@ -49,7 +49,7 @@
       (set (make-local-variable 'js2-mode-show-strict-warnings) t)))
   (add-hook 'js2-mode-hook 'sanityinc/disable-js2-checks-if-flycheck-active)
 
-  (add-hook 'js2-mode-hook (lambda () (setq mode-name "JS2")))
+  (add-hook 'js2-mode-hook (lambda () (setq mode-name "")))
 
   (with-eval-after-load 'js2-mode
     (js2-imenu-extras-setup)))
@@ -79,17 +79,18 @@
   (setq coffee-js-mode preferred-javascript-mode
         coffee-tab-width preferred-javascript-indent-level))
 
-;;(when (fboundp 'coffee-mode)
-;;      (add-to-list 'auto-mode-alist '("\\.coffee\\.erb\\'" . coffee-mode)))
+(when (fboundp 'coffee-mode)
+  (add-to-list 'auto-mode-alist '("\\.coffee\\.erb\\'" . coffee-mode)))
+
 
 
 ;; Run and interact with an inferior JS via js-comint.el
-;;(require-package 'js-comint)
 ;; 那么就看 https://github.com/redguardtoo/js-comint 里的介绍吧.
 ;; 在 js-comint 中,倒是定义了custom变量js-comint-program-{command,arguments}
 ;; 真找不到 inferior-js-program-command的定义,也不知道谁会用.
+;; 因为有个 js-comint-program-command的可定制变量，好像在起同样的作用。
 ;; 在 Linux 下,屏蔽它,好像也无事.
-;;(setq inferior-js-program-command "node")
+;; (setq inferior-js-program-command "node")
 
 (defun inferior-js-mode-hook-setup ()
   "In order to get cleaner output when using NodeJS.
@@ -106,17 +107,10 @@ Suggested by chenbin"
 
 (define-minor-mode inferior-js-keys-mode
   "Bindings for communicating with an inferior js interpreter."
-  nil " InfJS" inferior-js-minor-mode-map)
+  nil "" inferior-js-minor-mode-map)
 
 (dolist (hook '(js2-mode-hook js-mode-hook))
   (add-hook hook 'inferior-js-keys-mode))
-
-
-;; Alternatively, use skewer-mode
-;;(require-package 'skewer-mode)
-(with-eval-after-load 'skewer-mode
-  (add-hook 'skewer-mode-hook
-            (lambda () (inferior-js-keys-mode -1))))
 
 
 ;;(maybe-require-package 'add-node-modules-path)
