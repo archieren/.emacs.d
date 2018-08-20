@@ -29,7 +29,7 @@
 ;;----------------------------------------------------------------------------
 (setq gc-cons-threshold (* 128 1024 1024))
 (add-hook 'after-init-hook
-          (lambda () (setq gc-cons-threshold  (* 20 1024 1024))))
+          (lambda () (setq gc-cons-threshold  (* 4 1024 1024))))
 ;;----------------------------------------------------------------------------
 ;; Bootstrap config
 ;;----------------------------------------------------------------------------
@@ -106,14 +106,8 @@
 (init-init 'init-toml)
 (init-init 'init-yaml)
 (init-init 'init-toml)
-;;(init-init 'init-docker)
 (init-init 'init-terraform)
-;;(require 'init-nix)
 
-
-;;(init-init 'init-twitter)
-;; (init-init 'init-mu)
-(init-init 'init-ledger)
 
 (setq-default uptimes-keep-count 200)
 (add-hook 'after-init-hook (lambda () (require 'uptimes)))

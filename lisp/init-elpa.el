@@ -65,7 +65,6 @@ locate PACKAGE."
 (require-package 'scratch)
 (require-package 'command-log-mode)
 (require-package 'disable-mouse)
-(require-package 'evil)
 (require-package 'yasnippet)
 (require-package 'yasnippet-snippets)
 ;;; init-projectile
@@ -214,12 +213,6 @@ locate PACKAGE."
 (require-package 'haskell-mode)
 (require-package 'intero)
 (require-package 'hindent)
-;;(require-package 'lsp-mode)
-;;(require-package 'lsp-ui)
-;;(require-package 'lsp-haskell)
-;;(require-package 'ghc)
-;;(require-package 'company-ghc)
-;;(require-package 'dhall-mode)
 ;; init-compile
 (require-package 'alert)
 (require-package 'cmd-to-echo)
@@ -278,24 +271,10 @@ locate PACKAGE."
 ;; init-terraform
 (require-package 'terraform-mode)
 (require-package 'company-terraform)
-;;init 'init-nix
-;;init 'init-twitter
-;;init 'init-mu
-;;init 'init-ledger
-(require-package 'ledger-mode)
-(require-package 'flycheck-ledger)
+
 
 ;; Extra packages which don't require any configuration
 (require-package 'gnuplot)
-;;(require-package 'lua-mode)
-;;(require-package 'htmlize)
-;;(require-package 'dsvn)
-;;(require-package 'daemons)
-;;(require-package 'dotenv-mode)
-
-
-
-;;(require-package 'nginx-mode)
 (require-package 'uptimes)
 ;;; init-themes
 (require-package 'xresources-theme)
@@ -303,30 +282,6 @@ locate PACKAGE."
 (require-package 'zenburn-theme)
 (require-package 'color-theme-sanityinc-solarized)
 (require-package 'color-theme-sanityinc-tomorrow)
-;;--(require-package 'monokai-theme)
-;;--(require-package 'molokai-theme)
-;;--(require-package 'moe-theme)
-;;--(require-package 'cyberpunk-theme)
-;;--(require-package 'ample-theme)
-;;--(require-package 'gotham-theme)
-;;--(require-package 'gruvbox-theme)
-;;--(require-package 'alect-themes)
-;;--(require-package 'grandshell-theme)
-;;--(require-package 'tangotango-theme)
-;;--(require-package 'gruber-darker-theme)
-;;--(require-package 'ample-zen-theme)
-;;--(require-package 'flatland-theme)
-;;--(require-package 'clues-theme)
-;;--(require-package 'darkburn-theme)
-;;--(require-package 'soothe-theme)
-;;--(require-package 'dakrone-theme)
-;;--(require-package 'busybee-theme)
-;;--(require-package 'bubbleberry-theme)
-;;--(require-package 'cherry-blossom-theme)
-;;--(require-package 'heroku-theme)
-;;--(require-package 'hemisu-theme)
-;;--(require-package 'distinguished-theme)
-;;--(require-package 'challenger-deep-theme)
 (require-package 'dimmer)
 ;;;}}}
 (fullframe list-packages quit-window)
