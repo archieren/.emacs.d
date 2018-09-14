@@ -144,7 +144,7 @@
 ;; (global-set-key (kbd "C->") 'mc/mark-next-like-this)
 ;; (global-set-key (kbd "C-+") 'mc/mark-next-like-this)
 ;; (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
-;; 重新定义为
+;; 用windows键,重新定义为
 (global-set-key (kbd "s-;") 'mc/mark-next-like-this)
 (global-set-key (kbd "s-'") 'mc/mark-previous-like-this)
 (global-set-key (kbd "C-c s-;") 'mc/mark-all-like-this)

@@ -31,9 +31,9 @@
       org-html-validation-link nil
       ;;org-export-kill-product-buffer-when-displayed t
       org-tags-column 80
-      org-startup-indented t)
-(with-eval-after-load 'org
-  (diminish 'org-indent-mode))
+      org-startup-indented t
+      org-startup-with-inline-images "inlineimages")
+(diminish 'org-indent-mode)
 
 ;; Lots of stuff from http://doc.norang.ca/org-mode.html
 
@@ -53,7 +53,7 @@
       (when (file-exists-p zip-temp)
         (delete-file zip-temp)))))
 
-(after-load 'ob-ditaa
+(with-eval-after-load 'ob-ditaa
   (unless (and (boundp 'org-ditaa-jar-path)
                (file-exists-p org-ditaa-jar-path))
     (let ((jar-name "ditaa0_9.jar")
@@ -63,7 +63,7 @@
       (unless (file-exists-p org-ditaa-jar-path)
         (sanityinc/grab-ditaa url jar-name)))))
 
-(after-load 'ob-plantuml
+(with-eval-after-load 'ob-plantuml
   (let ((jar-name "plantuml.jar")
         (url "http://jaist.dl.sourceforge.net/project/plantuml/plantuml.jar"))
     (setq org-plantuml-jar-path
@@ -131,7 +131,7 @@ typical word processor."
 (setq org-refile-targets '((nil :maxlevel . 5)
                            (org-agenda-files :maxlevel . 5)))
 
-(after-load 'org-agenda
+(with-eval-after-load 'org-agenda
   (add-to-list 'org-agenda-after-show-hook 'org-show-entry))
 
 (defadvice org-refile (after sanityinc/save-all-after-refile activate)

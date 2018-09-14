@@ -7,7 +7,7 @@
 
 (require 'whitespace)
 (setq whitespace-style '(face lines-tail))
-(setq whitespace-line-column 80)
+(setq whitespace-line-column 120)
 (global-whitespace-mode t)
 (diminish 'global-whitespace-mode)
 ;;; 尾部的空格
