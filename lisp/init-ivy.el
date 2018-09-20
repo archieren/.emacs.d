@@ -92,24 +92,72 @@
   ;; 应当用Universal-ctags.
   )
 
+;;Some inputs method
+(require 'cl-lib)
+(require 'init-fontawesome-data)
+(require 'init-yi-data)
+(declare-function ivy-read "ivy")
+
+(defun glyph-propertize (glyph)
+  "GLYPH is the unicode of a font."
+  (propertize glyph ))
+
+(defun init-fonts-construct-candidates (fonts-alist)
+  "FONTS-ALIST."
+  (mapcar (lambda (fontawesome)
+            (cons (concat
+                   (car fontawesome)
+                   "->"
+                   (glyph-propertize (cdr fontawesome)))
+                  (cdr fontawesome)))
+          fonts-alist))
+
+
+
+;;;###autoload
+(defun counsel-fontawesome ()
+  "Nothing."
+  (interactive)
+  (require 'ivy)
+  (ivy-read "Font awesome> " (init-fonts-construct-candidates fontawesome-alist)
+            :action (lambda (font)
+                      (insert (cdr font)))))
+
+(defun counsel-yi()
+  "Nothing."
+  (interactive)
+  (require 'ivy)
+  (ivy-read "Yi > " (init-fonts-construct-candidates yi-alist)
+            :action (lambda (font)
+                      (insert (cdr font)))))
+
+;;;Keys
 (global-set-key (kbd "C-c C-r")   'ivy-resume)
 (global-set-key (kbd "C-x b")     'ivy-switch-buffer)
 (global-set-key (kbd "C-s")       'swiper)  ;; replaces i-search with swiper
 ;; Leave the kbd "M-x" for smex.
+(global-set-key (kbd "s-x j")     'counsel-git-grep)
+(global-set-key (kbd "s-x g")     'counsel-git) ;; Find file in the current git.
 (global-set-key (kbd "s-x x")     'counsel-M-x) ;; Gives M-x command counsel features
+;;Override some defaults.
 (global-set-key (kbd "C-x C-f")   'counsel-find-file) ;; gives C-x C-f counsel features
 (global-set-key (kbd "C-h v")     'counsel-describe-variable)
 (global-set-key (kbd "C-h f")     'counsel-describe-function)
 (global-set-key (kbd "M-y")       'counsel-yank-pop)
-
+;;Input method for Yi and FontAwesome
+(global-set-key (kbd "s-x i y")   'counsel-yi)
+(global-set-key (kbd "s-x i f")   'counsel-fontawesome)
 ;; M-. 绑定在 elisp-slime-nav.el里的elisp-slime-nav-find-elisp-thing-at-point
 ;; 很特殊.在elisp编程时有用. 经常elisp编程,故保留.
 (global-set-key (kbd "s-x .")     'counsel-etags-find-tag-at-point)
 (global-set-key (kbd "s-x t")     'counsel-etags-grep-symbol-at-point)
 (global-set-key (kbd "s-x s")     'counsel-etags-find-tag)
-;; Here s-x {x,.,t,s} ,s-x {a,r} in init-grep, s-x {n,p,a} in init-editing-utils
+;; Here s-x {j,g,x,i {y,f},.,t,s} ,s-x {a,r} in init-grep, s-x {n,p,m} in init-editing-utils
 ;;
 
+
+
+;;;
 (require 'xref)
 (setq xref-show-xrefs-function 'ivy-xref-show-xrefs)
 

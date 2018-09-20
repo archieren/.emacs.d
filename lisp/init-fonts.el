@@ -59,43 +59,6 @@ This is helpful for writeroom-mode, in particular."
 (add-hook 'visual-fill-column-mode-hook
           ' init-font-maybe-adjust-visual-fill-column)
 
-(require 'cl-lib)
-(require 'init-fontawesome-data)
-(require 'init-yi-data)
-(declare-function ivy-read "ivy")
-
-(defun glyph-propertize (glyph)
-  "GLYPH is the unicode of a font."
-  (propertize glyph ))
-
-(defun init-fonts-construct-candidates (fonts-alist)
-  "FONTS-ALIST."
-  (mapcar (lambda (fontawesome)
-            (cons (concat
-                   (car fontawesome)
-                   "->"
-                   (glyph-propertize (cdr fontawesome)))
-                  (cdr fontawesome)))
-          fonts-alist))
-
-
-
-;;;###autoload
-(defun counsel-fontawesome ()
-  "Nothing."
-  (interactive)
-  (require 'ivy)
-  (ivy-read "Font awesome> " (init-fonts-construct-candidates fontawesome-alist)
-            :action (lambda (font)
-                      (insert (cdr font)))))
-
-(defun counsel-yi()
-  "Nothing."
-  (interactive)
-  (require 'ivy)
-  (ivy-read "Yi > " (init-fonts-construct-candidates yi-alist)
-            :action (lambda (font)
-                      (insert (cdr font)))))
 
 
 (provide 'init-fonts)
