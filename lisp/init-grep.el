@@ -17,13 +17,13 @@
 ;; ag>ack>grep
 (when (executable-find "ag")
   (setq-default ag-highlight-search t)
-  (global-set-key (kbd "s-a") 'ag-project))
+  (global-set-key (kbd "s-x a") 'ag-project))
 
 ;; rg is the ripgrep
 ;; See https://github.com/BurntSushi/ripgrep
 (when (executable-find "rg")
   ;; Set the <prefix>
-  (rg-enable-default-bindings (kbd "s-s"))
+  (rg-enable-default-bindings (kbd "s-x r"))
   ;;<prefix> d  rg-dwim
   ;;<prefix> k  rg-kill-saved-searches
   ;;<prefix> l  rg-list-searches

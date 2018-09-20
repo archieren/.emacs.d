@@ -145,9 +145,9 @@
 ;; (global-set-key (kbd "C-+") 'mc/mark-next-like-this)
 ;; (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
 ;; 用windows键,重新定义为
-(global-set-key (kbd "s-;") 'mc/mark-next-like-this)
-(global-set-key (kbd "s-'") 'mc/mark-previous-like-this)
-(global-set-key (kbd "C-c s-;") 'mc/mark-all-like-this)
+(global-set-key (kbd "s-x n") 'mc/mark-next-like-this)
+(global-set-key (kbd "s-x p") 'mc/mark-previous-like-this)
+(global-set-key (kbd "s-x m") 'mc/mark-all-like-this)
 ;; From active region to multiple cursors:
 (global-set-key (kbd "C-c m r") 'set-rectangular-region-anchor)
 (global-set-key (kbd "C-c m c") 'mc/edit-lines)

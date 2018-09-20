@@ -98,6 +98,7 @@ locate PACKAGE."
 (require-package 'ivy-historian)
 (require-package 'ivy-xref)
 (require-package 'counsel)
+(require-package 'counsel-etags)
 (require-package 'swiper)
   ;;; init-helm
   ;;; init-hippie-expand
