@@ -56,3 +56,4 @@ site-lisp/package/
 .travis.yml
 /test-startup.sh
 request/
+/TAGS
