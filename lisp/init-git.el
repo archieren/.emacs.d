@@ -22,15 +22,17 @@
 
 
 ;; {{ git-gutter
-(global-git-gutter-mode t)
-(diminish 'git-gutter-mode)
+(with-eval-after-load 'git-gutter
+  (global-git-gutter-mode t)
+  (diminish 'git-gutter-mode)
 
 
-(global-set-key (kbd "C-x v =") 'git-gutter:popup-hunk)
-;; Stage current hunk
-(global-set-key (kbd "C-x v s") 'git-gutter:stage-hunk)
-;; Revert current hunk
-(global-set-key (kbd "C-x v r") 'git-gutter:revert-hunk)
+  (global-set-key (kbd "C-x v =") 'git-gutter:popup-hunk)
+  ;; Stage current hunk
+  (global-set-key (kbd "C-x v s") 'git-gutter:stage-hunk)
+  ;; Revert current hunk
+  (global-set-key (kbd "C-x v r") 'git-gutter:revert-hunk)
+  )
 ;; }}
 (provide 'init-git)
 ;;; init-git ends here

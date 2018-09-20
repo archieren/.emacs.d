@@ -75,6 +75,7 @@
   (add-to-list 'counsel-etags-ignore-filenames "*.toml")
   ;;clang
   (add-to-list 'counsel-etags-ignore-filenames "*.clang-format")
+  ;;
   ;; Don't ask before rereading the TAGS files if they have changed
   (setq tags-revert-without-query t)
   ;; Don't warn when TAGS files are large
@@ -85,7 +86,11 @@
   (add-hook 'prog-mode-hook
             (lambda ()
               (add-hook 'after-save-hook
-                        'counsel-etags-virtual-update-tags 'append 'local))))
+                        'counsel-etags-virtual-update-tags 'append 'local)))
+  ;;
+  ;;(setq counsel-etags-update-tags-backend (lambda () (shell-command "find . -type f -iname \"*.[ch]\" | etags -")))
+  ;; 应当用Universal-ctags.
+  )
 
 (global-set-key (kbd "C-c C-r")   'ivy-resume)
 (global-set-key (kbd "C-x b")     'ivy-switch-buffer)
@@ -97,6 +102,8 @@
 (global-set-key (kbd "C-h f")     'counsel-describe-function)
 (global-set-key (kbd "M-y")       'counsel-yank-pop)
 
+;; M-. 绑定在 elisp-slime-nav.el里的elisp-slime-nav-find-elisp-thing-at-point
+;; 很特殊.在elisp编程时有用. 经常elisp编程,故保留.
 (global-set-key (kbd "s-x .")     'counsel-etags-find-tag-at-point)
 (global-set-key (kbd "s-x t")     'counsel-etags-grep-symbol-at-point)
 (global-set-key (kbd "s-x s")     'counsel-etags-find-tag)
