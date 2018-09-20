@@ -10,7 +10,7 @@
 ;; Added by Package.el.  This must come before configurations of installed packages.
 (package-initialize)
 
-(setq debug-on-error t)
+(setq debug-on-error nil)
 
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 

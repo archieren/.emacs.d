@@ -12,7 +12,8 @@
 ;;
 (when (fboundp 'electric-pair-mode)
   (add-hook 'after-init-hook 'electric-pair-mode))
-(add-hook 'after-init-hook 'electric-indent-mode)
+(when (fboundp 'electric-indent-mode)
+  (add-hook 'after-init-hook 'electric-indent-mode))
 ;; Some basic preferences
 (setq-default cursor-type 'bar)
 (setq-default blink-cursor-interval 0.4)
@@ -48,23 +49,14 @@
 
 (add-hook 'after-init-hook 'transient-mark-mode)
 
-;;; Very large file.
-;;; 此处定义了一个交互式命令，没有和键绑定.
-(require 'ffap)
-(defun ffap-vlf ()
-  "Find file at point with VLF."
-  (interactive)
-  (let ((file (ffap-file-at-point)))
-    (unless (file-exists-p file)
-      (error "File does not exist: %s" file))
-    (vlf file)))
 
-;;; A simple visible bell which works in all terminal types.
-(add-hook 'after-init-hook 'mode-line-bell-mode)
-;; Beacon
-(setq-default beacon-lighter "")
-(setq-default beacon-size 5)
-(add-hook 'after-init-hook 'beacon-mode)
+;;; Beacon
+(require 'beacon)
+(with-eval-after-load 'beacon
+  (setq-default beacon-lighter "")
+  (setq-default beacon-size 5)
+  (add-hook 'after-init-hook 'beacon-mode))
+
 ;;; Newline behaviour
 (global-set-key (kbd "RET") 'newline-and-indent)
 (defun init-editing-utils-newline-at-end-of-line ()
@@ -72,66 +64,134 @@
   (interactive)
   (move-end-of-line 1)
   (newline-and-indent))
-(global-set-key
- (kbd "S-<return>") 'init-editing-utils-newline-at-end-of-line)
+(global-set-key (kbd "S-<return>") 'init-editing-utils-newline-at-end-of-line)
+
 ;;; Subword
 (with-eval-after-load 'subword
   (diminish 'subword-mode))
 
-(add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
+;;; RainBow
+(require 'rainbow-delimiters)
+(with-eval-after-load 'rainbow-delimiters
+  (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
 
+;;; Prettify-Symbols
 (when (fboundp 'global-prettify-symbols-mode)
   (add-hook 'after-init-hook 'global-prettify-symbols-mode))
+
 ;;;
-(add-hook 'after-init-hook 'global-undo-tree-mode)
+(require 'undo-tree)
 (with-eval-after-load 'undo-tree
-  (diminish 'undo-tree-mode))
+  (diminish 'undo-tree-mode)
+  (add-hook 'after-init-hook 'global-undo-tree-mode))
+
 ;;; symbol-overlay
 (require 'symbol-overlay)
-(dolist (hook '(prog-mode-hook
-                html-mode-hook
-                css-mode-hook
-                yaml-mode-hook
-                conf-mode-hook))
-  (add-hook hook 'symbol-overlay-mode))
 (with-eval-after-load 'symbol-overlay
   (diminish 'symbol-overlay-mode)
+  (dolist (hook '(prog-mode-hook
+                  html-mode-hook
+                  css-mode-hook
+                  yaml-mode-hook
+                  conf-mode-hook))
+    (add-hook hook 'symbol-overlay-mode))
   (define-key
     symbol-overlay-mode-map (kbd "M-i") 'symbol-overlay-put)
   (define-key
     symbol-overlay-mode-map (kbd "M-n") 'symbol-overlay-jump-next)
   (define-key
     symbol-overlay-mode-map (kbd "M-p") 'symbol-overlay-jump-prev))
+
+;;; 杂技类命令
+;; "M-z" zap-to-char , "M-Z" zap-up-to-char
 ;; Zap *up* to char is a handy pair for zap-to-char
 (autoload 'zap-up-to-char "misc"
   "Kill up to, but not including ARGth occurrence of CHAR.")
 (global-set-key (kbd "M-Z") 'zap-up-to-char)
+;;; Kill from point back to the first non-whitespace character on the line.
+(defun kill-back-to-indentation ()
+  "Kill from point back to the first non-whitespace character on the line."
+  (interactive)
+  (let ((prev-pos (point)))
+    (back-to-indentation)
+    (kill-region (point) prev-pos)))
+(global-set-key (kbd "C-M-<backspace>") 'kill-back-to-indentation)
+;; Open-line
+(defun init-editing-utils-open-line-with-reindent (n)
+  "A version of `open-line' which reindents the start and end positions.
+If there is a fill prefix and/or a `left-margin', insert them
+on the new line if the line would have been blank.
+With arg N, insert N newlines."
+  (interactive "*p")
+  (let* ((do-fill-prefix (and fill-prefix (bolp)))
+         (do-left-margin (and (bolp) (> (current-left-margin) 0)))
+         (loc (point-marker))
+         ;; Don't expand an abbrev before point.
+         (abbrev-mode nil))
+    (delete-horizontal-space t)
+    (newline n)
+    (indent-according-to-mode)
+    (when (eolp)
+      (delete-horizontal-space t))
+    (goto-char loc)
+    (while (> n 0)
+      (cond ((bolp)
+             (if do-left-margin (indent-to (current-left-margin)))
+             (if do-fill-prefix (insert-and-inherit fill-prefix))))
+      (forward-line 1)
+      (setq n (1- n)))
+    (goto-char loc)
+    (end-of-line)
+    (indent-according-to-mode)))
+(global-set-key (kbd "C-o") 'init-editing-utils-open-line-with-reindent)
+
+
+
 ;;; browse-kill-ring
 (require 'browse-kill-ring)
-(setq browse-kill-ring-separator "\f")
-(global-set-key (kbd "M-Y") 'browse-kill-ring)
 (with-eval-after-load 'browse-kill-ring
+  (setq browse-kill-ring-separator "\f")
+  (global-set-key (kbd "M-Y") 'browse-kill-ring)
   (define-key
     browse-kill-ring-mode-map (kbd "C-g") 'browse-kill-ring-quit)
   (define-key
     browse-kill-ring-mode-map (kbd "M-n") 'browse-kill-ring-forward)
   (define-key
     browse-kill-ring-mode-map (kbd "M-p") 'browse-kill-ring-previous))
+
+;;----------------------------------------------------------------------------
+;; Page break lines
+;; C-q C-l插入 ^L ，C-x {],[}导航
+;;----------------------------------------------------------------------------
+(require 'page-break-lines)
 (with-eval-after-load 'page-break-lines
-  (push 'browse-kill-ring-mode page-break-lines-modes))
+  (diminish 'page-break-lines-mode)
+  (add-hook 'after-init-hook 'global-page-break-lines-mode)
+  (push 'browse-kill-ring-mode page-break-lines-modes)
+  )
+
 ;; Don't disable narrowing commands
 (put 'narrow-to-region 'disabled nil)
 (put 'narrow-to-page 'disabled nil)
 (put 'narrow-to-defun 'disabled nil)
+
 ;; Show matching parens
 (add-hook 'after-init-hook 'show-paren-mode)
+
 ;; Expand region
+(require 'expand-region)
 (global-set-key (kbd "C-=") 'er/expand-region)
 ;; Don't disable case-change functions
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
+
 ;; Rectangle selections, and overwrite text when the selection is active
+;; Builtins.I just turn it on.
 (cua-selection-mode t)                  ; for rectangles, CUA is nice
+
+
+
+
 ;; Handy key bindings
 (global-set-key (kbd "C-.") 'set-mark-command)
 (global-set-key (kbd "C-x C-.") 'pop-global-mark)
@@ -160,22 +220,6 @@
 
 
 
-(defun kill-back-to-indentation ()
-  "Kill from point back to the first non-whitespace character on the line."
-  (interactive)
-  (let ((prev-pos (point)))
-    (back-to-indentation)
-    (kill-region (point) prev-pos)))
-
-(global-set-key (kbd "C-M-<backspace>") 'kill-back-to-indentation)
-
-
-;;----------------------------------------------------------------------------
-;; Page break lines
-;;----------------------------------------------------------------------------
-(add-hook 'after-init-hook 'global-page-break-lines-mode)
-(with-eval-after-load 'page-break-lines
-  (diminish 'page-break-lines-mode))
 
 ;;----------------------------------------------------------------------------
 ;; Shift lines up and down with M-up and M-down. When paredit is enabled,
@@ -206,9 +250,10 @@
 (global-set-key [remap backward-up-list] 'backward-up-sexp) ; C-M-u, C-M-up
 
 ;; whole-line-or-region :Cut/copy the current line if no region is active
-(add-hook 'after-init-hook 'whole-line-or-region-mode)
+(require 'whole-line-or-region)
 (with-eval-after-load 'whole-line-or-region
-  (diminish 'whole-line-or-region-local-mode ""))
+  (diminish 'whole-line-or-region-local-mode "")
+  (add-hook 'after-init-hook 'whole-line-or-region-mode))
 
 (defun suspend-mode-during-cua-rect-selection (mode-name)
   "Add an advice to suspend `MODE-NAME' while selecting a CUA rectangle."
@@ -231,36 +276,6 @@
 (suspend-mode-during-cua-rect-selection 'whole-line-or-region-mode)
 
 
-(defun init-editing-utils-open-line-with-reindent (n)
-  "A version of `open-line' which reindents the start and end positions.
-If there is a fill prefix and/or a `left-margin', insert them
-on the new line if the line would have been blank.
-With arg N, insert N newlines."
-  (interactive "*p")
-  (let* ((do-fill-prefix (and fill-prefix (bolp)))
-         (do-left-margin (and (bolp) (> (current-left-margin) 0)))
-         (loc (point-marker))
-         ;; Don't expand an abbrev before point.
-         (abbrev-mode nil))
-    (delete-horizontal-space t)
-    (newline n)
-    (indent-according-to-mode)
-    (when (eolp)
-      (delete-horizontal-space t))
-    (goto-char loc)
-    (while (> n 0)
-      (cond ((bolp)
-             (if do-left-margin (indent-to (current-left-margin)))
-             (if do-fill-prefix (insert-and-inherit fill-prefix))))
-      (forward-line 1)
-      (setq n (1- n)))
-    (goto-char loc)
-    (end-of-line)
-    (indent-according-to-mode)))
-
-(global-set-key (kbd "C-o") 'init-editing-utils-open-line-with-reindent)
-
-
 ;;----------------------------------------------------------------------------
 ;; Random line sorting
 ;;----------------------------------------------------------------------------
@@ -277,7 +292,9 @@ With arg N, insert N newlines."
                    (lambda (s1 s2) (eq (random 2) 0)))))))
 
 ;;; highlight-escape-sequence
-(add-hook 'after-init-hook 'hes-mode)
+(require 'highlight-escape-sequences)
+(with-eval-after-load 'highlight-escape-sequences
+  (add-hook 'after-init-hook 'hes-mode))
 ;;;
 (require 'guide-key)
 (with-eval-after-load 'guide-key

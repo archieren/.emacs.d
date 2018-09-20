@@ -63,13 +63,14 @@
 (with-eval-after-load 'counsel-etags
   (add-to-list 'counsel-etags-ignore-directories "build_clang")
   (add-to-list 'counsel-etags-ignore-directories "build")
-  (add-to-list 'counsel-etags-ignore-directories ".stack-work")
   (add-to-list 'counsel-etags-ignore-directories ".vscode")
   ;; counsel-etags-ignore-filenames supports wildcast
   ;; haskell
   (add-to-list 'counsel-etags-ignore-filenames "*.yaml")
   (add-to-list 'counsel-etags-ignore-filenames "*.cabal")
   (add-to-list 'counsel-etags-ignore-filenames "*.hi")
+  (add-to-list 'counsel-etags-ignore-directories ".stack-work")
+  (add-to-list 'counsel-etags-ignore-directories "dist")
   ;;rust
   (add-to-list 'counsel-etags-ignore-filenames "*.lock")
   (add-to-list 'counsel-etags-ignore-filenames "*.toml")
@@ -136,6 +137,7 @@
 (global-set-key (kbd "C-x b")     'ivy-switch-buffer)
 (global-set-key (kbd "C-s")       'swiper)  ;; replaces i-search with swiper
 ;; Leave the kbd "M-x" for smex.
+;; Counsel中还有很多有关git的功能,以后再关注.
 (global-set-key (kbd "s-x j")     'counsel-git-grep)
 (global-set-key (kbd "s-x g")     'counsel-git) ;; Find file in the current git.
 (global-set-key (kbd "s-x x")     'counsel-M-x) ;; Gives M-x command counsel features

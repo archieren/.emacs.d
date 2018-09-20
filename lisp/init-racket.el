@@ -16,7 +16,8 @@
 
 (add-hook 'racket-mode-hook (lambda () (paredit-mode t)))
 
-(setq tab-always-indent 'complete) ;; 使用tab自己主动补全
+;;Has been defined at init-company
+;;(setq tab-always-indent 'complete) ;; 使用tab自己主动补全
 
 (provide 'init-racket)
 ;;; init-racket ends here

@@ -119,8 +119,6 @@ locate PACKAGE."
 ;;(require-package 'fill-column-indicator)
 (require-package 'unfill)
 (require-package 'list-unicode-display)
-(require-package 'vlf)  ;; Very large file.
-(require-package 'mode-line-bell)
 (require-package 'beacon)
 (require-package 'rainbow-delimiters)
 (require-package 'undo-tree)
@@ -138,11 +136,11 @@ locate PACKAGE."
   ;;; init-whitespace
 (require-package 'whitespace-cleanup-mode)
   ;;; init-vc
-(require-package 'diff-hl)
-(require-package 'browse-at-remote)
+;;(require-package 'diff-hl)
+;;(require-package 'browse-at-remote)
   ;;; init-darcs
-(require-package 'darcsum)
-(require-package 'vc-darcs)
+;;(require-package 'darcsum)
+;;(require-package 'vc-darcs)
   ;;; init-git
 (require-package 'git-blamed)
 (require-package 'gitignore-mode)

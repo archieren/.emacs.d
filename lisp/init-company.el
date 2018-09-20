@@ -31,7 +31,6 @@
   (define-key company-active-map (kbd "C-p") 'company-select-previous)
   (setq-default company-dabbrev-other-buffers 'all
                 company-tooltip-align-annotations t))
-(global-set-key (kbd "M-C-/") 'company-complete)
 
 (require 'company-quickhelp)
 (add-hook 'after-init-hook 'company-quickhelp-mode)
