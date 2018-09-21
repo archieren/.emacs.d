@@ -144,6 +144,10 @@ With arg N, insert N newlines."
     (end-of-line)
     (indent-according-to-mode)))
 (global-set-key (kbd "C-o") 'init-editing-utils-open-line-with-reindent)
+;;; 这更像键盘侠的杂技
+;; avy is a GNU Emacs package for jumping to visible text using a char-based decision tree.
+(require 'avy)
+(global-set-key (kbd "C-:") 'avy-goto-char-timer)
 
 
 
@@ -195,8 +199,6 @@ With arg N, insert N newlines."
 ;; Handy key bindings
 (global-set-key (kbd "C-.") 'set-mark-command)
 (global-set-key (kbd "C-x C-.") 'pop-global-mark)
-;;; avy
-(global-set-key (kbd "C-;") 'avy-goto-char-timer)
 
 
 ;; multiple-cursors

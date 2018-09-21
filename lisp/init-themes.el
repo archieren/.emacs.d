@@ -41,6 +41,7 @@
   (setq custom-enabled-themes '(sanityinc-solarized-dark))
   (reapply-themes))
 ;;; Dimmer
+(require 'dimmer)
 (setq-default dimmer-fraction 0.1)
 (add-hook 'after-init-hook 'dimmer-mode)
 

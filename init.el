@@ -7,6 +7,7 @@
 
 (setq lexical-binding t)
 
+
 ;; Added by Package.el.  This must come before configurations of installed packages.
 (package-initialize)
 

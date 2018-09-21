@@ -155,7 +155,7 @@
 (global-set-key (kbd "s-x t")     'counsel-etags-grep-symbol-at-point)
 (global-set-key (kbd "s-x s")     'counsel-etags-find-tag)
 ;; Here s-x {j,g,x,i {y,f},.,t,s} ,s-x {a,r} in init-grep, s-x {n,p,m} in init-editing-utils
-;;
+;; s-x s-p in init_projectile
 
 
 

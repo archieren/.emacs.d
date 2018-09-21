@@ -6,6 +6,7 @@
 (require 'magit)
 (require 'git-gutter)
 (require 'init-utils)
+(require 'fullframe)
 
 ;; Hint: customize `magit-repository-directories' so that you can use C-u M-F12 to
 ;; quickly open magit on any one of your projects.
