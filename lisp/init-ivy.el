@@ -61,21 +61,22 @@
   (define-key ivy-mode-map (kbd "M-s /") 'init-ivy-swiper-at-point))
 
 (with-eval-after-load 'counsel-etags
-  (add-to-list 'counsel-etags-ignore-directories "build_clang")
-  (add-to-list 'counsel-etags-ignore-directories "build")
-  (add-to-list 'counsel-etags-ignore-directories ".vscode")
+  (add-to-list 'counsel-etags-ignore-directories       "build_clang")
+  (add-to-list 'counsel-etags-ignore-directories       "build")
+  (add-to-list 'counsel-etags-ignore-directories       ".vscode")
   ;; counsel-etags-ignore-filenames supports wildcast
   ;; haskell
-  (add-to-list 'counsel-etags-ignore-filenames "*.yaml")
-  (add-to-list 'counsel-etags-ignore-filenames "*.cabal")
-  (add-to-list 'counsel-etags-ignore-filenames "*.hi")
-  (add-to-list 'counsel-etags-ignore-directories ".stack-work")
-  (add-to-list 'counsel-etags-ignore-directories "dist")
+  (add-to-list 'counsel-etags-ignore-filenames         "*.yaml")
+  (add-to-list 'counsel-etags-ignore-filenames         "*.cabal")
+  (add-to-list 'counsel-etags-ignore-filenames         "*.hi")
+  (add-to-list 'counsel-etags-ignore-directories       ".stack-work")
+  (add-to-list 'counsel-etags-ignore-directories       "dist")
   ;;rust
-  (add-to-list 'counsel-etags-ignore-filenames "*.lock")
-  (add-to-list 'counsel-etags-ignore-filenames "*.toml")
+  (add-to-list 'counsel-etags-ignore-directories       "target")
+  (add-to-list 'counsel-etags-ignore-filenames         "*.lock")
+  (add-to-list 'counsel-etags-ignore-filenames         "*.toml")
   ;;clang
-  (add-to-list 'counsel-etags-ignore-filenames "*.clang-format")
+  (add-to-list 'counsel-etags-ignore-filenames         "*.clang-format")
   ;;
   ;; Don't ask before rereading the TAGS files if they have changed
   (setq tags-revert-without-query t)
