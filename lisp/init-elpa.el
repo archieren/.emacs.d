@@ -171,6 +171,9 @@ locate PACKAGE."
 ;;; init-org
 (require-package 'org-cliplink)
 (require-package 'writeroom-mode)
+;; init-cc
+(require-package 'company-c-headers)
+(require-package 'flycheck-pkg-config)
 ;; init-lisp
 (require-package 'elisp-slime-nav)
 (require-package 'ipretty)

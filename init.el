@@ -82,6 +82,7 @@
 (init-init 'init-folding)
 ;;(init-init 'init-dash);; Dash, a new list api.
 ;; Programming language
+(init-init 'init-cc)
 (init-init 'init-lisp)
 (init-init 'init-common-lisp)
 (init-init 'init-racket)

@@ -2,7 +2,7 @@
 ;;; Commentary:
 ;;; Code:
 (require 'flycheck)
-(add-hook 'after-init-hook 'global-flycheck-mode)
+(global-flycheck-mode t)
 (setq flycheck-display-errors-function
       #'flycheck-display-error-messages-unless-error-list)
 (setq-default flycheck-emacs-lisp-load-path 'inherit)

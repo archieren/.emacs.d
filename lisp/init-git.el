@@ -23,7 +23,7 @@
 
 
 ;; {{ git-gutter
-(with-eval-after-load 'git-gutter
+(with-eval-after-load 'magit
   (global-git-gutter-mode t)
   (diminish 'git-gutter-mode)
 
