@@ -66,8 +66,8 @@
 (init-init 'init-company)
 ;;(init-init 'init-windows)
 ;;(init-init 'init-sessions)
-(init-init 'init-fonts)
-(init-init 'init-mmm)
+;;(init-init 'init-fonts)
+;;(init-init 'init-mmm)
 
 (init-init 'init-editing-utils)
 (init-init 'init-whitespace)

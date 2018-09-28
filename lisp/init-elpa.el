@@ -69,30 +69,30 @@ locate PACKAGE."
 (require-package 'yasnippet-snippets)
 ;;; init-projectile
 (require-package 'projectile)
-;;; init-mode-line
+;;; init-gui
 (require-package 'powerline)
-;;; init-frame-hooks init-xterm init-gui-frames
+(require-package 'disable-mouse)
+(require-package 'switch-window)
+(require-package 'window-number)
+(require-package 'visual-fill-column)
+(require-package 'default-text-scale)
+
 ;;; init-dired
 (require-package 'diredfl)
 (require-package 'diff-hl)
-;;; init-isearch
-(require-package 'anzu)
+
 ;;; init-grep
 ;;(require-package 'wgrep)
 (require-package 'ag)
 (require-package 'wgrep-ag)
 (require-package 'rg)
-;;;init-uniquify
   ;;; init-ibuffer
 (require-package 'ibuffer-vc)
   ;;; init-flycheck
 (require-package 'flycheck)
 (require-package 'flycheck-color-mode-line)
-  ;;; init-recentf
   ;;; init-ido
 (require-package 'flx-ido)
-  ;;; init-smex
-(require-package 'smex)
   ;;;init-ivy
 (require-package 'ivy)
 (require-package 'ivy-historian)
@@ -100,18 +100,11 @@ locate PACKAGE."
 (require-package 'counsel)
 (require-package 'counsel-etags)
 (require-package 'swiper)
-  ;;; init-helm
-  ;;; init-hippie-expand
-;;; It's a build-in package.
-  ;;; init-company
+
+;;; init-company
 (require-package 'company)
 (require-package 'company-quickhelp)
-  ;;; init-window
-(require-package 'switch-window)
-(require-package 'window-number)
-  ;;; init-fonts
-(require-package 'visual-fill-column)
-(require-package 'default-text-scale)
+
   ;;; init-mmm
 (require-package 'mmm-mode)
   ;;; init-editing-utils

@@ -8,8 +8,6 @@
 (setq use-file-dialog nil)
 (setq use-dialog-box nil)
 (setq inhibit-startup-screen t)
-
-
 ;;----------------------------------------------------------------------------
 ;; Window size and features
 ;;----------------------------------------------------------------------------
@@ -17,6 +15,12 @@
   (tool-bar-mode -1))
 (when (fboundp 'set-scroll-bar-mode)
   (set-scroll-bar-mode nil))
+
+;; scroll one line at a time (less "jumpy" than defaults)
+(setq mouse-wheel-scroll-amount '(1 ((shift) . 1))) ;; one line at a time
+(setq mouse-wheel-progressive-speed nil) ;; don't accelerate scrolling
+(setq mouse-wheel-follow-mouse 't) ;; scroll window under mouse
+(setq scroll-step 1) ;; keyboard scroll one line at a time
 
 (when (fboundp 'menu-bar-mode)
   (menu-bar-mode -1))
@@ -39,7 +43,6 @@
 (setq uniquify-separator " • ")
 (setq uniquify-after-kill-buffer-p t)
 (setq uniquify-ignore-buffers-re "^\\*")
-
 ;;----------------------------------------------------------------------------
 ;; Recentf.
 ;;----------------------------------------------------------------------------
@@ -47,22 +50,15 @@
 (setq-default
  recentf-max-saved-items 1000
  recentf-exclude '("/tmp/" "/ssh:"))
-
 ;;----------------------------------------------------------------------------
 ;; Navigate window layouts with "C-c <left>" and "C-c <right>"
 ;;----------------------------------------------------------------------------
-
 (require 'winner)
-
 (add-hook 'after-init-hook 'winner-mode)
-
 ;; Make "C-x o" prompt for a target window when there are more than 2
 (setq-default switch-window-shortcut-style 'alphabet)
 (setq-default switch-window-timeout nil)
 (global-set-key (kbd "C-x o") 'switch-window)
-
-
-
 ;; When splitting window, show (other-buffer) in the new window
 (defun split-window-func-with-other-buffer (split-function)
   "SPLIT-FUNCTION."
@@ -75,10 +71,7 @@
       (unless arg
         (select-window target-window)))))
 
-(global-set-key (kbd "C-x 2") (split-window-func-with-other-buffer 'split-window-vertically))
-(global-set-key (kbd "C-x 3") (split-window-func-with-other-buffer 'split-window-horizontally))
-
-(defun init-window-toggle-delete-other-windows ()
+(defun init-gui-toggle-delete-other-windows ()
   "Delete other windows in frame if any, or restore previous window config."
   (interactive)
   (if (and winner-mode
@@ -86,7 +79,9 @@
       (winner-undo)
     (delete-other-windows)))
 
-(global-set-key (kbd "C-x 1") 'init-window-toggle-delete-other-windows)
+(global-set-key (kbd "C-x 1") 'init-gui-toggle-delete-other-windows)
+(global-set-key (kbd "C-x 2") (split-window-func-with-other-buffer 'split-window-vertically))
+(global-set-key (kbd "C-x 3") (split-window-func-with-other-buffer 'split-window-horizontally))
 
 ;;----------------------------------------------------------------------------
 ;; Rearrange split windows
@@ -112,11 +107,70 @@
 (global-set-key (kbd "C-x |") 'split-window-horizontally-instead)
 (global-set-key (kbd "C-x _") 'split-window-vertically-instead)
 
+;;----------------------------------------------------------------------------
 ;;; 设置 window-number
+;;----------------------------------------------------------------------------
 (require 'window-number)
 (window-number-mode)
 (window-number-meta-mode)
 
+;;----------------------------------------------------------------------------
+;;; Multi major mode
+;;----------------------------------------------------------------------------
+(require 'mmm-auto)
+(setq mmm-global-mode 'buffers-with-submode-classes)
+(setq mmm-submode-decoration-level 2)
+
+;;----------------------------------------------------------------------------
+;;; 字体设置 - 用等宽字体，比较好对齐中英文!
+;;----------------------------------------------------------------------------
+(set-face-attribute  'default
+                     nil
+                     :font  (font-spec :family "DejaVu Sans Mono"
+                                       :size 14))
+(dolist (script '(kana han symbol cjk-misc bopomofo))
+  (set-fontset-font  t  ;;(frame-parameter nil 'font)
+                     script
+                     (font-spec :family "Noto Sans Mono CJK SC"
+                                :size 14)))
+;;; Fall Back!
+(set-fontset-font t
+                  '(#xf000 . #xf8ff)
+                  (font-spec
+                   :family "Font Awesome 5 Free Solid"
+                   :style  "Solid"
+                   :size 12) )
+;;;  Fall Back!
+;;But now,it doesn't work!So,quote it.
+;;Can I merge "Font Awesome 5 Free Solid" with "Font Awesome 5 Brands Regular?"
+(set-fontset-font t
+                  '(#xf000 . #xf8ff)
+                  (font-spec
+                   :family "Font Awesome 5 Brands Regular"
+                   :style  "Regular"
+                   :size 12)
+                  nil
+                  'append)
+
+(setq face-font-rescale-alist '(("DejaVu Sans Mono" . 1.0)
+                                ("Noto Sans Mono CJK SC" . 1.0)))
+;;;
+(add-hook 'after-init-hook 'default-text-scale-mode)
+(require 'visual-fill-column)
+(defun  init-font-maybe-adjust-visual-fill-column ()
+  "Readjust visual fill column when the global font size is modified.
+This is helpful for writeroom-mode, in particular."
+  ;; TODO: submit as patch
+  (if visual-fill-column-mode
+      (add-hook 'after-setting-font-hook
+                'visual-fill-column--adjust-window
+                nil
+                t)
+    (remove-hook 'after-setting-font-hook
+                 'visual-fill-column--adjust-window
+                 t)))
+(add-hook 'visual-fill-column-mode-hook
+          ' init-font-maybe-adjust-visual-fill-column)
 
 (provide 'init-gui)
 ;;; init-gui ends here
