@@ -48,32 +48,16 @@
 ;; Emacs's expendation
 (init-init 'init-mode-line)
 (init-init 'init-gui)
-;;(init-init 'init-frame-hooks)
-;;(init-init 'init-xterm)
-;;(init-init 'init-gui-frames)
 (init-init 'init-dired)
-;;(init-init 'init-isearch)
 (init-init 'init-grep)
-;;(init-init 'init-uniquify)
 (init-init 'init-ibuffer)
 (init-init 'init-flycheck)
-;;(init-init 'init-recentf)
 (init-init 'init-ido)
-;;(init-init 'init-smex)
 (init-init 'init-ivy)
-;;(init-init 'init-helm)
 (init-init 'init-hippie-expand)
 (init-init 'init-company)
-;;(init-init 'init-windows)
-;;(init-init 'init-sessions)
-;;(init-init 'init-fonts)
-;;(init-init 'init-mmm)
-
 (init-init 'init-editing-utils)
-(init-init 'init-whitespace)
 ;; Version Control
-(init-init 'init-vc)
-(init-init 'init-darcs)
 (init-init 'init-git)
   ;;; From now on ,packages are loaded by themself!
 ;; Editing expandation

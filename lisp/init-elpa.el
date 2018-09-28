@@ -76,6 +76,8 @@ locate PACKAGE."
 (require-package 'window-number)
 (require-package 'visual-fill-column)
 (require-package 'default-text-scale)
+(require-package 'whitespace-cleanup-mode)
+(require-package 'mmm-mode)
 
 ;;; init-dired
 (require-package 'diredfl)
@@ -105,8 +107,6 @@ locate PACKAGE."
 (require-package 'company)
 (require-package 'company-quickhelp)
 
-  ;;; init-mmm
-(require-package 'mmm-mode)
   ;;; init-editing-utils
 ;; It's quite a little of complification.
 ;;(require-package 'fill-column-indicator)
@@ -126,8 +126,6 @@ locate PACKAGE."
 (require-package 'highlight-escape-sequences)
 (require-package 'guide-key)
 ;;(require-package 'nlinum)
-  ;;; init-whitespace
-(require-package 'whitespace-cleanup-mode)
   ;;; init-vc
 ;;(require-package 'diff-hl)
 ;;(require-package 'browse-at-remote)

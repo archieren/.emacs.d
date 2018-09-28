@@ -15,7 +15,7 @@
 
 (with-eval-after-load 'magit
   (define-key magit-status-mode-map (kbd "C-M-<up>") 'magit-section-up)
-  (add-hook 'magit-popup-mode-hook 'init-whitespace-no-trailing-whitespace)
+  (add-hook 'magit-popup-mode-hook 'init-gui-no-trailing-whitespace)
   (fullframe magit-status magit-mode-quit-window)
   (global-set-key [(meta f12)] 'magit-status)
   (global-set-key (kbd "C-x g") 'magit-status)
