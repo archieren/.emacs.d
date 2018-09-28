@@ -259,10 +259,21 @@ With arg N, insert N newlines."
         (sort-subr nil 'forward-line 'end-of-line nil nil
                    (lambda (s1 s2) (eq (random 2) 0)))))))
 
+;;----------------------------------------------------------------------------
+;; 杂项
+;;----------------------------------------------------------------------------
+;;; 折叠、折纸
+(require 'origami)
+(add-hook 'prog-mode-hook 'origami-mode)
+(with-eval-after-load 'origami
+  (define-key origami-mode-map (kbd "C-c f") 'origami-recursively-toggle-node)
+  (define-key origami-mode-map (kbd "C-c F") 'origami-toggle-all-nodes))
+
 ;;; highlight-escape-sequence
 (require 'highlight-escape-sequences)
 (with-eval-after-load 'highlight-escape-sequences
   (add-hook 'after-init-hook 'hes-mode))
+
 ;;;
 (require 'guide-key)
 (with-eval-after-load 'guide-key
@@ -275,6 +286,62 @@ With arg N, insert N newlines."
 (yas-reload-all)
 (add-hook 'prog-mode-hook #'yas-minor-mode)
 (require 'yasnippet-snippets)
+
+;;----------------------------------------------------------------------------
+;; Paredit
+;;----------------------------------------------------------------------------
+(require 'paredit)
+(require 'paredit-everywhere)
+(autoload 'enable-paredit-mode "paredit")
+
+(defun maybe-map-paredit-newline ()
+  "Nothing."
+  (unless (or (memq major-mode '(inferior-emacs-lisp-mode cider-repl-mode))
+              (minibufferp))
+    (local-set-key (kbd "RET") 'paredit-newline)))
+
+(add-hook 'paredit-mode-hook 'maybe-map-paredit-newline)
+
+(with-eval-after-load 'paredit
+  (diminish 'paredit-mode)
+  ;; Suppress certain paredit keybindings to avoid clashes, including
+  ;; my global binding of M-?
+  (dolist (binding '("C-<2left>" "C-<right>" "C-M-<left>" "C-M-<right>" "M-s" "M-?"))
+    (define-key paredit-mode-map (read-kbd-macro binding) nil)))
+
+
+;; Compatibility with other modes
+;; defined in init-editing-utils
+(suspend-mode-during-cua-rect-selection 'paredit-mode)
+
+
+;; Use paredit in the minibuffer
+;; TODO: break out into separate package
+;; http://emacsredux.com/blog/2013/04/18/evaluate-emacs-lisp-in-the-minibuffer/
+(add-hook 'minibuffer-setup-hook 'conditionally-enable-paredit-mode)
+
+(defvar paredit-minibuffer-commands '(eval-expression
+                                      pp-eval-expression
+                                      eval-expression-with-eldoc
+                                      ibuffer-do-eval
+                                      ibuffer-do-view-and-eval)
+  "Interactive commands for which paredit should be enabled in the minibuffer.")
+
+(defun conditionally-enable-paredit-mode ()
+  "Enable paredit during lisp-related minibuffer commands."
+  (if (memq this-command paredit-minibuffer-commands)
+      (enable-paredit-mode)))
+
+;; ----------------------------------------------------------------------------
+;; Enable some handy paredit functions in all prog modes
+;; ----------------------------------------------------------------------------
+
+(with-eval-after-load 'paredit-everywhere
+  (define-key paredit-everywhere-mode-map (kbd "M-s") nil)
+  (diminish 'paredit-everywhere-mode))
+
+(add-hook 'prog-mode-hook 'paredit-everywhere-mode)
+(add-hook 'css-mode-hook 'paredit-everywhere-mode)
 
 (provide 'init-editing-utils)
 ;;; init-editing-utils ends here

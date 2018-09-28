@@ -59,11 +59,6 @@
 (init-init 'init-company)
 (init-init 'init-editing-utils)
 
-  ;;; From now on ,packages are loaded by themself!
-;; Editing expandation
-(init-init 'init-paredit)
-(init-init 'init-folding)
-;;(init-init 'init-dash);; Dash, a new list api.
 ;; Programming language
 (init-init 'init-cc)
 (init-init 'init-lisp)

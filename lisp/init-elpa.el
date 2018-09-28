@@ -125,14 +125,17 @@ locate PACKAGE."
 (require-package 'whole-line-or-region)
 (require-package 'highlight-escape-sequences)
 (require-package 'guide-key)
-;;(require-package 'nlinum)
-  ;;; init-vc
+(require-package 'paredit)
+(require-package 'paredit-everywhere)
+(require-package 'origami)
+
+;;; init-vc
 ;;(require-package 'diff-hl)
 ;;(require-package 'browse-at-remote)
-  ;;; init-darcs
+;;; init-darcs
 ;;(require-package 'darcsum)
 ;;(require-package 'vc-darcs)
-  ;;; init-git
+;;; init-git
 (require-package 'git-blamed)
 (require-package 'gitignore-mode)
 (require-package 'gitconfig-mode)
@@ -146,12 +149,7 @@ locate PACKAGE."
 (require-package 'github-clone)
 (require-package 'magithub)
 (require-package 'git-gutter)
-  ;;; init-paredit
-(require-package 'paredit)
-(require-package 'paredit-everywhere)
-;;; init-misc
-;;; init-folding
-(require-package 'origami)
+
 ;;; init-org
 (require-package 'org-cliplink)
 (require-package 'writeroom-mode)
