@@ -57,7 +57,7 @@
 ;; 开始配置cc-mode时,有些概念要清楚.
 ;; Style , Syntax , Complete , Navigation . 其实这也是所有编辑器要达到的基本功能.
 ;; cc-mode处理是语言文本的编辑风格.只须分清c,c++...就行了.
-;; 而flycheck做的是语法检查,要选择检查器，并给检查器指定语言标准.
+;; 而flycheck做的是语法检查,要选择checker，并给checker指定语言标准.
 ;; 因此,可以在cc-mode提供的buffer's local mode-hook里,设定buffer's local flycheck-checker,及相应的参数.
 ;; (当然,还可以在目录里，设置相应的变量)
 ;;

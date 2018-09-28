@@ -17,7 +17,7 @@
 
 ;;; Erase all the code with respect to enviroment-compatibility!
 ;;; Emacs > 25.3.
-;;; Move some utils from init-elpa.el.
+;;; Move out some utils from init-elpa.el.
 ;;; Borrowed some code from redguardtoo's work.
 ;;---------------------------------------------------------------------
 ;;; See redguardtoo's code.但最终感觉不是个好多少的方法.
@@ -47,23 +47,24 @@
 (init-init 'init-projectile)
 ;; Emacs's expendation
 (init-init 'init-mode-line)
-(init-init 'init-frame-hooks)
-(init-init 'init-xterm)
-(init-init 'init-gui-frames)
+(init-init 'init-gui)
+;;(init-init 'init-frame-hooks)
+;;(init-init 'init-xterm)
+;;(init-init 'init-gui-frames)
 (init-init 'init-dired)
-(init-init 'init-isearch)
+;;(init-init 'init-isearch)
 (init-init 'init-grep)
-(init-init 'init-uniquify)
+;;(init-init 'init-uniquify)
 (init-init 'init-ibuffer)
 (init-init 'init-flycheck)
-(init-init 'init-recentf)
+;;(init-init 'init-recentf)
 (init-init 'init-ido)
-(init-init 'init-smex)
+;;(init-init 'init-smex)
 (init-init 'init-ivy)
-(init-init 'init-helm)
+;;(init-init 'init-helm)
 (init-init 'init-hippie-expand)
 (init-init 'init-company)
-(init-init 'init-windows)
+;;(init-init 'init-windows)
 ;;(init-init 'init-sessions)
 (init-init 'init-fonts)
 (init-init 'init-mmm)

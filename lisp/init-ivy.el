@@ -62,6 +62,39 @@
 
 ;; With respect to counsel-etags
 ;; 主要基于etags,ctags导航.
+(defun init-ivy/scan-dir (src-dir &optional force)
+  "Create tags file from SRC-DIR.
+If FORCE is t, the commmand is executed without checking the timer."
+  (let* ((find-pg (or
+                   counsel-etags-find-program
+                   (counsel-etags-guess-program "find")))
+         (ctags-pg (or
+                    counsel-etags-tags-program
+                    (format "%s -e -L" (counsel-etags-guess-program
+                                        "ctags"))))
+         (default-directory src-dir)
+         ;; run find&ctags to create TAGS
+         (cmd (format
+               "%s . \\( %s \\) -prune -o -type f -not -size +%sk %s | %s -"
+               find-pg
+               (mapconcat (lambda (p) (format "-iwholename \"*%s*\"" p))
+                          counsel-etags-ignore-directories " -or ")
+               counsel-etags-max-file-size
+               (mapconcat (lambda (n)
+                            (format "-not -name \"%s\"" n))
+                          counsel-etags-ignore-filenames " ")
+               ctags-pg))
+         (tags-file (concat (file-name-as-directory src-dir) "TAGS"))
+         (doit (or force (not (file-exists-p tags-file)))))
+    ;; always update cli options
+    (when doit
+      (message "%s at %s" cmd default-directory)
+      (shell-command cmd)
+      (visit-tags-table tags-file t)
+      )
+    )
+  )
+
 (with-eval-after-load 'counsel-etags
   (add-to-list 'counsel-etags-ignore-directories       "build_clang")
   (add-to-list 'counsel-etags-ignore-directories       "build")
@@ -92,8 +125,16 @@
               (add-hook 'after-save-hook
                         'counsel-etags-virtual-update-tags 'append 'local)))
   ;;
-  ;;(setq counsel-etags-update-tags-backend (lambda () (shell-command "find . -type f -iname \"*.[ch]\" | etags -")))
-  ;; 应当用Universal-ctags.
+  (setq counsel-etags-update-tags-backend
+        (lambda ()
+          (interactive)
+          (let* ((tags-file (counsel-etags-locate-tags-file)))
+            (when tags-file
+              (init-ivy/scan-dir (file-name-directory tags-file) t)
+              (run-hook-with-args
+               'counsel-etags-after-update-tags-hook tags-file)
+              (unless counsel-etags-quiet-when-updating-tags
+                (message "%s is updated!" tags-file))))))
   )
 
 ;;Some inputs method
