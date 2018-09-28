@@ -149,13 +149,6 @@ locate PACKAGE."
   ;;; init-paredit
 (require-package 'paredit)
 (require-package 'paredit-everywhere)
-  ;;; init-slime
-(require-package 'slime)
-(require-package 'hippie-expand-slime)
-(require-package 'slime-company)
-;; slime-repl is in slime package.
-;; it's not an individual package.
-;;(require-package 'slime-repl)
 ;;; init-misc
 ;;; init-folding
 (require-package 'origami)
@@ -168,6 +161,9 @@ locate PACKAGE."
 (require-package 'company-c-headers)
 (require-package 'flycheck-pkg-config)
 ;; init-lisp
+(require-package 'slime)
+(require-package 'hippie-expand-slime)
+(require-package 'slime-company)
 (require-package 'elisp-slime-nav)
 (require-package 'ipretty)
 (require-package 'auto-compile)

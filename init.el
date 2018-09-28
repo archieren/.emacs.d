@@ -62,7 +62,6 @@
   ;;; From now on ,packages are loaded by themself!
 ;; Editing expandation
 (init-init 'init-paredit)
-(init-init 'init-slime)
 (init-init 'init-folding)
 ;;(init-init 'init-dash);; Dash, a new list api.
 ;; Programming language
