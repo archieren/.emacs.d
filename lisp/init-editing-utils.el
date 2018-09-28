@@ -21,6 +21,7 @@
               (expand-file-name ".bookmarks.el" user-emacs-directory))
 (setq-default buffers-menu-max-size 30)
 (setq-default case-fold-search t)
+;;; Linum-mode has some with multicursor.
 ;;(global-linum-mode t)
 ;;(add-hook 'after-init-hook 'global-linum-mode)
 (add-hook 'after-init-hook 'column-number-mode)
@@ -145,7 +146,7 @@ With arg N, insert N newlines."
     (indent-according-to-mode)))
 (global-set-key (kbd "C-o") 'init-editing-utils-open-line-with-reindent)
 ;;; 这更像键盘侠的杂技
-;; avy is a GNU Emacs package for jumping to visible text using a char-based decision tree.
+;; Avy is a GNU Emacs package for jumping to visible text using a char-based decision tree.
 (require 'avy)
 (global-set-key (kbd "C-:") 'avy-goto-char-timer)
 

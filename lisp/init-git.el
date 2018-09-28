@@ -1,5 +1,6 @@
 ;;; init-git --- Nothing
 ;;; Commentary:
+;;  All about VC goes here!
 ;;; Code:
 (require 'diminish)
 
@@ -34,6 +35,16 @@
   ;; Revert current hunk
   (global-set-key (kbd "C-x v r") 'git-gutter:revert-hunk)
   )
+;; }}
+
+;; {{ Use git logo in vc-modeline instead of "Git:master"
+;; See: https://www.reddit.com/r/emacs/comments/5fjri7/how_to_use_git_logo_in_modeline_instead_of/
+(declare-function vc-mode "vc-hooks")
+(defadvice vc-mode-line (after strip-backend () activate)
+  "Nothing to say."
+  (when (stringp vc-mode)
+    (let ((gitlogo (replace-regexp-in-string "^ Git." "  - " vc-mode)))
+      (setq vc-mode gitlogo))))
 ;; }}
 (provide 'init-git)
 ;;; init-git ends here

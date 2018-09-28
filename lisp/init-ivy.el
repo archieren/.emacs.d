@@ -35,7 +35,7 @@
   (define-key ivy-minibuffer-map (kbd "RET") #'ivy-alt-done)
   (dolist (k '("C-j" "C-RET")) (define-key ivy-minibuffer-map (kbd k) #'ivy-immediate-done))
   (define-key ivy-minibuffer-map (kbd "<up>") #'ivy-previous-line-or-history)
-  (diminish 'ivy-mode)
+  (diminish 'ivy-mode "")
   )
 
 
@@ -60,6 +60,8 @@
 
   (define-key ivy-mode-map (kbd "M-s /") 'init-ivy-swiper-at-point))
 
+;; With respect to counsel-etags
+;; 主要基于etags,ctags导航.
 (with-eval-after-load 'counsel-etags
   (add-to-list 'counsel-etags-ignore-directories       "build_clang")
   (add-to-list 'counsel-etags-ignore-directories       "build")
@@ -138,6 +140,9 @@
 (global-set-key (kbd "C-x b")     'ivy-switch-buffer)
 (global-set-key (kbd "C-s")       'swiper)  ;; replaces i-search with swiper
 ;; Leave the kbd "M-x" for smex.
+;; Counsel' grep 功能.
+(global-set-key (kbd "s-c a")     'counsel-ag) ;; Search in current directory
+(global-set-key (kbd "s-c g")     'counsel-rg) ;; Search in current directory
 ;; Counsel中还有很多有关git的功能,以后再关注.
 (global-set-key (kbd "s-x j")     'counsel-git-grep)
 (global-set-key (kbd "s-x g")     'counsel-git) ;; Find file in the current git.

@@ -172,6 +172,8 @@ locate PACKAGE."
 (require-package 'org-cliplink)
 (require-package 'writeroom-mode)
 ;; init-cc
+(require-package 'cmake-mode)
+(require-package 'google-c-style)
 (require-package 'company-c-headers)
 (require-package 'flycheck-pkg-config)
 ;; init-lisp
@@ -282,6 +284,7 @@ locate PACKAGE."
 (require-package 'xresources-theme)
 (require-package 'spacemacs-theme)
 (require-package 'zenburn-theme)
+(require-package 'dracula-theme)
 (require-package 'color-theme-sanityinc-solarized)
 (require-package 'color-theme-sanityinc-tomorrow)
 (require-package 'dimmer)

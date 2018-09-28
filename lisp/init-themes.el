@@ -3,6 +3,7 @@
 ;; 设置主题
 ;; sanityinc-solarized-dark sanityinc-tomorrow-bright sanityinc-tomorrow-night
 ;; xresources spacemacs-dark spacemacs-light
+;; dracula
 ;;; Code:
 
 
