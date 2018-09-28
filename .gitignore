@@ -57,3 +57,5 @@ site-lisp/package/
 /test-startup.sh
 request/
 /TAGS
+/abbrev_defs
+/games/snake-scores
