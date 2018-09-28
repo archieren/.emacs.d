@@ -46,8 +46,9 @@
 ;; Project
 (init-init 'init-projectile)
 ;; Emacs's expendation
-(init-init 'init-mode-line)
 (init-init 'init-gui)
+;; Version Control
+(init-init 'init-git)
 (init-init 'init-dired)
 (init-init 'init-grep)
 (init-init 'init-ibuffer)
@@ -57,13 +58,11 @@
 (init-init 'init-hippie-expand)
 (init-init 'init-company)
 (init-init 'init-editing-utils)
-;; Version Control
-(init-init 'init-git)
+
   ;;; From now on ,packages are loaded by themself!
 ;; Editing expandation
 (init-init 'init-paredit)
 (init-init 'init-slime)
-(init-init 'init-misc)
 (init-init 'init-folding)
 ;;(init-init 'init-dash);; Dash, a new list api.
 ;; Programming language
@@ -100,8 +99,7 @@
 (add-hook 'after-init-hook (lambda () (require 'uptimes)))
 
 ;; Variables configured via the interactive 'customize' interface
-(when (file-exists-p custom-file)
-  (load custom-file))
+(when (file-exists-p custom-file) (load custom-file))
 ;; Locales (setting them earlier in this file doesn't work in X)
 (init-init 'init-locales)
 ;; Allow users to provide an optional "init-local" containing personal settings

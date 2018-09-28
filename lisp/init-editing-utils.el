@@ -14,33 +14,6 @@
   (add-hook 'after-init-hook 'electric-pair-mode))
 (when (fboundp 'electric-indent-mode)
   (add-hook 'after-init-hook 'electric-indent-mode))
-;; Some basic preferences
-(setq-default cursor-type 'bar)
-(setq-default blink-cursor-interval 0.4)
-(setq-default bookmark-default-file
-              (expand-file-name ".bookmarks.el" user-emacs-directory))
-(setq-default buffers-menu-max-size 30)
-(setq-default case-fold-search t)
-;;; Linum-mode has some with multicursor.
-;;(global-linum-mode t)
-;;(add-hook 'after-init-hook 'global-linum-mode)
-(add-hook 'after-init-hook 'column-number-mode)
-(add-hook 'after-init-hook 'delete-selection-mode)
-(setq-default ediff-split-window-function 'split-window-horizontally)
-(setq-default ediff-window-setup-function 'ediff-setup-windows-plain)
-;;; No tabs in source code
-(setq-default indent-tabs-mode nil)
-;;; No backup files in the backend
-(setq-default make-backup-files nil)
-(setq-default mouse-yank-at-point t)
-(setq-default save-interprogram-paste-before-kill t)
-(setq-default scroll-preserve-screen-position 'always)
-(setq-default set-mark-command-repeat-pop t)
-(setq-default tooltip-delay 1.5)
-;;; No wraping.
-(setq-default truncate-lines t)
-(setq-default truncate-partial-width-windows nil)
-
 
 (require 'autorevert);;build-in
 (add-hook 'after-init-hook 'global-auto-revert-mode)
@@ -49,14 +22,6 @@
       auto-revert-verbose nil)
 
 (add-hook 'after-init-hook 'transient-mark-mode)
-
-
-;;; Beacon
-(require 'beacon)
-(with-eval-after-load 'beacon
-  (setq-default beacon-lighter "")
-  (setq-default beacon-size 5)
-  (add-hook 'after-init-hook 'beacon-mode))
 
 ;;; Newline behaviour
 (global-set-key (kbd "RET") 'newline-and-indent)
