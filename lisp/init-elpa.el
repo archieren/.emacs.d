@@ -202,15 +202,33 @@ locate PACKAGE."
 (require-package 'haskell-mode)
 (require-package 'intero)
 (require-package 'hindent)
+;; init-rust
+(require-package 'rust-mode)
+(require-package 'cargo)
+(require-package 'racer)
+(require-package 'flycheck-rust)
+
+
 ;; init-compile
 (require-package 'alert)
 (require-package 'cmd-to-echo)
-;; init-textfile
+;; init-doc
 (require-package 'textile-mode)
-;; init-markdown
 (require-package 'markdown-mode)
-;; init-csv
 (require-package 'csv-mode)
+(require-package 'tagedit)
+(require-package 'haml-mode)
+(require-package 'rainbow-mode)
+(require-package 'mmm-mode)
+(require-package 'sass-mode)
+(require-package 'skewer-mode)
+(require-package 'css-eldoc)
+(require-package 'skewer-less)
+(require-package 'yaml-mode)
+(require-package 'toml-mode)
+(require-package 'terraform-mode)
+(require-package 'company-terraform)
+
 ;; init-javascript
 (require-package 'json-mode)
 (require-package 'js2-mode)
@@ -227,18 +245,6 @@ locate PACKAGE."
 (require-package 'company-php)
 ;; init-org
 (require-package 'org-pomodoro)
-;; init-nxml
-;; init-html
-(require-package 'tagedit)
-;; init-css
-(require-package 'rainbow-mode)
-(require-package 'mmm-mode)
-(require-package 'sass-mode)
-(require-package 'skewer-mode)
-(require-package 'css-eldoc)
-(require-package 'skewer-less)
-;; init-haml
-(require-package 'haml-mode)
 ;; init-http
 (require-package 'httprepl)
 (require-package 'restclient)
@@ -248,18 +254,7 @@ locate PACKAGE."
 ;; init-purescript
 (require-package 'purescript-mode)
 (require-package 'psc-ide)
-;; init-rust
-(require-package 'rust-mode)
-(require-package 'cargo)
-(require-package 'racer)
-(require-package 'flycheck-rust)
-;; init-yaml
-(require-package 'yaml-mode)
-;; init-toml
-(require-package 'toml-mode)
-;; init-terraform
-(require-package 'terraform-mode)
-(require-package 'company-terraform)
+
 
 
 ;; Extra packages which don't require any configuration

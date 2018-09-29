@@ -19,46 +19,41 @@
 (add-hook 'after-init-hook 'counsel-mode)
 
 
+;;; Ivy
+(setq-default ivy-use-virtual-buffers t
+              ivy-virtual-abbreviate 'fullpath
+              ivy-count-format "%d/%d "
+              projectile-completion-system 'ivy
+              ivy-magic-tilde nil
+              ivy-dynamic-exhibit-delay-ms 150
+              ivy-initial-inputs-alist
+              '((man . "^")
+                (woman . "^")))
 
-(with-eval-after-load 'ivy
-  (setq-default ivy-use-virtual-buffers t
-                ivy-virtual-abbreviate 'fullpath
-                ivy-count-format "%d/%d "
-                projectile-completion-system 'ivy
-                ivy-magic-tilde nil
-                ivy-dynamic-exhibit-delay-ms 150
-                ivy-initial-inputs-alist
-                '((man . "^")
-                  (woman . "^")))
+;; IDO-style directory navigation
+(define-key ivy-minibuffer-map (kbd "RET") #'ivy-alt-done)
+(dolist (k '("C-j" "C-RET")) (define-key ivy-minibuffer-map (kbd k) #'ivy-immediate-done))
+(define-key ivy-minibuffer-map (kbd "<up>") #'ivy-previous-line-or-history)
+(diminish 'ivy-mode "")
 
-  ;; IDO-style directory navigation
-  (define-key ivy-minibuffer-map (kbd "RET") #'ivy-alt-done)
-  (dolist (k '("C-j" "C-RET")) (define-key ivy-minibuffer-map (kbd k) #'ivy-immediate-done))
-  (define-key ivy-minibuffer-map (kbd "<up>") #'ivy-previous-line-or-history)
-  (diminish 'ivy-mode "")
-  )
-
-
+;;;Counsel
 (setq-default counsel-mode-override-describe-bindings t)
-(with-eval-after-load 'counsel
-  (diminish 'counsel-mode)
-  (if (executable-find "rg")
-      ;; use ripgrep instead of grep because it's way faster
-      (setq counsel-grep-base-command
-            "rg -i -M 120 --no-heading --line-number --color never '%s' %s"
-            counsel-rg-base-command
-            "rg -i -M 120 --no-heading --line-number --color never %s ."
-            )
-    (warn "\nWARNING: Could not find the ripgrep executable.")))
+(diminish 'counsel-mode)
+(if (executable-find "rg")
+    ;; use ripgrep instead of grep because it's way faster
+    (setq counsel-grep-base-command
+          "rg -i -M 120 --no-heading --line-number --color never '%s' %s"
+          counsel-rg-base-command
+          "rg -i -M 120 --no-heading --line-number --color never %s ."
+          )
+  (warn "\nWARNING: Could not find the ripgrep executable."))
 
-;; With respect to swiper
-(with-eval-after-load 'ivy
-  (defun init-ivy-swiper-at-point (sym)
-    "Use `swiper' to search for the symbol at point."
-    (interactive (list (thing-at-point 'symbol)))
-    (swiper sym))
-
-  (define-key ivy-mode-map (kbd "M-s /") 'init-ivy-swiper-at-point))
+;; Swiper
+(defun init-ivy-swiper-at-point (sym)
+  "Use `swiper' to search for the SYM at point."
+  (interactive (list (thing-at-point 'symbol)))
+  (swiper sym))
+(define-key ivy-mode-map (kbd "s-s") 'init-ivy-swiper-at-point)
 
 ;; With respect to counsel-etags
 ;; 主要基于etags,ctags导航.
@@ -201,7 +196,7 @@ If FORCE is t, the commmand is executed without checking the timer."
 (global-set-key (kbd "s-x .")     'counsel-etags-find-tag-at-point)
 (global-set-key (kbd "s-x t")     'counsel-etags-grep-symbol-at-point)
 (global-set-key (kbd "s-x s")     'counsel-etags-find-tag)
-;; Here s-x {j,g,x,i {y,f},.,t,s} ,s-x {a,r} in init-grep, s-x {n,p,m} in init-editing-utils
+;; Here s-x {j,g,x,i {y,f},.,t,s} and s-s,s-x {a,r} in init-grep, s-x {n,p,m} in init-editing-utils
 ;; s-x s-p in init_projectile
 
 

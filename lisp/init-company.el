@@ -61,7 +61,5 @@
     (add-hook 'company-completion-cancelled-hook
               'init-company-page-break-lines-maybe-reenable)))
 
-;;;没看到怎么针对后端.
-
 (provide 'init-company)
 ;;; init-company ends here
