@@ -88,8 +88,7 @@ locate PACKAGE."
 (require-package 'ag)
 (require-package 'wgrep-ag)
 (require-package 'rg)
-  ;;; init-ibuffer
-(require-package 'ibuffer-vc)
+
   ;;; init-flycheck
 (require-package 'flycheck)
 (require-package 'flycheck-color-mode-line)
@@ -128,6 +127,7 @@ locate PACKAGE."
 (require-package 'paredit)
 (require-package 'paredit-everywhere)
 (require-package 'origami)
+(require-package 'ibuffer-vc)
 
 ;;; init-vc
 ;;(require-package 'diff-hl)
@@ -174,11 +174,11 @@ locate PACKAGE."
 (require-package 'rainbow-mode)
 (require-package 'aggressive-indent)
 (require-package 'highlight-quoted)
+
 ;;(require-package 'flycheck)
 (require-package 'flycheck-package)
 (require-package 'cask-mode)
-;; init-common-lisp
-;;(require-package 'nrepl-sync) ;;-- Remove it.
+
 ;; init-racket
 (require-package 'racket-mode)
 ;; init-python

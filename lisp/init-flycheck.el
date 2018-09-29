@@ -8,6 +8,9 @@
 (setq-default flycheck-emacs-lisp-load-path 'inherit)
 (custom-set-variables '(flycheck-mode-line-prefix ""))
 
+(require 'flycheck-package)
+(flycheck-package-setup)
+
 (require 'flycheck-color-mode-line)
 (add-hook 'flycheck-mode-hook
           #'flycheck-color-mode-line-mode)

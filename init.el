@@ -51,7 +51,6 @@
 (init-init 'init-git)
 (init-init 'init-dired)
 (init-init 'init-grep)
-(init-init 'init-ibuffer)
 (init-init 'init-flycheck)
 (init-init 'init-ido)
 (init-init 'init-ivy)
@@ -62,7 +61,6 @@
 ;; Programming language
 (init-init 'init-cc)
 (init-init 'init-lisp)
-(init-init 'init-common-lisp)
 (init-init 'init-racket)
 (init-init 'init-erlang)
 (init-init 'init-python)
