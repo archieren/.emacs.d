@@ -5,13 +5,10 @@
 ;;; Code:
 (require 'js2-mode)
 (require 'json-mode)
-(require 'coffee-mode)
-(require 'typescript-mode)
 (require 'prettier-js)
 (require 'xref-js2)
 (require 'js-comint)
 (require 'add-node-modules-path)
-
 (require 'flycheck)
 (require 'init-utils)
 
@@ -56,8 +53,6 @@
 
 ;; js-mode
 (setq-default js-indent-level preferred-javascript-indent-level)
-
-
 (add-to-list 'interpreter-mode-alist (cons "node" preferred-javascript-mode))
 
 ;; xref-js2
@@ -67,21 +62,6 @@
     (define-key js2-mode-map (kbd "M-.") nil)
     (add-hook 'js2-mode-hook
               (lambda () (add-hook 'xref-backend-functions #'xref-js2-xref-backend nil t)))))
-
-;;; Coffee-mode for Coffeescript
-;; 这是个什么东东?
-;; CoffeeScript是逐句编译为JavaScript的一种小型语言，且没有运行时的解释器.
-;; CoffeeScript旨在编译人类可读,美观优雅且速度不输原生的代码,
-;; 且编译后的代码可以在任何JavaScript运行时正确运行.
-;; 作者是GitHub!
-;; An Emacs major mode for CoffeeScript and IcedCoffeeScript.
-(with-eval-after-load 'coffee-mode
-  (setq coffee-js-mode preferred-javascript-mode
-        coffee-tab-width preferred-javascript-indent-level))
-
-(when (fboundp 'coffee-mode)
-  (add-to-list 'auto-mode-alist '("\\.coffee\\.erb\\'" . coffee-mode)))
-
 
 
 ;; Run and interact with an inferior JS via js-comint.el
@@ -112,13 +92,16 @@ Suggested by chenbin"
 (dolist (hook '(js2-mode-hook js-mode-hook))
   (add-hook hook 'inferior-js-keys-mode))
 
+(add-hook 'js2-mode-hook 'add-node-modules-path)
 
-;;(maybe-require-package 'add-node-modules-path)
-(with-eval-after-load 'typescript-mode
-  (add-hook 'typescript-mode-hook 'add-node-modules-path))
-(with-eval-after-load 'js2-mode
-  (add-hook 'js2-mode-hook 'add-node-modules-path))
 
+;;;Php
+(require 'php-mode)
+(require 'smarty-mode)
+(require 'company-php)
+(require 'init-company)
+(add-hook 'php-mode-hook
+          (lambda () (sanityinc/local-push-company-backend 'company-ac-php-backend)))
 
 (provide 'init-javascript)
 ;;; init-javascript ends here

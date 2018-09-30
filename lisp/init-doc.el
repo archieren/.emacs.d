@@ -75,16 +75,19 @@ between them.  It then indents the markup by using nxml's indentation rules."
 (require 'haml-mode)
 (define-key haml-mode-map (kbd "C-o") 'open-line)
 
-;;; CSS
+;;;----------------------------------------------
+;;; CSS / SASS / SCSS
+;;;----------------------------------------------
 (require 'rainbow-mode)
 (require 'mmm-mode)
-(require 'sass-mode)
+(require 'sass-mode) ;; sass 是 css的一个扩展.
 (require 'skewer-mode)
 (require 'skewer-less)
 (require 'css-eldoc)
 (dolist (hook '(css-mode-hook html-mode-hook sass-mode-hook))
   (add-hook hook 'rainbow-mode))
 ;;Embedding in html
+(require 'mmm-vars)
 (mmm-add-group
  'html-css
  '((css-cdata
@@ -110,20 +113,26 @@ between them.  It then indents the markup by using nxml's indentation rules."
   (mmm-add-mode-ext-class mode "\\.r?html\\(\\.erb\\)?\\'" 'html-css))
 ;; SASS and SCSS
 ;; Prefer the scss-mode built into Emacs
-;; Emacs 自己启用了 scss-mode.
+;; Emacs 自己启用了 scss-mode.定义在css-model.el中.
 ;;(unless (fboundp 'scss-mode)  (require-package 'scss-mode))
 (setq-default scss-compile-at-save nil)
-(add-hook 'less-css-mode-hook 'skewer-less-mode)
+
+;;; Skewer CSS
 (add-hook 'css-mode-hook 'skewer-css-mode)
+;;; Use eldoc for syntax hint
 (autoload 'turn-on-css-eldoc "css-eldoc")
 (add-hook 'css-mode-hook 'turn-on-css-eldoc)
 
+;;;----------------------------------------------
 ;;;Toml
+;;;----------------------------------------------
 ;;Toml-mode 好像好久没开发了.
 (require 'toml-mode)
 (add-hook 'toml-mode-hook 'goto-address-prog-mode)
 
+;;;----------------------------------------------
 ;;;Yaml
+;;;----------------------------------------------
 (require 'yaml-mode)
 (add-auto-mode 'yaml-mode "\\.yml\\.erb\\'")
 (add-hook 'yaml-mode-hook 'goto-address-prog-mode)

@@ -223,7 +223,6 @@ locate PACKAGE."
 (require-package 'sass-mode)
 (require-package 'skewer-mode)
 (require-package 'css-eldoc)
-(require-package 'skewer-less)
 (require-package 'yaml-mode)
 (require-package 'toml-mode)
 (require-package 'terraform-mode)
@@ -232,28 +231,19 @@ locate PACKAGE."
 ;; init-javascript
 (require-package 'json-mode)
 (require-package 'js2-mode)
-(require-package 'coffee-mode)
-(require-package 'typescript-mode)
 (require-package 'prettier-js)
 (require-package 'xref-js2)
 (require-package 'js-comint)
-(require-package 'skewer-mode)
 (require-package 'add-node-modules-path)
-;; init-php
 (require-package 'php-mode)
 (require-package 'smarty-mode)
 (require-package 'company-php)
+
 ;; init-org
 (require-package 'org-pomodoro)
 ;; init-http
 (require-package 'httprepl)
 (require-package 'restclient)
-;; init-elm
-(require-package 'elm-mode)
-(require-package 'flycheck-elm)
-;; init-purescript
-(require-package 'purescript-mode)
-(require-package 'psc-ide)
 
 
 

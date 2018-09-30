@@ -10,8 +10,8 @@
 
 ;;; Code:
 (require 'ivy)
-(require 'counsel)
 (require 'swiper)
+(require 'counsel)
 (require 'counsel-etags)
 
 (add-hook 'after-init-hook 'ivy-mode)

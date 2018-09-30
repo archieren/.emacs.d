@@ -348,7 +348,7 @@ With arg N, insert N newlines."
 ;; IBuffer : why goes here!
 ;; ----------------------------------------------------------------------------
 (require 'ibuffer)
-(fullframe ibuffer ibuffer-quit)
+;;(fullframe ibuffer ibuffer-quit)
 
 
 (defun ibuffer-set-up-preferred-filters ()

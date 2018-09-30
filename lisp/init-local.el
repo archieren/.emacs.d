@@ -13,7 +13,6 @@
   (find-file (expand-file-name "lisp/init-local.el" user-emacs-directory)))
 
 (global-set-key (kbd "s-f") 'init-local-open-init-local)
-
 ;;; 设置 shell
 (setq shell-file-name "/usr/bin/bash")
 (autoload 'ansi-color-for-comint-mode-on "ansi-color" nil t)

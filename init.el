@@ -39,6 +39,7 @@
 (init-init 'init-site-lisp)
 (init-init 'init-elpa)
 (init-init 'init-exec-path)
+(init-init 'init-compile)
 ;;----------------------------------------------------------------------------
 ;; Load most of basic packages in elpa ,and then config for specific features and modes
 ;;----------------------------------------------------------------------------
@@ -67,14 +68,14 @@
 (init-init 'init-haskell)
 (init-init 'init-rust)
 
-;; Web development
+;; Web development or Documents ML
 (init-init 'init-doc)
-;;(init-init 'init-compile)
-;;(init-init 'init-javascript)
 ;;(init-init 'init-org)
+
+(init-init 'init-javascript)
 ;;(init-init 'init-http)
-;;(init-init 'init-elm)
-;;(init-init 'init-purescript)
+
+
 
 
 

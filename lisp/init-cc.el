@@ -59,23 +59,24 @@
 ;; cc-mode处理是语言文本的编辑风格.只须分清c,c++...就行了.
 ;; 而flycheck做的是语法检查,要选择checker，并给checker指定语言标准.
 ;; 因此,可以在cc-mode提供的buffer's local mode-hook里,设定buffer's local flycheck-checker,及相应的参数.
-;; (当然,还可以在目录里，设置相应的变量)
+;; (当然,还可以在目录里，设置相应的目录变量)
+;; flycheck-{clang,gcc}-include-path的设置,最好放在
 ;;
 (defun init-cc-c-mode-hook ()
   "Set my c setups."
-  (setq flycheck-checker               'c/c++-clang)
-  ;;(setq flycheck-checker 'c/c++-gcc)
-  (setq flycheck-clang-language-standard "c17")
-  ;;(setq flycheck-gcc-language-standard "c17")
+  ;;(setq flycheck-checker               'c/c++-clang)
+  ;;(setq flycheck-clang-language-standard "c17")
+  (setq flycheck-checker 'c/c++-gcc)
+  (setq flycheck-gcc-language-standard "c17")
   ;; More flycheck-checker c/c++-gcc (c/c++-clang) 's parameters can go here!
   )
 
 (defun init-cc-c++-mode-hook ()
   "Set my c setups."
-  (setq flycheck-checker               'c/c++-clang)
-  ;;(setq flycheck-checker 'c/c++-gcc)
-  (setq flycheck-clang-language-standard "c++17")
-  ;;(setq flycheck-gcc-language-standard 'c++17)
+  ;;(setq flycheck-checker                 'c/c++-clang)
+  ;;(setq flycheck-clang-language-standard "c++17")
+  (setq flycheck-checker                   'c/c++-gcc)
+  (setq flycheck-gcc-language-standard     'c++17)
   ;; More flycheck-checker c/c++-gcc (c/c++-clang) 's parameters can go here!
   )
 (add-hook 'c-mode-hook   'init-cc-c-mode-hook)
