@@ -62,67 +62,6 @@ between them.  It then indents the markup by using nxml's indentation rules."
           end (point-max)))
   (shell-command-on-region beg end "tidy -xml -q -i" (current-buffer) t "*tidy-errors*" t))
 
-;;; Html:Html用build-in里的sgml-mode来实现.
-(require 'tagedit)
-(require 'sgml-mode)
-(tagedit-add-paredit-like-keybindings)
-(define-key tagedit-mode-map (kbd "M-?") nil)
-(add-hook 'sgml-mode-hook (lambda () (tagedit-mode 1)))
-(add-auto-mode 'html-mode "\\.\\(jsp\\|tmpl\\)\\'")
-
-;;; Haml 是什么？ 好像被sass-mode给加载上来了.
-;; 原来sass-mode是它的派生mode.
-(require 'haml-mode)
-(define-key haml-mode-map (kbd "C-o") 'open-line)
-
-;;;----------------------------------------------
-;;; CSS / SASS / SCSS
-;;;----------------------------------------------
-(require 'rainbow-mode)
-(require 'mmm-mode)
-(require 'sass-mode) ;; sass 是 css的一个扩展.
-(require 'skewer-mode)
-(require 'skewer-less)
-(require 'css-eldoc)
-(dolist (hook '(css-mode-hook html-mode-hook sass-mode-hook))
-  (add-hook hook 'rainbow-mode))
-;;Embedding in html
-(require 'mmm-vars)
-(mmm-add-group
- 'html-css
- '((css-cdata
-    :submode css-mode
-    :face mmm-code-submode-face
-    :front "<style[^>]*>[ \t\n]*\\(//\\)?<!\\[CDATA\\[[ \t]*\n?"
-    :back "[ \t]*\\(//\\)?]]>[ \t\n]*</style>"
-    :insert ((?j js-tag nil @ "<style type=\"text/css\">"
-                 @ "\n" _ "\n" @ "</style>" @)))
-   (css
-    :submode css-mode
-    :face mmm-code-submode-face
-    :front "<style[^>]*>[ \t]*\n?"
-    :back "[ \t]*</style>"
-    :insert ((?j js-tag nil @ "<style type=\"text/css\">"
-                 @ "\n" _ "\n" @ "</style>" @)))
-   (css-inline
-    :submode css-mode
-    :face mmm-code-submode-face
-    :front "style=\""
-    :back "\"")))
-(dolist (mode (list 'html-mode 'nxml-mode))
-  (mmm-add-mode-ext-class mode "\\.r?html\\(\\.erb\\)?\\'" 'html-css))
-;; SASS and SCSS
-;; Prefer the scss-mode built into Emacs
-;; Emacs 自己启用了 scss-mode.定义在css-model.el中.
-;;(unless (fboundp 'scss-mode)  (require-package 'scss-mode))
-(setq-default scss-compile-at-save nil)
-
-;;; Skewer CSS
-(add-hook 'css-mode-hook 'skewer-css-mode)
-;;; Use eldoc for syntax hint
-(autoload 'turn-on-css-eldoc "css-eldoc")
-(add-hook 'css-mode-hook 'turn-on-css-eldoc)
-
 ;;;----------------------------------------------
 ;;;Toml
 ;;;----------------------------------------------

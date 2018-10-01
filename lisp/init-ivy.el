@@ -90,47 +90,53 @@ If FORCE is t, the commmand is executed without checking the timer."
     )
   )
 
-(with-eval-after-load 'counsel-etags
-  (add-to-list 'counsel-etags-ignore-directories       "build_clang")
-  (add-to-list 'counsel-etags-ignore-directories       "build")
-  (add-to-list 'counsel-etags-ignore-directories       ".vscode")
-  ;; counsel-etags-ignore-filenames supports wildcast
-  ;; haskell
-  (add-to-list 'counsel-etags-ignore-filenames         "*.yaml")
-  (add-to-list 'counsel-etags-ignore-filenames         "*.cabal")
-  (add-to-list 'counsel-etags-ignore-filenames         "*.hi")
-  (add-to-list 'counsel-etags-ignore-directories       ".stack-work")
-  (add-to-list 'counsel-etags-ignore-directories       "dist")
-  ;;rust
-  (add-to-list 'counsel-etags-ignore-directories       "target")
-  (add-to-list 'counsel-etags-ignore-filenames         "*.lock")
-  (add-to-list 'counsel-etags-ignore-filenames         "*.toml")
-  ;;clang
-  (add-to-list 'counsel-etags-ignore-filenames         "*.clang-format")
-  ;;
-  ;; Don't ask before rereading the TAGS files if they have changed
-  (setq tags-revert-without-query t)
-  ;; Don't warn when TAGS files are large
-  (setq large-file-warning-threshold nil)
-  ;; How many seconds to wait before rerunning tags for auto-update
-  (setq counsel-etags-update-interval 180)
-  ;; Setup auto update now
-  (add-hook 'prog-mode-hook
-            (lambda ()
-              (add-hook 'after-save-hook
-                        'counsel-etags-virtual-update-tags 'append 'local)))
-  ;;
-  (setq counsel-etags-update-tags-backend
-        (lambda ()
-          (interactive)
-          (let* ((tags-file (counsel-etags-locate-tags-file)))
-            (when tags-file
-              (init-ivy/scan-dir (file-name-directory tags-file) t)
-              (run-hook-with-args
-               'counsel-etags-after-update-tags-hook tags-file)
-              (unless counsel-etags-quiet-when-updating-tags
-                (message "%s is updated!" tags-file))))))
-  )
+;; Project
+(add-to-list 'counsel-etags-ignore-directories       "build_clang")
+(add-to-list 'counsel-etags-ignore-directories       "build")
+(add-to-list 'counsel-etags-ignore-directories       ".vscode")
+;; counsel-etags-ignore-filenames supports wildcast
+;; haskell
+(add-to-list 'counsel-etags-ignore-filenames         "*.yaml")
+(add-to-list 'counsel-etags-ignore-filenames         "*.cabal")
+(add-to-list 'counsel-etags-ignore-filenames         "*.hi")
+(add-to-list 'counsel-etags-ignore-directories       ".stack-work")
+(add-to-list 'counsel-etags-ignore-directories       "dist")
+;;rust
+(add-to-list 'counsel-etags-ignore-directories       "target")
+(add-to-list 'counsel-etags-ignore-filenames         "*.lock")
+(add-to-list 'counsel-etags-ignore-filenames         "*.toml")
+;;clang
+(add-to-list 'counsel-etags-ignore-filenames         "*.clang-format")
+;;
+;; 附注:事实上ctags的命令中的很多选项,可以在特定文件中给出
+;; $HOME/.ctags.d/*.ctags
+;; .ctags.d/*.ctags
+;;  ctags.d/*.ctags
+;; 可以看出,可在用户级别, 项目级别来设置ctags的选项.
+
+;; Don't ask before rereading the TAGS files if they have changed
+(setq tags-revert-without-query t)
+;; Don't warn when TAGS files are large
+(setq large-file-warning-threshold nil)
+;; How many seconds to wait before rerunning tags for auto-update
+(setq counsel-etags-update-interval 180)
+;; Setup auto update now
+(add-hook 'prog-mode-hook
+          (lambda ()
+            (add-hook 'after-save-hook
+                      'counsel-etags-virtual-update-tags 'append 'local)))
+;;
+(setq counsel-etags-update-tags-backend
+      (lambda ()
+        (interactive)
+        (let* ((tags-file (counsel-etags-locate-tags-file)))
+          (when tags-file
+            (init-ivy/scan-dir (file-name-directory tags-file) t)
+            (run-hook-with-args 'counsel-etags-after-update-tags-hook tags-file)
+            (unless counsel-etags-quiet-when-updating-tags
+              (message "%s is updated!" tags-file))))))
+
+
 
 ;;Some inputs method
 (require 'cl-lib)
@@ -142,7 +148,7 @@ If FORCE is t, the commmand is executed without checking the timer."
   "GLYPH is the unicode of a font."
   (propertize glyph ))
 
-(defun init-fonts-construct-candidates (fonts-alist)
+(defun init-ivy-construct-candidates (fonts-alist)
   "FONTS-ALIST."
   (mapcar (lambda (fontawesome)
             (cons (concat
@@ -159,7 +165,7 @@ If FORCE is t, the commmand is executed without checking the timer."
   "Nothing."
   (interactive)
   (require 'ivy)
-  (ivy-read "Font awesome> " (init-fonts-construct-candidates fontawesome-alist)
+  (ivy-read "Font awesome> " (init-ivy-construct-candidates fontawesome-alist)
             :action (lambda (font)
                       (insert (cdr font)))))
 
@@ -167,7 +173,7 @@ If FORCE is t, the commmand is executed without checking the timer."
   "Nothing."
   (interactive)
   (require 'ivy)
-  (ivy-read "Yi > " (init-fonts-construct-candidates yi-alist)
+  (ivy-read "Yi > " (init-ivy-construct-candidates yi-alist)
             :action (lambda (font)
                       (insert (cdr font)))))
 
@@ -177,8 +183,8 @@ If FORCE is t, the commmand is executed without checking the timer."
 (global-set-key (kbd "C-s")       'swiper)  ;; replaces i-search with swiper
 ;; Leave the kbd "M-x" for smex.
 ;; Counsel' grep 功能.
-(global-set-key (kbd "s-c a")     'counsel-ag) ;; Search in current directory
-(global-set-key (kbd "s-c g")     'counsel-rg) ;; Search in current directory
+(global-set-key (kbd "s-x c a")     'counsel-ag) ;; Search in current directory
+(global-set-key (kbd "s-x c g")     'counsel-rg) ;; Search in current directory
 ;; Counsel中还有很多有关git的功能,以后再关注.
 (global-set-key (kbd "s-x j")     'counsel-git-grep)
 (global-set-key (kbd "s-x g")     'counsel-git) ;; Find file in the current git.
@@ -196,8 +202,9 @@ If FORCE is t, the commmand is executed without checking the timer."
 (global-set-key (kbd "s-x .")     'counsel-etags-find-tag-at-point)
 (global-set-key (kbd "s-x t")     'counsel-etags-grep-symbol-at-point)
 (global-set-key (kbd "s-x s")     'counsel-etags-find-tag)
+(global-set-key (kbd "s-x C-g")   'counsel-etags-scan-code)
 ;; Here s-x {j,g,x,i {y,f},.,t,s} and s-s,s-x {a,r} in init-grep, s-x {n,p,m} in init-editing-utils
-;; s-x s-p in init_projectile
+;; s-x C-p in init-projectile
 
 
 

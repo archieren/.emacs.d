@@ -216,13 +216,6 @@ locate PACKAGE."
 (require-package 'textile-mode)
 (require-package 'markdown-mode)
 (require-package 'csv-mode)
-(require-package 'tagedit)
-(require-package 'haml-mode)
-(require-package 'rainbow-mode)
-(require-package 'mmm-mode)
-(require-package 'sass-mode)
-(require-package 'skewer-mode)
-(require-package 'css-eldoc)
 (require-package 'yaml-mode)
 (require-package 'toml-mode)
 (require-package 'terraform-mode)
@@ -238,6 +231,14 @@ locate PACKAGE."
 (require-package 'php-mode)
 (require-package 'smarty-mode)
 (require-package 'company-php)
+;; For html and CSSs
+(require-package 'tagedit)
+(require-package 'haml-mode)
+(require-package 'mmm-mode)
+(require-package 'sass-mode)
+(require-package 'skewer-mode)
+(require-package 'skewer-less)
+(require-package 'css-eldoc)
 
 ;; init-org
 (require-package 'org-pomodoro)

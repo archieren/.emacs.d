@@ -68,12 +68,12 @@
 (init-init 'init-haskell)
 (init-init 'init-rust)
 
-;; Web development or Documents ML
+;; Documents ML
 (init-init 'init-doc)
-;;(init-init 'init-org)
+(init-init 'init-org)
 
-(init-init 'init-javascript)
-;;(init-init 'init-http)
+;; Web development
+(init-init 'init-web-dev)
 
 
 

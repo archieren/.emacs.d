@@ -66,7 +66,7 @@
 
 (with-eval-after-load 'haskell-mode
   (define-key haskell-mode-map (kbd "C-c h") 'hoogle)
-  (define-key haskell-mode-map (kbd "C-o") 'open-line))
+  (define-key haskell-mode-map (kbd "C-o")   'open-line))
 
 (with-eval-after-load 'page-break-lines
   (push 'haskell-mode page-break-lines-modes))
@@ -79,20 +79,18 @@
   (if stack-exec-path-mode
       (when (and (executable-find "stack")
                  (locate-dominating-file default-directory "stack.yaml"))
-        (setq-local
-         exec-path
-         (seq-uniq
-          (append
-           (list (concat
-                  (string-trim-right
-                   (shell-command-to-string "stack path --local-install-root"))
-                  "/bin"))
-           (parse-colon-path
-            (replace-regexp-in-string
-             "[\r\n]+\\'" ""
-             (shell-command-to-string "stack path --bin-path"))))
-          'string-equal )
-         ))
+        (setq-local exec-path
+                    (seq-uniq
+                     (append
+                      (list (concat
+                             (string-trim-right
+                              (shell-command-to-string "stack path --local-install-root"))
+                             "/bin"))
+                      (parse-colon-path
+                       (replace-regexp-in-string
+                        "[\r\n]+\\'" ""
+                        (shell-command-to-string "stack path --bin-path"))))
+                     'string-equal )))
     (kill-local-variable 'exec-path)))
 
 (add-hook 'haskell-mode-hook 'stack-exec-path-mode)

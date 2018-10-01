@@ -12,6 +12,9 @@
 (require 'flycheck)
 (require 'init-utils)
 
+;;;----------------------------------------------------
+;;;JavaScript
+;;;----------------------------------------------------
 (defcustom preferred-javascript-mode
   (first (remove-if-not #'fboundp '(js2-mode js-mode)))
   "Javascript mode to use for .js files."
@@ -102,6 +105,90 @@ Suggested by chenbin"
 (require 'init-company)
 (add-hook 'php-mode-hook
           (lambda () (sanityinc/local-push-company-backend 'company-ac-php-backend)))
+
+;;;-----------------------------------------------
+;;;Html
+;;;-----------------------------------------------
+;;; Html:Html用build-in里的sgml-mode来实现.
+(require 'tagedit)
+(require 'sgml-mode)
+(tagedit-add-paredit-like-keybindings)
+(define-key tagedit-mode-map (kbd "M-?") nil)
+(add-hook 'sgml-mode-hook (lambda () (tagedit-mode 1)))
+(add-auto-mode 'html-mode "\\.\\(jsp\\|tmpl\\)\\'")
+
+;;; Haml 是什么？ 好像被sass-mode给加载上来了.
+;; 原来sass-mode是它的派生mode.
+(require 'haml-mode)
+(define-key haml-mode-map (kbd "C-o") 'open-line)
+
+;;;----------------------------------------------
+;;; CSS / SASS(Syntactically awesome style sheets) / SCSS(Sassy css)
+;;;----------------------------------------------
+;; CSS的预处理有好几个: SASS,Less,Stylus,.....且不管他.
+(require 'rainbow-mode)
+(require 'mmm-mode)
+(require 'sass-mode)
+(require 'skewer-mode)
+(require 'skewer-less)
+(require 'css-eldoc)
+(dolist (hook '(css-mode-hook html-mode-hook sass-mode-hook))
+  (add-hook hook 'rainbow-mode))
+;;Embedding in html
+(require 'mmm-vars)
+(mmm-add-group
+ 'html-css
+ '((css-cdata
+    :submode css-mode
+    :face mmm-code-submode-face
+    :front "<style[^>]*>[ \t\n]*\\(//\\)?<!\\[CDATA\\[[ \t]*\n?"
+    :back "[ \t]*\\(//\\)?]]>[ \t\n]*</style>"
+    :insert ((?j js-tag nil @ "<style type=\"text/css\">"
+                 @ "\n" _ "\n" @ "</style>" @)))
+   (css
+    :submode css-mode
+    :face mmm-code-submode-face
+    :front "<style[^>]*>[ \t]*\n?"
+    :back "[ \t]*</style>"
+    :insert ((?j js-tag nil @ "<style type=\"text/css\">"
+                 @ "\n" _ "\n" @ "</style>" @)))
+   (css-inline
+    :submode css-mode
+    :face mmm-code-submode-face
+    :front "style=\""
+    :back "\"")))
+(dolist (mode (list 'html-mode 'nxml-mode))
+  (mmm-add-mode-ext-class mode "\\.r?html\\(\\.erb\\)?\\'" 'html-css))
+;; SASS and SCSS
+;; Prefer the scss-mode built into Emacs
+;; Emacs在css-model.el中,内建了对scss,less-css的支持.
+;;  (unless (fboundp 'scss-mode)  (require-package 'scss-mode))
+;;  (unless (fboundp 'less-css-mode) (require-package 'less-css-mode))
+(setq-default scss-compile-at-save nil)
+(add-hook 'less-css-mode-hook 'skewer-less-mode)
+
+;;;Skewer: live web development with Emacs
+;; Skewer CSS
+(add-hook 'js2-mode-hook  'skewer-mode)
+(add-hook 'css-mode-hook  'skewer-css-mode)
+(add-hook 'html-mode-hook 'skewer-html-mode)
+;;; Use eldoc for syntax hint
+(autoload 'turn-on-css-eldoc "css-eldoc")
+(add-hook 'css-mode-hook 'turn-on-css-eldoc)
+
+;;;-----------------------------------------
+;;; Restclient
+;;;-----------------------------------------
+(require 'restclient)
+(add-auto-mode 'restclient-mode "\\.rest\\'")
+
+(defun sanityinc/restclient ()
+  "Nothing."
+  (interactive)
+  (with-current-buffer (get-buffer-create "*restclient*")
+    (restclient-mode)
+    (pop-to-buffer (current-buffer))))
+
 
 (provide 'init-javascript)
 ;;; init-javascript ends here
