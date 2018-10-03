@@ -90,6 +90,7 @@ If FORCE is t, the commmand is executed without checking the timer."
     )
   )
 
+;; Ignores of ctags
 ;; Project
 (add-to-list 'counsel-etags-ignore-directories       "build_clang")
 (add-to-list 'counsel-etags-ignore-directories       "build")
