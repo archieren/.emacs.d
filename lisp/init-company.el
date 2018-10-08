@@ -23,14 +23,13 @@
 ;; 全局启用company-mode.
 (add-hook 'after-init-hook 'global-company-mode)
 
-(with-eval-after-load 'company
-  (diminish 'company-mode)
-  (define-key company-mode-map   (kbd "M-/") 'company-complete)
-  (define-key company-active-map (kbd "M-/") 'company-other-backend)
-  (define-key company-active-map (kbd "C-n") 'company-select-next)
-  (define-key company-active-map (kbd "C-p") 'company-select-previous)
-  (setq-default company-dabbrev-other-buffers 'all
-                company-tooltip-align-annotations t))
+(diminish 'company-mode)
+(define-key company-mode-map   (kbd "M-/") 'company-complete)
+(define-key company-active-map (kbd "M-/") 'company-other-backend)
+(define-key company-active-map (kbd "C-n") 'company-select-next)
+(define-key company-active-map (kbd "C-p") 'company-select-previous)
+(setq-default company-dabbrev-other-buffers 'all
+              company-tooltip-align-annotations t)
 
 (require 'company-quickhelp)
 (add-hook 'after-init-hook 'company-quickhelp-mode)
@@ -42,24 +41,24 @@
 
 ;; Suspend page-break-lines-mode while company menu is active
 ;; (see https://github.com/company-mode/company-mode/issues/416)
+(require 'page-break-lines)
 (defvar init-company-page-break-lines-on-p nil)
 (make-variable-buffer-local 'init-company-page-break-lines-on-p)
-(with-eval-after-load 'company
-  (with-eval-after-load 'page-break-lines
-    (defun init-company-page-break-lines-disable (&rest ignore)
-      (when (setq init-company-page-break-lines-on-p
-                  (bound-and-true-p page-break-lines-mode))
-        (page-break-lines-mode -1)))
-
-    (defun init-company-page-break-lines-maybe-reenable (&rest ignore)
-      (when init-company-page-break-lines-on-p
-        (page-break-lines-mode 1)))
-    (add-hook 'company-completion-started-hook
-              'init-company-page-break-lines-disable)
-    (add-hook 'company-completion-finished-hook
-              'init-company-page-break-lines-maybe-reenable)
-    (add-hook 'company-completion-cancelled-hook
-              'init-company-page-break-lines-maybe-reenable)))
+(defun init-company-page-break-lines-disable (&rest ignore)
+  "?IGNORE."
+  (when (setq init-company-page-break-lines-on-p
+              (bound-and-true-p page-break-lines-mode))
+    (page-break-lines-mode -1)))
+(defun init-company-page-break-lines-maybe-reenable (&rest ignore)
+  "?IGNORE."
+  (when init-company-page-break-lines-on-p
+    (page-break-lines-mode 1)))
+(add-hook 'company-completion-started-hook
+          'init-company-page-break-lines-disable)
+(add-hook 'company-completion-finished-hook
+          'init-company-page-break-lines-maybe-reenable)
+(add-hook 'company-completion-cancelled-hook
+          'init-company-page-break-lines-maybe-reenable)
 
 (provide 'init-company)
 ;;; init-company ends here

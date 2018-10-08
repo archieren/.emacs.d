@@ -21,6 +21,12 @@
 (add-hook 'haskell-mode-hook 'haskell-decl-scan-mode) ;;; C-M-a C-M-e C-M-h
 (add-hook 'haskell-mode-hook 'haskell-auto-insert-module-template)
 (add-hook 'haskell-mode-hook 'hindent-mode)
+
+(define-key haskell-mode-map (kbd "C-c h") 'hoogle)
+(define-key haskell-mode-map (kbd "C-o")   'open-line)
+
+(push 'haskell-mode page-break-lines-modes) ;; page-break-lines
+
 ;; hindent-mode 不是 haskell-indent-mode
 ;; 需要系统按装hindent
 (when (require 'nadvice)
@@ -60,16 +66,6 @@
 ;; speedbar 华而不实，暂不用。
 ;;(require 'speedbar)
 ;;(speedbar-add-supported-extension ".hs")
-
-
-
-
-(with-eval-after-load 'haskell-mode
-  (define-key haskell-mode-map (kbd "C-c h") 'hoogle)
-  (define-key haskell-mode-map (kbd "C-o")   'open-line))
-
-(with-eval-after-load 'page-break-lines
-  (push 'haskell-mode page-break-lines-modes))
 
 (define-minor-mode stack-exec-path-mode
   "If this is a stack project, set `exec-path' to the path \"stack exec\" would use."
