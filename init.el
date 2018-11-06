@@ -11,7 +11,7 @@
 ;; Added by Package.el.  This must come before configurations of installed packages.
 (package-initialize)
 
-(setq debug-on-error nil)
+(setq debug-on-error t)
 
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 

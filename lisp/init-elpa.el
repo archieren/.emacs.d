@@ -195,6 +195,7 @@ locate PACKAGE."
 (require-package 's)
 (require-package 'auto-complete)
 (require-package 'skewer-mode)
+(require-package 'ess) ;;dependency,myabe a bug
 
 ;; init-erlang
 (require-package 'erlang)

@@ -4,6 +4,7 @@
 (require 'diminish)
 
 (require 'elpy)
+(require 'flycheck)
 (setq interpreter-mode-alist
       (cons '("python" . python-mode) interpreter-mode-alist))
 
@@ -16,14 +17,15 @@
   (setq electric-indent-chars (delq ?: electric-indent-chars))
   )
 
-(when (require 'flycheck nil t)
-  (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
-  (add-hook 'elpy-mode-hook 'flycheck-mode))
+(setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
+(add-hook 'elpy-mode-hook 'flycheck-mode)
+(setq flycheck-flake8-maximum-line-length 120)
 
 (add-hook 'python-mode-hook 'python-mode-hook-setup)
 
 (require 'py-autopep8)
 (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
+(setq py-autopep8-options '("--max-line-length=120"))
 
 ;;; elpy 使用了 highlight-indentation 包
 ;;; (require 'highlight-indentation)
@@ -39,7 +41,7 @@
 ;;ein
 ;;See https://github.com/millejoh/emacs-ipython-notebook
 (require 'ein)
-(require 'ein-loaddefs)
+;;(require 'ein-loaddefs)
 (require 'ein-notebook)
 (require 'ein-subpackages)
 (require 'dash)

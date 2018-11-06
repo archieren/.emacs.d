@@ -4,6 +4,8 @@
 
 (require 'racket-mode)
 
+(add-hook 'racket-mode-hook      (lambda () (setq mode-name "")))
+(add-hook 'racket-repl-mode-hook (lambda () (setq mode-name " ")))
 (setq racket-program "racket")
 ;;; racket-racket-program, racket-raco-program are obsolete variables!
 ;;; (setq racket-raco-program "raco")
