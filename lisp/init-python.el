@@ -19,13 +19,13 @@
 
 (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
 (add-hook 'elpy-mode-hook 'flycheck-mode)
-(setq flycheck-flake8-maximum-line-length 120)
+(setq flycheck-flake8-maximum-line-length 240)
 
 (add-hook 'python-mode-hook 'python-mode-hook-setup)
 
 (require 'py-autopep8)
 (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
-(setq py-autopep8-options '("--max-line-length=120"))
+(setq py-autopep8-options '("--max-line-length=240"))
 
 ;;; elpy 使用了 highlight-indentation 包
 ;;; (require 'highlight-indentation)

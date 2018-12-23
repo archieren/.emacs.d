@@ -13,9 +13,9 @@
 (require 'google-c-style)
 ;;; avoid default "gnu" style, use more popular one
 
-(setq c-default-style '((java-mode . "java")
-                        (awk-mode . "awk")
-                        (other . "linux")))
+(setq c-default-style '((java-mode . "java" )
+                        (awk-mode  . "awk"  )
+                        (other     . "linux")))
 
 ;; Customizations for all modes in CC Mode.
 (defun init-cc-c-mode-common-hook ()
@@ -60,7 +60,9 @@
 ;; 而flycheck做的是语法检查,要选择checker，并给checker指定语言标准.
 ;; 因此,可以在cc-mode提供的buffer's local mode-hook里,设定buffer's local flycheck-checker,及相应的参数.
 ;; (当然,还可以在目录里，设置相应的目录变量)
-;; flycheck-{clang,gcc}-include-path的设置,最好放在
+;; flycheck-{clang,gcc}-include-path的设置,最好放在项目的目录变量中,即在项目的根目录下的.dir-local.el中添加下面的类似内容
+;; ((c++-mode . ((flycheck-gcc-include-path . ("/home/archie/Projects/saliency/src" "/home/archie/Projects/saliency" )))))
+;; 注意格式
 ;;
 (defun init-cc-c-mode-hook ()
   "Set my c setups."
@@ -76,7 +78,7 @@
   ;;(setq flycheck-checker                 'c/c++-clang)
   ;;(setq flycheck-clang-language-standard "c++17")
   (setq flycheck-checker                   'c/c++-gcc)
-  (setq flycheck-gcc-language-standard     'c++17)
+  (setq flycheck-gcc-language-standard     "c++17")
   ;; More flycheck-checker c/c++-gcc (c/c++-clang) 's parameters can go here!
   )
 (add-hook 'c-mode-hook   'init-cc-c-mode-hook)
