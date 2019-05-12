@@ -1,4 +1,4 @@
-;;; init-haskell --- Nothing
+;;; init-haskell --- Support the haskell language -*- lexical-binding: t -*-
 
 ;;; Commentary:
 ;; Ghc-mode is a submode of haskell-mode.

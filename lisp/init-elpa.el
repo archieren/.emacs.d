@@ -141,6 +141,7 @@ locate PACKAGE."
 (require-package 'gitconfig-mode)
 (require-package 'git-timemachine)
 (require-package 'magit)
+(require-package 'magit-popup)
 (require-package 'fullframe)
 (require-package 'git-commit)
 (require-package 'git-messenger)

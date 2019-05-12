@@ -212,7 +212,7 @@ This is helpful for writeroom-mode, in particular."
 (require 'diminish)
 (require 'whitespace)
 (setq whitespace-style '(face lines-tail))
-(setq whitespace-line-column 120)
+(setq whitespace-line-column 256)
 (global-whitespace-mode t)
 (diminish 'global-whitespace-mode)
 ;;; 尾部的空格
