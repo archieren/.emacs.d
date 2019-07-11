@@ -28,11 +28,11 @@
 (setq py-autopep8-options '("--max-line-length=240"))
 
 ;;; elpy 使用了 highlight-indentation 包
-;;; (require 'highlight-indentation)
+(require 'highlight-indentation)
 (with-eval-after-load 'elpy
   (diminish 'elpy-mode)
-  (diminish 'highlight-indentation-mode))
-
+  (diminish 'highlight-indentation-mode)
+  )
 
 ;;(elpy-use-ipython) ;;deprecated!
 
