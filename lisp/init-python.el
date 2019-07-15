@@ -15,6 +15,8 @@
 (defun python-mode-hook-setup ()
   "Nothing."
   (setq electric-indent-chars (delq ?: electric-indent-chars))
+  (setq indent-tabs-mode t)
+  (setq python-indent-offset 4)
   )
 
 (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
