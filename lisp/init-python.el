@@ -15,7 +15,7 @@
 (defun python-mode-hook-setup ()
   "Nothing."
   (setq electric-indent-chars (delq ?: electric-indent-chars))
-  (setq indent-tabs-mode t)
+  (setq indent-tabs-mode nil)
   (setq python-indent-offset 4)
   )
 
