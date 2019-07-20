@@ -11,6 +11,7 @@
 (require 'flycheck-pkg-config)
 (require 'cmake-mode)
 (require 'google-c-style)
+(require 'init-company)
 ;;; avoid default "gnu" style, use more popular one
 
 (setq c-default-style '((java-mode . "java" )
@@ -23,16 +24,17 @@
   (setq tab-width 4
         ;; this will make sure spaces are used instead of tabs
         indent-tabs-mode nil)
+  ;; Company-c-headers
+  (sanityinc/local-push-company-backend 'company-c-headers)
+  ;; (add-to-list 'company-backends 'company-c-headers)
   )
-;;(add-hook 'c-mode-common-hook 'init-cc-c-mode-common-hook)
+(add-hook 'c-mode-common-hook 'init-cc-c-mode-common-hook)
 (add-hook 'c-mode-common-hook 'google-set-c-style)
 (add-hook 'c-mode-common-hook 'google-make-newline-indent)
 
 ;;; Company-c-headers
-(with-eval-after-load 'company
-  (add-to-list 'company-backends 'company-c-headers))
 ;;To enable C++ header completion for standard libraries, you have to add its path, for example, like this:
-;;(add-to-list 'company-c-headers-path-system "/usr/include/c++/??/")
+(add-to-list 'company-c-headers-path-system "/usr/include/c++/??/")
 
 ;;; Flycheck-pkg-config
 ;;Flycheck-pkg-config provides an interactive way for configuring flycheck to use C library headers.
