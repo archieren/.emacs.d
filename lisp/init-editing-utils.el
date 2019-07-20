@@ -286,6 +286,13 @@ With arg N, insert N newlines."
 (yas-reload-all)
 (add-hook 'prog-mode-hook #'yas-minor-mode)
 (require 'yasnippet-snippets)
+;; With this code, yasnippet will expand the snippet if company didn't complete the word
+;; replace company-complete-common with company-complete if you're using it
+(defvar my-company-point)
+(advice-add 'company-complete-common :before (lambda () (setq my-company-point (point))))
+(advice-add 'company-complete-common :after (lambda ()
+                                              (when (equal my-company-point (point))
+                                                (yas-expand))))
 
 ;;----------------------------------------------------------------------------
 ;; Paredit
