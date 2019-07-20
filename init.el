@@ -51,15 +51,15 @@
 ;; Version Control
 (init-init 'init-git)
 ;; Some basic workingflow!
-;; Company - Flycheck - Ivy
-;; 补全 - 语法检查 - 交互
+;; Ivy - Company - Flycheck
+;; 交互 - 补全 - 语法检查
 (init-init 'init-dired)
 (init-init 'init-grep)
+(init-init 'init-ido)
+(init-init 'init-ivy)
 (init-init 'init-company)
 (init-init 'init-hippie-expand)
 (init-init 'init-flycheck)
-(init-init 'init-ido)
-(init-init 'init-ivy)
 (init-init 'init-editing-utils)
 
 ;; Programming language
