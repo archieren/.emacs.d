@@ -57,6 +57,10 @@ locate PACKAGE."
 (require-package 'cl-lib)
 (require-package 'f)
 (require-package 'wgrep)
+(require-package 'ag)
+(require-package 'wgrep-ag)
+(require-package 'rg)
+(require-package 'ripgrep)
 (require-package 'company)
 ;;When we diminish a mode,
 ;;we are saying we want it to continue doing its work for us,
@@ -85,9 +89,9 @@ locate PACKAGE."
 
 ;;; init-grep
 ;;(require-package 'wgrep)
-(require-package 'ag)
-(require-package 'wgrep-ag)
-(require-package 'rg)
+;;(require-package 'ag)
+;;(require-package 'wgrep-ag)
+;;(require-package 'rg)
 
   ;;; init-flycheck
 (require-package 'flycheck)
