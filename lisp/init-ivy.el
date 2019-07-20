@@ -189,7 +189,7 @@ If FORCE is t, the commmand is executed without checking the timer."
 ;; Counsel中还有很多有关git的功能,以后再关注.
 (global-set-key (kbd "s-x j")     'counsel-git-grep)
 (global-set-key (kbd "s-x g")     'counsel-git) ;; Find file in the current git.
-(global-set-key (kbd "s-x x")     'counsel-M-x) ;; Gives M-x command counsel features
+(global-set-key (kbd "s-x M-x")     'counsel-M-x) ;; Gives M-x command counsel features
 ;;Override some defaults.
 (global-set-key (kbd "C-x C-f")   'counsel-find-file) ;; gives C-x C-f counsel features
 (global-set-key (kbd "C-h v")     'counsel-describe-variable)
@@ -204,7 +204,7 @@ If FORCE is t, the commmand is executed without checking the timer."
 (global-set-key (kbd "s-x t")     'counsel-etags-grep-symbol-at-point)
 (global-set-key (kbd "s-x s")     'counsel-etags-find-tag)
 (global-set-key (kbd "s-x C-g")   'counsel-etags-scan-code)
-;; Here s-x {j,g,x,i {y,f},.,t,s} and s-s,s-x {a,r} in init-grep, s-x {n,p,m} in init-editing-utils
+;; Here s-x {j,g,M-x,i {y,f},.,t,s} and s-s,s-x {a,r} in init-grep, s-x {n,p,m} in init-editing-utils
 ;; s-x C-p in init-projectile
 
 
