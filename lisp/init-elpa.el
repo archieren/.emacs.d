@@ -206,6 +206,7 @@ locate PACKAGE."
 (require-package 'erlang)
 ;; init-haskell
 (require-package 'haskell-mode)
+(require-package 'dante)
 (require-package 'intero)
 (require-package 'hindent)
 ;; init-rust

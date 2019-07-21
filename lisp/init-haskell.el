@@ -10,8 +10,11 @@
 (require 'hindent)
 (require 'rainbow-delimiters)
 (require 'flycheck)
-(require 'intero)
 (require 'diminish)
+
+(add-hook 'haskell-mode-hook 'subword-mode)
+(add-hook 'haskell-cabal-mode 'subword-mode)
+
 (custom-set-variables '(haskell-tags-on-save t))
 (add-auto-mode 'haskell-mode "\\.ghci\\'")
 (add-hook 'haskell-mode-hook (lambda () (setq mode-name "")))
@@ -21,6 +24,7 @@
 (add-hook 'haskell-mode-hook 'haskell-decl-scan-mode) ;;; C-M-a C-M-e C-M-h
 (add-hook 'haskell-mode-hook 'haskell-auto-insert-module-template)
 (add-hook 'haskell-mode-hook 'hindent-mode)
+(add-hook 'haskell-mode-hook 'flycheck-mode)
 
 (define-key haskell-mode-map (kbd "C-c h") 'hoogle)
 (define-key haskell-mode-map (kbd "C-o")   'open-line)
@@ -37,16 +41,6 @@
   (advice-add 'hindent--before-save :around 'init-haskell-hindent--before-save-wrapper))
 (diminish 'hindent-mode)
 
-(require 'haskell-compile)
-(defun init-haskell-haskell-compile ()
-  "Nothing."
-  (interactive)
-  (save-some-buffers (not compilation-ask-about-save)
-                     compilation-save-buffers-predicate)
-  (let* ((prjdir (intero-project-root))
-         (command (format "cd %s && stack build" prjdir)))
-    (compilation-start command 'haskell-compilation-mode)))
-(define-key haskell-mode-map (kbd "C-c s-c") 'init-haskell-haskell-compile)
 
 ;;; 其实禁用了 haskell-mode 定义的几个checker.
 ;;; 下面有关intero checker的情况也是如此.
@@ -54,7 +48,7 @@
 
 ;;;
 ;;; Indentation. But turn-on-haskell-indentation was made obsolete since 2015.
-;;  (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
+(add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
 
 ;;; Using external formatters. Stylish-haskell should be intsalled!
 ;;  (custom-set-variables '(haskell-stylish-on-save t))
@@ -75,19 +69,15 @@
   (if stack-exec-path-mode
       (when (and (executable-find "stack")
                  (locate-dominating-file default-directory "stack.yaml"))
-        (setq-local exec-path
-                    (seq-uniq
-                     (append
-                      (list (concat
-                             (string-trim-right
-                              (shell-command-to-string "stack path --local-install-root"))
-                             "/bin"))
-                      (parse-colon-path
-                       (replace-regexp-in-string
-                        "[\r\n]+\\'" ""
-                        (shell-command-to-string "stack path --bin-path"))))
-                     'string-equal )))
-    (kill-local-variable 'exec-path)))
+        (let ((stack-path (append
+                           (list (concat (string-trim-right (shell-command-to-string "stack path --local-install-root")) "/bin"))
+                           (parse-colon-path (replace-regexp-in-string "[\r\n]+\\'" "" (shell-command-to-string "stack path --bin-path"))))))
+          (setq-local exec-path (seq-uniq stack-path 'string-equal))
+          (make-local-variable 'process-environment)
+          (setenv "PATH" (string-join exec-path path-separator))))
+    (kill-local-variable 'exec-path)
+    (kill-local-variable 'process-environment)))
+
 
 (add-hook 'haskell-mode-hook 'stack-exec-path-mode)
 
@@ -95,12 +85,24 @@
 ;;; 采用 intero,则交互模式只有两种,inferior-haskell-mode和intero-mode,
 ;;; inferior-haskell-mode基于Comint-mode和eshell,简单好用.
 ;;; 而interactive-haskell-mode被intero屏蔽了
-(intero-global-mode)
+(require 'intero)
+(intero-global-mode) ;; 或者 (add-hook 'haskell-mode-hook 'intero-mode)
 (diminish 'intero-mode "")
 (define-key haskell-cabal-mode-map (kbd "C-c C-l") 'intero-restart)
 (define-key intero-mode-map (kbd "M-?") nil)
 (flycheck-add-next-checker 'intero  '(warning . haskell-hlint))
 ;;(setq intero-debug t)
+
+;;; Purcell自己都改用intero的变种dante,那我也试试!
+;;(require 'dante)
+;;(diminish 'dante-mode)
+;;(require 'haskell)
+;;(diminish 'interactive-haskell-mode)
+;;(add-hook 'haskell-mode-hook 'dante-mode)
+;;(add-hook 'haskell-mode-hook 'interactive-haskell-mode)
+;;(flycheck-add-next-checker 'haskell-dante '(warning . haskell-hlint))
+;;(setq flycheck-check-syntax-automatically '(save mode-enabled))
+
 
 ;;; hie
 ;;(require 'lsp-mode)
@@ -109,7 +111,6 @@
 ;;
 ;;(add-hook 'lsp-mode-hook 'lsp-ui-mode)
 ;;(add-hook 'haskell-mode-hook #'lsp-haskell-enable)
-;;(add-hook 'haskell-mode-hook 'flycheck-mode)
 ;;(diminish 'lsp-mode)
 (provide 'init-haskell)
 ;;; init-haskell ends here
