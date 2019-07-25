@@ -13,7 +13,7 @@
   (add-hook hook 'turn-on-elisp-slime-nav-mode))
 (add-hook 'emacs-lisp-mode-hook (lambda () (setq mode-name "")))
 (diminish 'elisp-slime-nav-mode)
-;;(setq-default initial-scratch-message (concat ";; Happy hacking, " user-login-name " - Emacs  you!\n\n"))
+(setq-default initial-scratch-message (concat ";; Happy hacking, " user-login-name " - Emacs  you!\n\n"))
 
 ;; Make C-x C-e run 'eval-region if the region is active
 (defun sanityinc/eval-last-sexp-or-region (prefix)
@@ -174,6 +174,11 @@ Eval region from begin-mark to end-mark if active, otherwise the last sexp."
                                       emacs-major-version emacs-minor-version))))
 
 (require 'slime)
+(slime-setup)
+(require 'slime-autoloads)
+(slime-setup '(slime-fancy slime-banner))
+;;; Another way! Install the slime from quicklisp!
+;; (load (expand-file-name "~/quicklisp/slime-helper.el"))
 (require 'slime-company)
 (require 'paredit)
 (require 'hippie-expand-slime)
@@ -215,10 +220,7 @@ Hippie Mode setup function for slime Lisp buffers."
 ;; See http://bc.tech.coop/blog/070927.html
 (require 'init-utils)
 (add-auto-mode 'lisp-mode "\\.cl\\'")
-(add-hook 'lisp-mode-hook (lambda ()
-                            (unless (featurep 'slime)
-                              (require 'slime)
-                              (normal-mode))))
+(add-hook 'lisp-mode-hook (lambda () (unless (featurep 'slime) (require 'slime) (normal-mode))))
 (when (executable-find "sbcl")
   (add-to-list 'slime-lisp-implementations
                '(sbcl ("sbcl") :coding-system utf-8-unix)))
