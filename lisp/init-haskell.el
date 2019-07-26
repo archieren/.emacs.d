@@ -19,11 +19,9 @@
 (add-auto-mode 'haskell-mode "\\.ghci\\'")
 (add-hook 'haskell-mode-hook (lambda () (setq mode-name "")))
 (add-hook 'haskell-mode-hook 'eldoc-mode)
-(add-hook 'haskell-mode-hook 'haskell-indentation-mode)
 (add-hook 'haskell-mode-hook 'rainbow-delimiters-mode)
 (add-hook 'haskell-mode-hook 'haskell-decl-scan-mode) ;;; C-M-a C-M-e C-M-h
 (add-hook 'haskell-mode-hook 'haskell-auto-insert-module-template)
-(add-hook 'haskell-mode-hook 'hindent-mode)
 (add-hook 'haskell-mode-hook 'flycheck-mode)
 
 (define-key haskell-mode-map (kbd "C-c h") 'hoogle)
@@ -31,7 +29,7 @@
 
 (push 'haskell-mode page-break-lines-modes) ;; page-break-lines
 
-;; hindent-mode 不是 haskell-indent-mode
+;; hindent-mode
 ;; 需要系统按装hindent
 (when (require 'nadvice)
   (defun  init-haskell-hindent--before-save-wrapper (oldfun &rest args)
@@ -40,18 +38,24 @@
         (apply oldfun args))))
   (advice-add 'hindent--before-save :around 'init-haskell-hindent--before-save-wrapper))
 (diminish 'hindent-mode)
+(add-hook 'haskell-mode-hook 'hindent-mode)
+
+;;; Indentation.
+;;; Haskell Mode ships with two indentation modes:
+;;      -- haskell-indention-mode
+;;      -- haskell-indent-mode
+(add-hook 'haskell-mode-hook 'haskell-indentation-mode)
+
 
 
 ;;; 其实禁用了 haskell-mode 定义的几个checker.
-;;; 下面有关intero checker的情况也是如此.
-;;; (add-hook 'haskell-mode-hook (lambda () (flycheck-select-checker 'haskell-hlint)))
+;;; haskell-hlint is shipped with  flycheck!
+;;; But hlint should be installed!
+(add-hook 'haskell-mode-hook (lambda () (flycheck-select-checker 'haskell-hlint)))
 
-;;;
-;;; Indentation. But turn-on-haskell-indentation was made obsolete since 2015.
-(add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
 
 ;;; Using external formatters. Stylish-haskell should be intsalled!
-;;  (custom-set-variables '(haskell-stylish-on-save t))
+(custom-set-variables '(haskell-stylish-on-save t))
 
 ;; Source code helpers
 ;; 奇怪，unicode-input-method对company-ghc有影响。
@@ -85,23 +89,23 @@
 ;;; 采用 intero,则交互模式只有两种,inferior-haskell-mode和intero-mode,
 ;;; inferior-haskell-mode基于Comint-mode和eshell,简单好用.
 ;;; 而interactive-haskell-mode被intero屏蔽了
-(require 'intero)
-(intero-global-mode) ;; 或者 (add-hook 'haskell-mode-hook 'intero-mode)
-(diminish 'intero-mode "")
-(define-key haskell-cabal-mode-map (kbd "C-c C-l") 'intero-restart)
-(define-key intero-mode-map (kbd "M-?") nil)
-(flycheck-add-next-checker 'intero  '(warning . haskell-hlint))
-;;(setq intero-debug t)
+;; (require 'intero)
+;; (intero-global-mode) ;; 或者 (add-hook 'haskell-mode-hook 'intero-mode)
+;; (diminish 'intero-mode "")
+;; (define-key haskell-cabal-mode-map (kbd "C-c C-l") 'intero-restart)
+;; (define-key intero-mode-map (kbd "M-?") nil)
+;; (flycheck-add-next-checker 'intero  '(warning . haskell-hlint))
+;; ;;(setq intero-debug t)
 
 ;;; Purcell自己都改用intero的变种dante,那我也试试!
-;;(require 'dante)
-;;(diminish 'dante-mode)
-;;(require 'haskell)
-;;(diminish 'interactive-haskell-mode)
-;;(add-hook 'haskell-mode-hook 'dante-mode)
-;;(add-hook 'haskell-mode-hook 'interactive-haskell-mode)
-;;(flycheck-add-next-checker 'haskell-dante '(warning . haskell-hlint))
-;;(setq flycheck-check-syntax-automatically '(save mode-enabled))
+(require 'dante)
+(diminish 'dante-mode "")
+(require 'haskell)
+(diminish 'interactive-haskell-mode)
+(add-hook 'haskell-mode-hook 'dante-mode)
+(add-hook 'haskell-mode-hook 'interactive-haskell-mode)
+(flycheck-add-next-checker 'haskell-dante '(warning . haskell-hlint))
+(setq flycheck-check-syntax-automatically '(save mode-enabled))
 
 
 ;;; hie
