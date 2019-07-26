@@ -7,25 +7,35 @@
 
 (require 'init-utils)
 (require 'haskell-mode)
+(require 'haskell-cabal)
+(require 'haskell-compile)
 (require 'hindent)
 (require 'rainbow-delimiters)
 (require 'flycheck)
 (require 'diminish)
 
-(add-hook 'haskell-mode-hook 'subword-mode)
-(add-hook 'haskell-cabal-mode 'subword-mode)
 
-(custom-set-variables '(haskell-tags-on-save t))
+;;; About Haskell-Cabal-Mode
+;;  Edit the .cabal File
+(with-eval-after-load 'haskell-cabal
+  (add-hook 'haskell-cabal-mode-hook 'subword-mode)
+  (add-hook 'haskell-cabal-mode-hook (lambda () (setq mode-name "")))
+  (define-key haskell-cabal-mode-map (kbd "C-c C-c") 'haskell-compile))
+
+;;; Hakell-Mode
 (add-auto-mode 'haskell-mode "\\.ghci\\'")
+(add-hook 'haskell-mode-hook 'subword-mode)
 (add-hook 'haskell-mode-hook (lambda () (setq mode-name "")))
 (add-hook 'haskell-mode-hook 'eldoc-mode)
 (add-hook 'haskell-mode-hook 'rainbow-delimiters-mode)
 (add-hook 'haskell-mode-hook 'haskell-decl-scan-mode) ;;; C-M-a C-M-e C-M-h
 (add-hook 'haskell-mode-hook 'haskell-auto-insert-module-template)
 (add-hook 'haskell-mode-hook 'flycheck-mode)
+(custom-set-variables '(haskell-tags-on-save t))
 
 (define-key haskell-mode-map (kbd "C-c h") 'hoogle)
 (define-key haskell-mode-map (kbd "C-o")   'open-line)
+;;(define-key haskell-mode-map (kbd "C-c C-c") 'haskell-compile)
 
 (push 'haskell-mode page-break-lines-modes) ;; page-break-lines
 
@@ -51,7 +61,7 @@
 ;;; 其实禁用了 haskell-mode 定义的几个checker.
 ;;; haskell-hlint is shipped with  flycheck!
 ;;; But hlint should be installed!
-(add-hook 'haskell-mode-hook (lambda () (flycheck-select-checker 'haskell-hlint)))
+;; (add-hook 'haskell-mode-hook (lambda () (flycheck-select-checker 'haskell-hlint)))
 
 
 ;;; Using external formatters. Stylish-haskell should be intsalled!
@@ -84,28 +94,43 @@
 
 
 (add-hook 'haskell-mode-hook 'stack-exec-path-mode)
+(add-hook 'haskell-cabal-mode-hook 'stack-exec-path-mode)
 
 ;;; intero
-;;; 采用 intero,则交互模式只有两种,inferior-haskell-mode和intero-mode,
-;;; inferior-haskell-mode基于Comint-mode和eshell,简单好用.
+;;; haskell-mode中,交互模式只有两种,inferior-haskell-mode和interactive-haskell-mode,
+;;; But:
+;;;    Inferior-haskell-mode was deprecated!
 ;;; 而interactive-haskell-mode被intero屏蔽了
-;; (require 'intero)
-;; (intero-global-mode) ;; 或者 (add-hook 'haskell-mode-hook 'intero-mode)
-;; (diminish 'intero-mode "")
-;; (define-key haskell-cabal-mode-map (kbd "C-c C-l") 'intero-restart)
-;; (define-key intero-mode-map (kbd "M-?") nil)
-;; (flycheck-add-next-checker 'intero  '(warning . haskell-hlint))
+(require 'intero)
+(intero-global-mode) ;; 或者 (add-hook 'haskell-mode-hook 'intero-mode)
+(diminish 'intero-mode "")
+(define-key haskell-cabal-mode-map (kbd "C-c C-l") 'intero-restart)
+(define-key intero-mode-map (kbd "M-?") nil)
+(flycheck-add-next-checker 'intero  '(warning . haskell-hlint))
+(setq flycheck-check-syntax-automatically '(save new-line))
 ;; ;;(setq intero-debug t)
 
+;;; Intero-Mode-Map
+;; (define-key intero-mode-map (kbd "C-c C-t") 'intero-type-at)
+;; (define-key intero-mode-map (kbd "M-?") 'intero-uses-at)
+;; (define-key intero-mode-map (kbd "C-c C-i") 'intero-info)
+;; (define-key intero-mode-map (kbd "M-.") 'intero-goto-definition)
+;; (define-key intero-mode-map (kbd "C-c C-l") 'intero-repl-load)
+;; (define-key intero-mode-map (kbd "C-c C-c") 'intero-repl-eval-region)
+;; (define-key intero-mode-map (kbd "C-c C-z") 'intero-repl)
+;; (define-key intero-mode-map (kbd "C-c C-r") 'intero-apply-suggestions)
+;; (define-key intero-mode-map (kbd "C-c C-e") 'intero-expand-splice-at-point)
+
+
 ;;; Purcell自己都改用intero的变种dante,那我也试试!
-(require 'dante)
-(diminish 'dante-mode "")
-(require 'haskell)
-(diminish 'interactive-haskell-mode)
-(add-hook 'haskell-mode-hook 'dante-mode)
-(add-hook 'haskell-mode-hook 'interactive-haskell-mode)
-(flycheck-add-next-checker 'haskell-dante '(warning . haskell-hlint))
-(setq flycheck-check-syntax-automatically '(save mode-enabled))
+;; (require 'dante)
+;; (diminish 'dante-mode "")
+;; (add-hook 'haskell-mode-hook 'dante-mode)
+;; (require 'haskell)
+;; (diminish 'interactive-haskell-mode)
+;; (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
+;; (flycheck-add-next-checker 'haskell-dante '(warning . haskell-hlint))
+;; (setq flycheck-check-syntax-automatically '(save mode-enabled))
 
 
 ;;; hie
