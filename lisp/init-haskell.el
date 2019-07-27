@@ -14,47 +14,67 @@
 (require 'flycheck)
 (require 'diminish)
 
+(define-minor-mode stack-exec-path-mode
+  "If this is a stack project, set `exec-path' to the path \"stack exec\" would use."
+  nil
+  :lighter ""
+  :global nil
+  (if stack-exec-path-mode
+      (when (and (executable-find "stack")
+                 (locate-dominating-file default-directory "stack.yaml"))
+        (let ((stack-path (append
+                           (list (concat (string-trim-right (shell-command-to-string "stack path --local-install-root")) "/bin"))
+                           (parse-colon-path (replace-regexp-in-string "[\r\n]+\\'" "" (shell-command-to-string "stack path --bin-path"))))))
+          (setq-local exec-path (seq-uniq stack-path 'string-equal))
+          (make-local-variable 'process-environment)
+          (setenv "PATH" (string-join exec-path path-separator))))
+    (kill-local-variable 'exec-path)
+    (kill-local-variable 'process-environment)))
+
 
 ;;; About Haskell-Cabal-Mode
 ;;  Edit the .cabal File
 (with-eval-after-load 'haskell-cabal
+  (add-hook 'haskell-cabal-mode-hook 'stack-exec-path-mode)
   (add-hook 'haskell-cabal-mode-hook 'subword-mode)
   (add-hook 'haskell-cabal-mode-hook (lambda () (setq mode-name "")))
   (define-key haskell-cabal-mode-map (kbd "C-c C-c") 'haskell-compile))
 
 ;;; Hakell-Mode
-(add-auto-mode 'haskell-mode "\\.ghci\\'")
-(add-hook 'haskell-mode-hook 'subword-mode)
-(add-hook 'haskell-mode-hook (lambda () (setq mode-name "")))
-(add-hook 'haskell-mode-hook 'eldoc-mode)
-(add-hook 'haskell-mode-hook 'rainbow-delimiters-mode)
-(add-hook 'haskell-mode-hook 'haskell-decl-scan-mode) ;;; C-M-a C-M-e C-M-h
-(add-hook 'haskell-mode-hook 'haskell-auto-insert-module-template)
-(add-hook 'haskell-mode-hook 'flycheck-mode)
-(custom-set-variables '(haskell-tags-on-save t))
+(with-eval-after-load 'haskell-mode
+  (add-auto-mode 'haskell-mode "\\.ghci\\'")
+  (add-hook 'haskell-mode-hook 'stack-exec-path-mode)
+  (add-hook 'haskell-mode-hook 'subword-mode)
+  (add-hook 'haskell-mode-hook (lambda () (setq mode-name "")))
+  (add-hook 'haskell-mode-hook 'eldoc-mode)
+  (add-hook 'haskell-mode-hook 'rainbow-delimiters-mode)
+  (add-hook 'haskell-mode-hook 'haskell-decl-scan-mode) ;;; C-M-a C-M-e C-M-h
+  (add-hook 'haskell-mode-hook 'haskell-auto-insert-module-template)
+  (add-hook 'haskell-mode-hook 'flycheck-mode)
+  (custom-set-variables '(haskell-tags-on-save t))
 
-(define-key haskell-mode-map (kbd "C-c h") 'hoogle)
-(define-key haskell-mode-map (kbd "C-o")   'open-line)
-;;(define-key haskell-mode-map (kbd "C-c C-c") 'haskell-compile)
+  (define-key haskell-mode-map (kbd "C-c h") 'hoogle)
+  (define-key haskell-mode-map (kbd "C-o")   'open-line)
+  ;; (define-key haskell-mode-map (kbd "C-c C-c") 'haskell-compile)
 
-(push 'haskell-mode page-break-lines-modes) ;; page-break-lines
+  (push 'haskell-mode page-break-lines-modes) ;; page-break-lines
 
-;; hindent-mode
-;; 需要系统按装hindent
-(when (require 'nadvice)
-  (defun  init-haskell-hindent--before-save-wrapper (oldfun &rest args)
-    (with-demoted-errors "Error invoking hindent: %s"
-      (let ((debug-on-error nil))
-        (apply oldfun args))))
-  (advice-add 'hindent--before-save :around 'init-haskell-hindent--before-save-wrapper))
-(diminish 'hindent-mode)
-(add-hook 'haskell-mode-hook 'hindent-mode)
+  ;; hindent-mode
+  ;; 需要系统按装hindent
+  (when (require 'nadvice)
+    (defun  init-haskell-hindent--before-save-wrapper (oldfun &rest args)
+      (with-demoted-errors "Error invoking hindent: %s"
+        (let ((debug-on-error nil))
+          (apply oldfun args))))
+    (advice-add 'hindent--before-save :around 'init-haskell-hindent--before-save-wrapper))
+  (diminish 'hindent-mode)
+  (add-hook 'haskell-mode-hook 'hindent-mode)
 
-;;; Indentation.
-;;; Haskell Mode ships with two indentation modes:
-;;      -- haskell-indention-mode
-;;      -- haskell-indent-mode
-(add-hook 'haskell-mode-hook 'haskell-indentation-mode)
+  ;; Indentation.
+  ;; Haskell Mode ships with two indentation modes:
+  ;;      -- haskell-indention-mode
+  ;;      -- haskell-indent-mode
+  (add-hook 'haskell-mode-hook 'haskell-indentation-mode))
 
 
 
@@ -75,26 +95,7 @@
 ;;(require 'speedbar)
 ;;(speedbar-add-supported-extension ".hs")
 
-(define-minor-mode stack-exec-path-mode
-  "If this is a stack project, set `exec-path' to the path \"stack exec\" would use."
-  nil
-  :lighter ""
-  :global nil
-  (if stack-exec-path-mode
-      (when (and (executable-find "stack")
-                 (locate-dominating-file default-directory "stack.yaml"))
-        (let ((stack-path (append
-                           (list (concat (string-trim-right (shell-command-to-string "stack path --local-install-root")) "/bin"))
-                           (parse-colon-path (replace-regexp-in-string "[\r\n]+\\'" "" (shell-command-to-string "stack path --bin-path"))))))
-          (setq-local exec-path (seq-uniq stack-path 'string-equal))
-          (make-local-variable 'process-environment)
-          (setenv "PATH" (string-join exec-path path-separator))))
-    (kill-local-variable 'exec-path)
-    (kill-local-variable 'process-environment)))
 
-
-(add-hook 'haskell-mode-hook 'stack-exec-path-mode)
-(add-hook 'haskell-cabal-mode-hook 'stack-exec-path-mode)
 
 ;;; intero
 ;;; haskell-mode中,交互模式只有两种,inferior-haskell-mode和interactive-haskell-mode,
