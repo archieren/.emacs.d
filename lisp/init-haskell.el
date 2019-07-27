@@ -17,7 +17,7 @@
 (define-minor-mode stack-exec-path-mode
   "If this is a stack project, set `exec-path' to the path \"stack exec\" would use."
   nil
-  :lighter ""
+  :lighter ""
   :global nil
   (if stack-exec-path-mode
       (when (and (executable-find "stack")
@@ -38,7 +38,9 @@
   (add-hook 'haskell-cabal-mode-hook 'stack-exec-path-mode)
   (add-hook 'haskell-cabal-mode-hook 'subword-mode)
   (add-hook 'haskell-cabal-mode-hook (lambda () (setq mode-name "")))
-  (define-key haskell-cabal-mode-map (kbd "C-c C-c") 'haskell-compile))
+  (define-key haskell-cabal-mode-map (kbd "C-c C-p") 'haskell-compile)
+  (custom-set-variables '(haskell-compile-ignore-cabal t))
+  )
 
 ;;; Hakell-Mode
 (with-eval-after-load 'haskell-mode
@@ -51,11 +53,10 @@
   (add-hook 'haskell-mode-hook 'haskell-decl-scan-mode) ;;; C-M-a C-M-e C-M-h
   (add-hook 'haskell-mode-hook 'haskell-auto-insert-module-template)
   (add-hook 'haskell-mode-hook 'flycheck-mode)
-  (custom-set-variables '(haskell-tags-on-save t))
 
   (define-key haskell-mode-map (kbd "C-c h") 'hoogle)
   (define-key haskell-mode-map (kbd "C-o")   'open-line)
-  ;; (define-key haskell-mode-map (kbd "C-c C-c") 'haskell-compile)
+  (define-key haskell-mode-map (kbd "C-c C-p") 'haskell-compile)
 
   (push 'haskell-mode page-break-lines-modes) ;; page-break-lines
 
@@ -73,27 +74,20 @@
   ;; Indentation.
   ;; Haskell Mode ships with two indentation modes:
   ;;      -- haskell-indention-mode
-  ;;      -- haskell-indent-mode
-  (add-hook 'haskell-mode-hook 'haskell-indentation-mode))
+  ;;      -- haskell-indent-mode  --Deprecated!!
+  (add-hook 'haskell-mode-hook 'haskell-indentation-mode)
+
+  ;; 其实禁用了 haskell-mode 定义的几个checker.
+  ;; haskell-hlint is shipped with  flycheck!
+  ;; But hlint should be installed!
+  ;; (add-hook 'haskell-mode-hook (lambda () (flycheck-select-checker 'haskell-hlint)))
 
 
-
-;;; 其实禁用了 haskell-mode 定义的几个checker.
-;;; haskell-hlint is shipped with  flycheck!
-;;; But hlint should be installed!
-;; (add-hook 'haskell-mode-hook (lambda () (flycheck-select-checker 'haskell-hlint)))
-
-
-;;; Using external formatters. Stylish-haskell should be intsalled!
-(custom-set-variables '(haskell-stylish-on-save t))
-
-;; Source code helpers
-;; 奇怪，unicode-input-method对company-ghc有影响。
-;; (add-hook 'haskell-mode-hook 'turn-on-haskell-unicode-input-method)
-
-;; speedbar 华而不实，暂不用。
-;;(require 'speedbar)
-;;(speedbar-add-supported-extension ".hs")
+  ;; Using external formatters. Stylish-haskell should be intsalled!
+  (custom-set-variables '(haskell-stylish-on-save t))
+  (custom-set-variables '(haskell-tags-on-save t))
+  (custom-set-variables '(haskell-compile-ignore-cabal t))
+  )
 
 
 
