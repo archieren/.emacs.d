@@ -95,7 +95,7 @@
 ;;; haskell-mode中,交互模式只有两种,inferior-haskell-mode和interactive-haskell-mode,
 ;;; But:
 ;;;    Inferior-haskell-mode was deprecated!
-;;; 而interactive-haskell-mode被intero屏蔽了
+;;;    Interactive-haskell-mode: 和Intero处于一个级别,Intero直接将他屏蔽了,Intero的REPL直接采用的是"stack ghci".
 (require 'intero)
 (intero-global-mode) ;; 或者 (add-hook 'haskell-mode-hook 'intero-mode)
 (diminish 'intero-mode "")
