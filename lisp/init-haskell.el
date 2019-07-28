@@ -1,14 +1,16 @@
 ;;; init-haskell --- Support the haskell language -*- lexical-binding: t -*-
 
 ;;; Commentary:
-;; Ghc-mode is a submode of haskell-mode.
+;;  Haskell-Mode, Dante Or Intero
 
 ;;; Code:
 
 (require 'init-utils)
-(require 'haskell-mode)
-(require 'haskell-cabal)
-(require 'haskell-compile)
+;; (require 'haskell-mode)
+;; (require 'haskell-cabal)
+;; (require 'haskell-compile)
+;; 上面三行可能没必要,下面一句把所有的都加载了
+(require 'haskell)
 (require 'hindent)
 (require 'rainbow-delimiters)
 (require 'flycheck)
@@ -34,7 +36,7 @@
 
 ;;; About Haskell-Cabal-Mode
 ;;  Edit the .cabal File
-(with-eval-after-load 'haskell-cabal
+(with-eval-after-load 'haskell  ;; haskell-cabal
   (add-hook 'haskell-cabal-mode-hook 'stack-exec-path-mode)
   (add-hook 'haskell-cabal-mode-hook 'subword-mode)
   (add-hook 'haskell-cabal-mode-hook (lambda () (setq mode-name "")))
@@ -43,7 +45,7 @@
   )
 
 ;;; Hakell-Mode
-(with-eval-after-load 'haskell-mode
+(with-eval-after-load 'haskell  ;; haskell-mode
   (add-auto-mode 'haskell-mode "\\.ghci\\'")
   (add-hook 'haskell-mode-hook 'stack-exec-path-mode)
   (add-hook 'haskell-mode-hook 'subword-mode)
@@ -96,13 +98,15 @@
 ;;; But:
 ;;;    Inferior-haskell-mode was deprecated!
 ;;;    Interactive-haskell-mode: 和Intero处于一个级别,Intero直接将他屏蔽了,Intero的REPL直接采用的是"stack ghci".
-;;(require 'intero)
-;;(intero-global-mode) ;; 或者 (add-hook 'haskell-mode-hook 'intero-mode)
-;;(diminish 'intero-mode "")
-;;(define-key haskell-cabal-mode-map (kbd "C-c C-l") 'intero-restart)
-;;(define-key intero-mode-map (kbd "M-?") nil)
-;;(flycheck-add-next-checker 'intero  '(warning . haskell-hlint))
-;;(setq flycheck-check-syntax-automatically '(save new-line))
+(require 'intero)
+(with-eval-after-load 'haskell
+  (intero-global-mode) ;; 或者 (add-hook 'haskell-mode-hook 'intero-mode)
+  (diminish 'intero-mode "")
+  (define-key haskell-cabal-mode-map (kbd "C-c C-l") 'intero-restart)
+  (define-key intero-mode-map (kbd "M-?") nil)
+  (flycheck-add-next-checker 'intero  '(warning . haskell-hlint))
+  (setq flycheck-check-syntax-automatically '(save new-line))
+  )
 ;; ;;(setq intero-debug t)
 
 ;;; Intero-Mode-Map
@@ -118,14 +122,20 @@
 
 
 ;;; Purcell自己都改用intero的变种dante,那我也试试!
-(require 'dante)
-(diminish 'dante-mode "")
-(add-hook 'haskell-mode-hook 'dante-mode)
-;; (require 'haskell)
-;; (diminish 'interactive-haskell-mode)
-;; (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
-(flycheck-add-next-checker 'haskell-dante '(warning . haskell-hlint))
-(setq flycheck-check-syntax-automatically '(save mode-enabled))
+;;; 感觉不是很爽,倒是搞明白一些事情!
+;;; dante可以不用！还不如直接用interacative-haskell-mode
+;;; 注意，好像还有个haskell-interactive-mode,这个应当不要去用！
+;;; interactive-haskell-mode 的process-type在auto情况下,选择的次序是cabal沙箱、stack ghci 、cabal等
+(with-eval-after-load 'haskell
+  ;; (require 'dante)
+  ;; (diminish 'dante-mode "")
+  ;; (add-hook 'haskell-mode-hook 'dante-mode)
+  ;; (flycheck-add-next-checker 'haskell-dante '(warning . haskell-hlint))
+  ;; ;;(require 'haskell)
+  ;; (diminish 'interactive-haskell-mode "")
+  ;; (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
+  ;; (setq flycheck-check-syntax-automatically '(save mode-enabled))
+  )
 
 
 ;;; hie
