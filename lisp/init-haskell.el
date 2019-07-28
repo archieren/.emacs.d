@@ -79,7 +79,7 @@
 
   ;; 其实禁用了 haskell-mode 定义的几个checker.
   ;; haskell-hlint is shipped with  flycheck!
-  ;; But hlint should be installed!
+  ;; But hlint should be installed in the os system!
   ;; (add-hook 'haskell-mode-hook (lambda () (flycheck-select-checker 'haskell-hlint)))
 
 
@@ -96,13 +96,13 @@
 ;;; But:
 ;;;    Inferior-haskell-mode was deprecated!
 ;;;    Interactive-haskell-mode: 和Intero处于一个级别,Intero直接将他屏蔽了,Intero的REPL直接采用的是"stack ghci".
-(require 'intero)
-(intero-global-mode) ;; 或者 (add-hook 'haskell-mode-hook 'intero-mode)
-(diminish 'intero-mode "")
-(define-key haskell-cabal-mode-map (kbd "C-c C-l") 'intero-restart)
-(define-key intero-mode-map (kbd "M-?") nil)
-(flycheck-add-next-checker 'intero  '(warning . haskell-hlint))
-(setq flycheck-check-syntax-automatically '(save new-line))
+;;(require 'intero)
+;;(intero-global-mode) ;; 或者 (add-hook 'haskell-mode-hook 'intero-mode)
+;;(diminish 'intero-mode "")
+;;(define-key haskell-cabal-mode-map (kbd "C-c C-l") 'intero-restart)
+;;(define-key intero-mode-map (kbd "M-?") nil)
+;;(flycheck-add-next-checker 'intero  '(warning . haskell-hlint))
+;;(setq flycheck-check-syntax-automatically '(save new-line))
 ;; ;;(setq intero-debug t)
 
 ;;; Intero-Mode-Map
@@ -118,14 +118,14 @@
 
 
 ;;; Purcell自己都改用intero的变种dante,那我也试试!
-;; (require 'dante)
-;; (diminish 'dante-mode "")
-;; (add-hook 'haskell-mode-hook 'dante-mode)
+(require 'dante)
+(diminish 'dante-mode "")
+(add-hook 'haskell-mode-hook 'dante-mode)
 ;; (require 'haskell)
 ;; (diminish 'interactive-haskell-mode)
 ;; (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
-;; (flycheck-add-next-checker 'haskell-dante '(warning . haskell-hlint))
-;; (setq flycheck-check-syntax-automatically '(save mode-enabled))
+(flycheck-add-next-checker 'haskell-dante '(warning . haskell-hlint))
+(setq flycheck-check-syntax-automatically '(save mode-enabled))
 
 
 ;;; hie
