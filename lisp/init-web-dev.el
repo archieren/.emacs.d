@@ -121,6 +121,7 @@
 ;;; CSS / SASS(Syntactically awesome style sheets) / SCSS(Sassy css)
 ;;;----------------------------------------------
 ;; CSS的预处理有好几个: SASS,Less,Stylus,.....且不管他.
+(require 'css-mode)  ;; Shipped with Emacs
 (require 'rainbow-mode)
 (require 'mmm-mode)
 (require 'sass-mode)
@@ -160,6 +161,7 @@
 ;;  (unless (fboundp 'scss-mode)  (require-package 'scss-mode))
 ;;  (unless (fboundp 'less-css-mode) (require-package 'less-css-mode))
 (setq-default scss-compile-at-save nil)
+(require 'less-css-mode)
 (add-hook 'less-css-mode-hook 'skewer-less-mode)
 
 ;;;Skewer: live web development with Emacs
