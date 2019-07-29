@@ -175,8 +175,9 @@
 (add-hook 'css-mode-hook 'turn-on-css-eldoc)
 
 ;;;-----------------------------------------
-;;; Restclient
+;;; HttpRepl and Restclient
 ;;;-----------------------------------------
+(require 'httprepl)
 (require 'restclient)
 (add-auto-mode 'restclient-mode "\\.rest\\'")
 

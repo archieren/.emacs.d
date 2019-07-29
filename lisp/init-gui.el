@@ -211,16 +211,19 @@ This is helpful for writeroom-mode, in particular."
 ;;----------------------------------------------------------------------------
 (require 'diminish)
 (require 'whitespace)
+(require 'whitespace-cleanup-mode)
 (setq whitespace-style '(face lines-tail))
 (setq whitespace-line-column 256)
 (global-whitespace-mode t)
 (diminish 'global-whitespace-mode)
+(diminish 'whitespace-cleanup-mode)
 ;;; 尾部的空格
 (setq-default show-trailing-whitespace t)
+
 ;;; Whitespace
 (defun  init-gui-no-trailing-whitespace ()
   "Turn off display of trailing whitespace in this buffer."
-  (setq show-trailing-whitespace nil))
+  (setq-local show-trailing-whitespace nil))
 ;; But don't show trailing whitespace in SQLi, inf-ruby etc.
 (dolist (hook '(special-mode-hook
                 Info-mode-hook
@@ -232,9 +235,9 @@ This is helpful for writeroom-mode, in particular."
                 minibuffer-setup-hook
                 eshell-mode-hook))
   (add-hook hook #'init-gui-no-trailing-whitespace))
-(require 'whitespace-cleanup-mode)
 (add-hook 'after-init-hook 'global-whitespace-cleanup-mode)
-(diminish 'whitespace-cleanup-mode)
+
+;;; ??
 (global-set-key [remap just-one-space] 'cycle-spacing)
 
 ;;----------------------------------------------------------------------------
