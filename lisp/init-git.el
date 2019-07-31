@@ -23,7 +23,7 @@
 
 ;; {{ git-gutter
 (global-git-gutter-mode t)
-(diminish 'git-gutter-mode)
+(diminish 'git-gutter-mode " ")
 
 (global-set-key (kbd "C-x v =") 'git-gutter:popup-hunk)
 ;; Stage current hunk
