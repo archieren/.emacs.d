@@ -33,12 +33,13 @@
 ;; IDO-style directory navigation
 (define-key ivy-minibuffer-map (kbd "RET") #'ivy-alt-done)
 (dolist (k '("C-j" "C-RET")) (define-key ivy-minibuffer-map (kbd k) #'ivy-immediate-done))
-(define-key ivy-minibuffer-map (kbd "<up>") #'ivy-previous-line-or-history)
-(diminish 'ivy-mode "")
+;; (define-key ivy-minibuffer-map (kbd "<up>") #'ivy-previous-line-or-history)
+(define-key ivy-minibuffer-map (kbd "<up>") #'ivy-previous-line)
+(diminish 'ivy-mode " ")
 
 ;;;Counsel
 (setq-default counsel-mode-override-describe-bindings t)
-(diminish 'counsel-mode)
+(diminish 'counsel-mode " ")
 (if (executable-find "rg")
     ;; use ripgrep instead of grep because it's way faster
     (setq counsel-grep-base-command
