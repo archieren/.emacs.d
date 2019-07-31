@@ -34,7 +34,7 @@
 
 ;;; Company-c-headers
 ;;To enable C++ header completion for standard libraries, you have to add its path, for example, like this:
-(add-to-list 'company-c-headers-path-system "/usr/include/c++/??/")
+(add-to-list 'company-c-headers-path-system "/usr/include/c++/9.1.0/")
 
 ;;; Flycheck-pkg-config
 ;;Flycheck-pkg-config provides an interactive way for configuring flycheck to use C library headers.

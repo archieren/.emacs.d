@@ -233,7 +233,8 @@ This is helpful for writeroom-mode, in particular."
                 compilation-mode-hook
                 twittering-mode-hook
                 minibuffer-setup-hook
-                eshell-mode-hook))
+                eshell-mode-hook
+                cmake-mode-hook))
   (add-hook hook #'init-gui-no-trailing-whitespace))
 (add-hook 'after-init-hook 'global-whitespace-cleanup-mode)
 

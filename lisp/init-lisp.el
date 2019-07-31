@@ -221,6 +221,7 @@ Hippie Mode setup function for slime Lisp buffers."
 ;; See http://bc.tech.coop/blog/070927.html
 (require 'init-utils)
 (add-auto-mode 'lisp-mode "\\.cl\\'")
+(add-hook 'lisp-mode-hook (lambda () (setq mode-name "")))
 (add-hook 'lisp-mode-hook (lambda () (unless (featurep 'slime) (require 'slime) (normal-mode))))
 (when (executable-find "sbcl")
   (add-to-list 'slime-lisp-implementations
