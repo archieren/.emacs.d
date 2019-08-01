@@ -89,6 +89,7 @@
   (custom-set-variables '(haskell-stylish-on-save t))
   (custom-set-variables '(haskell-tags-on-save t))
   (custom-set-variables '(haskell-compile-ignore-cabal t))
+  (define-key haskell-mode-map (kbd "M-.") 'haskell-mode-jump-to-def-or-tag)
   )
 
 
@@ -98,15 +99,15 @@
 ;;; But:
 ;;;    Inferior-haskell-mode was deprecated!
 ;;;    Interactive-haskell-mode: 和Intero处于一个级别,Intero直接将他屏蔽了,Intero的REPL直接采用的是"stack ghci".
-(require 'intero)
-(with-eval-after-load 'haskell
-  (intero-global-mode) ;; 或者 (add-hook 'haskell-mode-hook 'intero-mode)
-  (diminish 'intero-mode "")
-  (define-key haskell-cabal-mode-map (kbd "C-c C-l") 'intero-restart)
-  (define-key intero-mode-map (kbd "M-?") nil)
-  (flycheck-add-next-checker 'intero  '(warning . haskell-hlint))
-  (setq flycheck-check-syntax-automatically '(save new-line))
-  )
+;; (require 'intero)
+;; (with-eval-after-load 'haskell
+;;   (intero-global-mode) ;; 或者 (add-hook 'haskell-mode-hook 'intero-mode)
+;;   (diminish 'intero-mode "")
+;;   (define-key haskell-cabal-mode-map (kbd "C-c C-l") 'intero-restart)
+;;   (define-key intero-mode-map (kbd "M-?") nil)
+;;   (flycheck-add-next-checker 'intero  '(warning . haskell-hlint))
+;;   (setq flycheck-check-syntax-automatically '(save new-line))
+;;   )
 ;; ;;(setq intero-debug t)
 
 ;;; Intero-Mode-Map
@@ -131,10 +132,10 @@
   ;; (diminish 'dante-mode "")
   ;; (add-hook 'haskell-mode-hook 'dante-mode)
   ;; (flycheck-add-next-checker 'haskell-dante '(warning . haskell-hlint))
-  ;; ;;(require 'haskell)
-  ;; (diminish 'interactive-haskell-mode "")
-  ;; (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
-  ;; (setq flycheck-check-syntax-automatically '(save mode-enabled))
+  (require 'haskell-interactive-mode)
+  (diminish 'interactive-haskell-mode "")
+  (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
+  (setq flycheck-check-syntax-automatically '(save mode-enabled))
   )
 
 
