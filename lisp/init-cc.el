@@ -68,6 +68,7 @@
 ;;
 (defun init-cc-c-mode-hook ()
   "Set my c setups."
+  (setq mode-name "")
   ;;(setq flycheck-checker               'c/c++-clang)
   ;;(setq flycheck-clang-language-standard "c17")
   (setq flycheck-checker 'c/c++-gcc)
@@ -77,6 +78,7 @@
 
 (defun init-cc-c++-mode-hook ()
   "Set my c setups."
+  (setq mode-name "")
   ;;(setq flycheck-checker                 'c/c++-clang)
   ;;(setq flycheck-clang-language-standard "c++17")
   (setq flycheck-checker                   'c/c++-gcc)

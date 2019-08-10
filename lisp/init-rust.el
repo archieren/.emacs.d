@@ -11,7 +11,7 @@
 (with-eval-after-load 'rust-mode
   (diminish 'cargo-minor-mode)
   (diminish 'racer-mode)
-  (add-hook 'rust-mode-hook (lambda () (setq mode-name "")))
+  (add-hook 'rust-mode-hook (lambda () (setq mode-name "")))
   (add-hook 'rust-mode-hook #'cargo-minor-mode)
   (add-hook 'rust-mode-hook #'racer-mode)
   (add-hook 'racer-mode-hook #'eldoc-mode)

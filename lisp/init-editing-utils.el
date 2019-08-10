@@ -15,7 +15,10 @@
 (when (fboundp 'electric-indent-mode)
   (add-hook 'after-init-hook 'electric-indent-mode))
 
-(require 'autorevert);;build-in
+(require 'abbrev)
+(diminish 'abbrev-mode)
+
+(require 'autorevert) ;;build-in
 (add-hook 'after-init-hook 'global-auto-revert-mode)
 (diminish 'auto-revert-mode)
 (setq global-auto-revert-non-file-buffers t
