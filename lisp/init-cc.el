@@ -21,7 +21,8 @@
 ;; Customizations for all modes in CC Mode.
 (defun init-cc-c-mode-common-hook ()
   "Set my personal style for the current buffer."
-  (setq tab-width 4
+  (setq c-basic-offset 4
+        tab-width 4
         ;; this will make sure spaces are used instead of tabs
         indent-tabs-mode nil)
   ;; Company-c-headers

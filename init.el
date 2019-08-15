@@ -92,5 +92,7 @@
 ;; Allow users to provide an optional "init-local" containing personal settings
 (init-init 'init-local )
 (init-init 'init-themes)
+
+(setq debug-on-error nil)
 (provide 'init)
 ;;; init.el ends here
