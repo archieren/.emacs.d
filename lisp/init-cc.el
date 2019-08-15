@@ -32,6 +32,7 @@
 (add-hook 'c-mode-common-hook 'init-cc-c-mode-common-hook)
 (add-hook 'c-mode-common-hook 'google-set-c-style)
 (add-hook 'c-mode-common-hook 'google-make-newline-indent)
+(add-hook 'c-mode-common-hook 'subword-mode)
 
 ;;; Company-c-headers
 ;;To enable C++ header completion for standard libraries, you have to add its path, for example, like this:
