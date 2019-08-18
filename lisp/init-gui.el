@@ -74,7 +74,7 @@
 ;; Nicer naming of buffers for files with identical names.同名文件的buffer命名.
 ;;----------------------------------------------------------------------------
 (setq uniquify-buffer-name-style 'reverse)
-(setq uniquify-separator " • ")
+(setq uniquify-separator "")
 (setq uniquify-after-kill-buffer-p t)
 (setq uniquify-ignore-buffers-re "^\\*")
 ;;----------------------------------------------------------------------------
