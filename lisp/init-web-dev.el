@@ -11,6 +11,7 @@
 (require 'add-node-modules-path)
 (require 'flycheck)
 (require 'init-utils)
+(require 'diminish)
 
 ;;;----------------------------------------------------
 ;;;JavaScript
@@ -50,7 +51,7 @@
     (set (make-local-variable 'js2-mode-show-parse-errors) t)
     (set (make-local-variable 'js2-mode-show-strict-warnings) t)))
 (add-hook 'js2-mode-hook 'sanityinc/disable-js2-checks-if-flycheck-active)
-(add-hook 'js2-mode-hook (lambda () (setq mode-name "")))
+(add-hook 'js2-mode-hook (lambda () (setq mode-name "")))
 (js2-imenu-extras-setup)
 
 ;; xref-js2
@@ -128,6 +129,13 @@
 (require 'skewer-mode)
 (require 'skewer-less)
 (require 'css-eldoc)
+
+(diminish 'rainbow-mode "")
+(diminish 'skewer-mode "")
+(diminish 'skewer-less-mode "")
+(diminish 'skewer-css-mode "")
+(diminish 'skewer-html-mode "")
+
 (dolist (hook '(css-mode-hook html-mode-hook sass-mode-hook))
   (add-hook hook 'rainbow-mode))
 ;;Embedding in html
