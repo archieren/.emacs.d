@@ -106,6 +106,8 @@
 ;;; Html:Html用build-in里的sgml-mode来实现.
 (require 'tagedit)
 (require 'sgml-mode)
+
+(diminish 'tagedit-mode "")
 (tagedit-add-paredit-like-keybindings)
 (define-key tagedit-mode-map (kbd "M-?") nil)
 (add-hook 'sgml-mode-hook (lambda () (tagedit-mode 1)))
