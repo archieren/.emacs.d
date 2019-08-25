@@ -93,25 +93,31 @@
 ;;;----------------------------------------------
 ;;;Php
 ;;;----------------------------------------------
-(require 'php-mode)
-(require 'smarty-mode)
-(require 'company-php)
-(require 'init-company)
-(add-hook 'php-mode-hook
-          (lambda () (sanityinc/local-push-company-backend 'company-ac-php-backend)))
+;; (require 'php-mode)
+;; (require 'smarty-mode)
+;; (require 'company-php)
+;; (require 'init-company)
+;; (add-hook 'php-mode-hook
+;;           (lambda () (sanityinc/local-push-company-backend 'company-ac-php-backend)))
 
 ;;;-----------------------------------------------
-;;;Html
+;;;Html Or Web-Mode
 ;;;-----------------------------------------------
-;;; Html:Html用build-in里的sgml-mode来实现.
-(require 'tagedit)
-(require 'sgml-mode)
-
-(diminish 'tagedit-mode "")
-(tagedit-add-paredit-like-keybindings)
-(define-key tagedit-mode-map (kbd "M-?") nil)
-(add-hook 'sgml-mode-hook (lambda () (tagedit-mode 1)))
-(add-auto-mode 'html-mode "\\.\\(jsp\\|tmpl\\)\\'")
+(require 'web-mode)
+(add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.vue\\'" . web-mode))
+(setq web-mode-content-types-alist '(("vue" . "\\.vue\\'")))
+(defun my-web-mode-hook ()
+  "Hooks for Web mode."
+  (setq mode-name "")
+  (setq web-mode-markup-indent-offset 4)
+  (setq web-mode-markup-indent-offset 4)
+  (setq web-mode-css-indent-offset 4)
+  (setq web-mode-code-indent-offset 4)
+  (setq web-mode-enable-current-element-highlight t)
+  (setq web-mode-enable-css-colorization t)
+  )
+(add-hook 'web-mode-hook  'my-web-mode-hook)
 
 ;;; Haml (HTML abstraction markup language)
 ;;; It is based on one primary principle: markup should be beautiful.
@@ -138,33 +144,10 @@
 (diminish 'skewer-css-mode "")
 (diminish 'skewer-html-mode "")
 
-(dolist (hook '(css-mode-hook html-mode-hook sass-mode-hook))
+(dolist (hook '(css-mode-hook
+                web-mode-hook
+                sass-mode-hook))
   (add-hook hook 'rainbow-mode))
-;;Embedding in html
-(require 'mmm-vars)
-(mmm-add-group
- 'html-css
- '((css-cdata
-    :submode css-mode
-    :face mmm-code-submode-face
-    :front "<style[^>]*>[ \t\n]*\\(//\\)?<!\\[CDATA\\[[ \t]*\n?"
-    :back "[ \t]*\\(//\\)?]]>[ \t\n]*</style>"
-    :insert ((?j js-tag nil @ "<style type=\"text/css\">"
-                 @ "\n" _ "\n" @ "</style>" @)))
-   (css
-    :submode css-mode
-    :face mmm-code-submode-face
-    :front "<style[^>]*>[ \t]*\n?"
-    :back "[ \t]*</style>"
-    :insert ((?j js-tag nil @ "<style type=\"text/css\">"
-                 @ "\n" _ "\n" @ "</style>" @)))
-   (css-inline
-    :submode css-mode
-    :face mmm-code-submode-face
-    :front "style=\""
-    :back "\"")))
-(dolist (mode (list 'html-mode 'nxml-mode))
-  (mmm-add-mode-ext-class mode "\\.r?html\\(\\.erb\\)?\\'" 'html-css))
 ;; SASS and SCSS
 ;; Prefer the scss-mode built into Emacs
 ;; Emacs在css-model.el中,内建了对scss,less-css的支持.
@@ -179,7 +162,7 @@
 ;; Skewer CSS
 (add-hook 'js2-mode-hook  'skewer-mode)
 (add-hook 'css-mode-hook  'skewer-css-mode)
-(add-hook 'html-mode-hook 'skewer-html-mode)
+(add-hook 'web-mode-hook 'skewer-html-mode)
 ;;; Use eldoc for syntax hint
 (autoload 'turn-on-css-eldoc "css-eldoc")
 (add-hook 'css-mode-hook 'turn-on-css-eldoc)

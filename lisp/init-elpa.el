@@ -227,17 +227,20 @@ locate PACKAGE."
 (require-package 'toml-mode)
 (require-package 'terraform-mode)
 (require-package 'company-terraform)
-
-;; init-javascript
+;; init-web-dev
+(require-package 'web-mode)
+(require-package 'company-web)
+;;for Javascript
 (require-package 'json-mode)
 (require-package 'js2-mode)
 (require-package 'prettier-js)
 (require-package 'xref-js2)
 (require-package 'js-comint)
 (require-package 'add-node-modules-path)
-(require-package 'php-mode)
-(require-package 'smarty-mode)
-(require-package 'company-php)
+;; (require-package 'php-mode)
+;; (require-package 'smarty-mode)
+;; (require-package 'company-php)
+
 ;; For html and CSSs
 (require-package 'tagedit)
 (require-package 'haml-mode)
