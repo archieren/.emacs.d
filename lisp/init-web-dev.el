@@ -104,10 +104,13 @@
 ;;;Html Or Web-Mode
 ;;;-----------------------------------------------
 (require 'web-mode)
-(add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+(require 'company-web)
+
+(add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.vue\\'" . web-mode))
 (setq web-mode-content-types-alist '(("vue" . "\\.vue\\'")))
-(defun my-web-mode-hook ()
+
+(defun my/web-mode-hook ()
   "Hooks for Web mode."
   (setq mode-name "")
   (setq web-mode-markup-indent-offset 4)
@@ -117,7 +120,37 @@
   (setq web-mode-enable-current-element-highlight t)
   (setq web-mode-enable-css-colorization t)
   )
-(add-hook 'web-mode-hook  'my-web-mode-hook)
+
+(defun my/web-html-setup ()
+  "Web html mode's specific settings."
+  (flycheck-add-mode 'html-tidy 'web-mode)
+  (flycheck-select-checker 'html-tidy)
+  (flycheck-mode))
+
+(defun my/web-vue-setup ()
+  "Setup for web-mode vue files."
+  (flycheck-add-mode 'javascript-eslint 'web-mode)
+  (my/use-eslint-from-node-modules)
+  (flycheck-select-checker 'javascript-eslint)
+  (flycheck-mode)
+  (add-hook 'web-mode-hook #'setup-tide-mode)
+  (add-hook 'web-mode-hook #'prettier-js-mode)
+  (add-to-list (make-local-variable 'company-backends)
+               '(company-tide company-web-html company-files company-css))
+  )
+
+(add-hook 'web-mode-hook  'my/web-mode-hook)
+
+(add-hook 'web-mode-hook (lambda () (add-to-list (make-local-variable 'company-backends)
+                                            '(company-web-html company-files))))
+(add-hook 'web-mode-hook (lambda () (lambda()
+                                 (cond ((equal web-mode-content-type "html")
+                                        (my/web-html-setup)))
+                                 (cond ((equal web-mode-content-type "vue")
+                                        (my/web-vue-setup)))
+                                 )))
+
+
 
 ;;; Haml (HTML abstraction markup language)
 ;;; It is based on one primary principle: markup should be beautiful.

@@ -28,7 +28,7 @@
           '("xml" "xsd" "sch" "rng" "xslt" "svg" "rss"
             "gpx" "tcx" "plist"))
          "\\'"))
-(setq magic-mode-alist (cons '("<\\?xml " . nxml-mode) magic-mode-alist))
+;; (setq magic-mode-alist (cons '("<\\?xml " . nxml-mode) magic-mode-alist))
 (fset 'xml-mode 'nxml-mode)
 (setq nxml-slash-auto-complete-flag t)
 
