@@ -4,6 +4,7 @@
 ;; 其他均基于它。
 ;;; Code:
 (require 'js2-mode)
+(require 'typescript-mode)
 (require 'json-mode)
 (require 'prettier-js)
 (require 'xref-js2)
@@ -88,17 +89,27 @@
 
 
 (add-hook 'js2-mode-hook 'add-node-modules-path)
+(add-hook 'typescript-mode-hook 'add-node-modules-path)
 
+;;; Tide
+(require 'tide)
+(defun my/setup-tide-mode ()
+  "Setup tide-mode."
+  (interactive)
+  (tide-setup)
+  ;; (flycheck-mode +1)
+  (setq flycheck-check-syntax-automatically '(save mode-enabled))
+  (eldoc-mode +1)
+  (tide-hl-identifier-mode +1)
+  (add-to-list (make-local-variable 'company-backends) 'company-files)
+  ;; (company-mode +1)
+  )
 
-;;;----------------------------------------------
-;;;Php
-;;;----------------------------------------------
-;; (require 'php-mode)
-;; (require 'smarty-mode)
-;; (require 'company-php)
-;; (require 'init-company)
-;; (add-hook 'php-mode-hook
-;;           (lambda () (sanityinc/local-push-company-backend 'company-ac-php-backend)))
+;; formats the buffer before saving
+(add-hook 'before-save-hook 'tide-format-before-save)
+
+(add-hook 'js2-mode-hook #'setup-tide-mode)
+(add-hook 'typescript-mode-hook #'my/setup-tide-mode)
 
 ;;;-----------------------------------------------
 ;;;Html Or Web-Mode
@@ -120,6 +131,17 @@
   (setq web-mode-enable-current-element-highlight t)
   (setq web-mode-enable-css-colorization t)
   )
+
+(defun my/use-eslint-from-node-modules ()
+  "No Document Now!"
+  ;; use local eslint from node_modules before global
+  ;; http://emacs.stackexchange.com/questions/21205/flycheck-with-file-relative-eslint-executable
+  (let* ((root (locate-dominating-file
+                (or (buffer-file-name) default-directory) "node_modules"))
+         (eslint (and root
+                      (expand-file-name "node_modules/eslint/bin/eslint.js" root))))
+    (when (and eslint (file-executable-p eslint))
+      (setq-local flycheck-javascript-eslint-executable eslint))))
 
 (defun my/web-html-setup ()
   "Web html mode's specific settings."

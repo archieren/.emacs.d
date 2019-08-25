@@ -236,6 +236,8 @@ locate PACKAGE."
 (require-package 'prettier-js)
 (require-package 'xref-js2)
 (require-package 'js-comint)
+(require-package 'typescript-mode)
+(require-package 'tide)
 (require-package 'add-node-modules-path)
 ;; (require-package 'php-mode)
 ;; (require-package 'smarty-mode)
