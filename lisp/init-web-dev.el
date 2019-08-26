@@ -24,8 +24,7 @@
   :group 'programming
   :options '(js2-mode js-mode))
 
-(defconst preferred-javascript-indent-level 2)
-(setq-default js-indent-level preferred-javascript-indent-level);;js-mode
+(setq-default js-indent-level 4);;js-mode
 
 
 ;; Need to first remove from list if present, since elpa adds entries too, which
@@ -93,6 +92,7 @@
 
 ;;; Tide
 (require 'tide)
+(diminish 'tide-mode " ")
 (defun my/setup-tide-mode ()
   "Setup tide-mode."
   (interactive)
@@ -108,7 +108,7 @@
 ;; formats the buffer before saving
 (add-hook 'before-save-hook 'tide-format-before-save)
 
-(add-hook 'js2-mode-hook #'setup-tide-mode)
+(add-hook 'js2-mode-hook #'my/setup-tide-mode)
 (add-hook 'typescript-mode-hook #'my/setup-tide-mode)
 
 ;;;-----------------------------------------------
@@ -193,11 +193,11 @@
 (require 'skewer-less)
 (require 'css-eldoc)
 
-(diminish 'rainbow-mode "")
-(diminish 'skewer-mode "")
-(diminish 'skewer-less-mode "")
-(diminish 'skewer-css-mode "")
-(diminish 'skewer-html-mode "")
+(diminish 'rainbow-mode " ")
+(diminish 'skewer-mode " ")
+(diminish 'skewer-less-mode " ")
+(diminish 'skewer-css-mode " ")
+(diminish 'skewer-html-mode " ")
 
 (dolist (hook '(css-mode-hook
                 web-mode-hook
