@@ -97,6 +97,7 @@
   "Setup tide-mode."
   (interactive)
   (tide-setup)
+  ;;Infact,both flycheck-mode and company-mode are globaly setted!
   (flycheck-mode +1)
   (setq flycheck-check-syntax-automatically '(save mode-enabled))
   (eldoc-mode +1)
@@ -145,6 +146,7 @@
                       (expand-file-name "node_modules/eslint/bin/eslint.js" root))))
     (when (and eslint (file-executable-p eslint))
       (setq-local flycheck-javascript-eslint-executable eslint))))
+(add-hook 'flycheck-mode-hook #'my/use-eslint-from-node-modules)
 
 (defun my/web-html-setup ()
   "Web html mode's specific settings."
@@ -156,12 +158,14 @@
 (defun my/web-vue-setup ()
   "Setup for web-mode vue files."
   (setq mode-name "")
-  (flycheck-add-mode 'javascript-eslint 'web-mode)
-  (my/use-eslint-from-node-modules)
-  (flycheck-select-checker 'javascript-eslint)
   (flycheck-mode)
-  (add-hook 'web-mode-hook #'my/setup-tide-mode)
-  (add-hook 'web-mode-hook #'prettier-js-mode)
+  (my/setup-tide-mode)
+  (prettier-js-mode)
+  (flycheck-add-mode 'javascript-eslint 'web-mode)
+  (flycheck-select-checker 'javascript-eslint)
+  ;;(my/use-eslint-from-node-modules)
+  ;; Duplicated!
+  ;; Why should use eslint from local?
   (add-to-list (make-local-variable 'company-backends)
                '(company-tide company-web-html company-files company-css))
   )
