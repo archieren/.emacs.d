@@ -119,6 +119,7 @@
 
 (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.vue\\'" . web-mode))
+;; (add-to-list 'auto-mode-alist '("\\.jsx\\'" . web-mode))
 (setq web-mode-content-types-alist '(("vue" . "\\.vue\\'")))
 
 (defun my/web-mode-hook ()
@@ -145,7 +146,7 @@
 
 (defun my/web-html-setup ()
   "Web html mode's specific settings."
-  (flycheck-add-mode 'html-tidy 'web-mode)
+  (flycheck-add-mode 'html-tidy 'web-mode) ;;Tidy install in archlinux: sudo pacman -S tidy
   (flycheck-select-checker 'html-tidy)
   (flycheck-mode))
 
@@ -155,14 +156,13 @@
   (my/use-eslint-from-node-modules)
   (flycheck-select-checker 'javascript-eslint)
   (flycheck-mode)
-  (add-hook 'web-mode-hook #'setup-tide-mode)
+  (add-hook 'web-mode-hook #'my/setup-tide-mode)
   (add-hook 'web-mode-hook #'prettier-js-mode)
   (add-to-list (make-local-variable 'company-backends)
                '(company-tide company-web-html company-files company-css))
   )
 
 (add-hook 'web-mode-hook  'my/web-mode-hook)
-
 (add-hook 'web-mode-hook (lambda () (add-to-list (make-local-variable 'company-backends)
                                             '(company-web-html company-files))))
 (add-hook 'web-mode-hook (lambda () (lambda()
