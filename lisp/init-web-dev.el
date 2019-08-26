@@ -38,7 +38,7 @@
 
 ;; js2-mode
 ;; Change some defaults: customize them to override
-(setq-default js2-basic-offset 2
+(setq-default js2-basic-offset 4
               js2-bounce-indent-p nil)
 ;; Disable js2 mode's syntax error highlighting by default...
 (setq-default js2-mode-show-parse-errors nil
@@ -88,7 +88,7 @@
 
 
 (add-hook 'js2-mode-hook 'add-node-modules-path)
-(add-hook 'typescript-mode-hook 'add-node-modules-path)
+
 
 ;;; Tide
 (require 'tide)
@@ -97,18 +97,21 @@
   "Setup tide-mode."
   (interactive)
   (tide-setup)
-  ;; (flycheck-mode +1)
+  (flycheck-mode +1)
   (setq flycheck-check-syntax-automatically '(save mode-enabled))
   (eldoc-mode +1)
   (tide-hl-identifier-mode +1)
   (add-to-list (make-local-variable 'company-backends) 'company-files)
-  ;; (company-mode +1)
+  (company-mode +1)
   )
 
 ;; formats the buffer before saving
 (add-hook 'before-save-hook 'tide-format-before-save)
 
 (add-hook 'js2-mode-hook #'my/setup-tide-mode)
+
+(add-hook 'typescript-mode-hook (lambda () (setq mode-name "")))
+(add-hook 'typescript-mode-hook 'add-node-modules-path)
 (add-hook 'typescript-mode-hook #'my/setup-tide-mode)
 
 ;;;-----------------------------------------------
@@ -124,7 +127,6 @@
 
 (defun my/web-mode-hook ()
   "Hooks for Web mode."
-  (setq mode-name "")
   (setq web-mode-markup-indent-offset 4)
   (setq web-mode-markup-indent-offset 4)
   (setq web-mode-css-indent-offset 4)
@@ -146,12 +148,14 @@
 
 (defun my/web-html-setup ()
   "Web html mode's specific settings."
+  (setq mode-name "")
   (flycheck-add-mode 'html-tidy 'web-mode) ;;Tidy install in archlinux: sudo pacman -S tidy
   (flycheck-select-checker 'html-tidy)
   (flycheck-mode))
 
 (defun my/web-vue-setup ()
   "Setup for web-mode vue files."
+  (setq mode-name "")
   (flycheck-add-mode 'javascript-eslint 'web-mode)
   (my/use-eslint-from-node-modules)
   (flycheck-select-checker 'javascript-eslint)
@@ -165,12 +169,10 @@
 (add-hook 'web-mode-hook  'my/web-mode-hook)
 (add-hook 'web-mode-hook (lambda () (add-to-list (make-local-variable 'company-backends)
                                             '(company-web-html company-files))))
-(add-hook 'web-mode-hook (lambda () (lambda()
-                                 (cond ((equal web-mode-content-type "html")
-                                        (my/web-html-setup)))
-                                 (cond ((equal web-mode-content-type "vue")
-                                        (my/web-vue-setup)))
-                                 )))
+(add-hook 'web-mode-hook (lambda () (cond ((equal web-mode-content-type "html")
+                                      (my/web-html-setup))
+                                     ((equal web-mode-content-type "vue")
+                                      (my/web-vue-setup)))))
 
 
 
