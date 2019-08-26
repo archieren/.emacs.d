@@ -166,6 +166,8 @@ With arg N, insert N newlines."
 
 
 ;; Handy key bindings
+(global-unset-key (kbd "C-SPC"))
+(global-unset-key (kbd "C-x C-SPC"))
 (global-set-key (kbd "C-.") 'set-mark-command)
 (global-set-key (kbd "C-x C-.") 'pop-global-mark)
 
