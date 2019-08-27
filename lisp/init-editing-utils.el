@@ -288,8 +288,8 @@ With arg N, insert N newlines."
   (add-hook 'after-init-hook 'guide-key-mode))
 
 (require 'yasnippet)
-(yas-reload-all)
 (add-hook 'prog-mode-hook #'yas-minor-mode)
+(yas-reload-all)
 (require 'yasnippet-snippets)
 ;; With this code, yasnippet will expand the snippet if company didn't complete the word
 ;; replace company-complete-common with company-complete if you're using it

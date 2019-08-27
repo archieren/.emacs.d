@@ -14,9 +14,9 @@
 (require 'init-utils)
 (require 'diminish)
 
-;;;----------------------------------------------------
-;;;JavaScript
-;;;----------------------------------------------------
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                                        ;       Js2-mode For JavaScript       ;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defcustom preferred-javascript-mode
   (first (remove-if-not #'fboundp '(js2-mode js-mode)))
   "Javascript mode to use for .js files."
@@ -93,11 +93,11 @@
                                         ;          JavaScript-Eslint & Tide
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; JAVASCRIPT-ESLINT is a builtin checker in flycheck.
+;; 我怀疑这个问题已经在flycheck中修正了.但还是留着吧,反正不冲突.
 (defun my/use-eslint-from-node-modules ()
   "No Document Now!"
   ;; use local eslint from node_modules before global
   ;; http://emacs.stackexchange.com/questions/21205/flycheck-with-file-relative-eslint-executable
-  ;; I suspect that this has been coded into the flycheck.
   (let* ((root (locate-dominating-file
                 (or (buffer-file-name) default-directory) "node_modules"))
          (eslint (and root
@@ -131,6 +131,7 @@
 (add-hook 'js2-mode-hook (lambda ()
                            (my/setup-tide-mode)
                            (message "hello")
+                           ;; 下面一句似乎也无必要!tide-setup里似乎就是这么干的.
                            (flycheck-add-next-checker 'javascript-eslint 'javascript-tide 'append)
                            ))
 
