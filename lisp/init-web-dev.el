@@ -86,8 +86,26 @@
 (dolist (hook '(js2-mode-hook js-mode-hook))
   (add-hook hook 'inferior-js-keys-mode))
 
-
 (add-hook 'js2-mode-hook 'add-node-modules-path)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                                        ;          JavaScript-Eslint & Tide
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; JAVASCRIPT-ESLINT is a builtin checker in flycheck.
+(defun my/use-eslint-from-node-modules ()
+  "No Document Now!"
+  ;; use local eslint from node_modules before global
+  ;; http://emacs.stackexchange.com/questions/21205/flycheck-with-file-relative-eslint-executable
+  ;; I suspect that this has been coded into the flycheck.
+  (let* ((root (locate-dominating-file
+                (or (buffer-file-name) default-directory) "node_modules"))
+         (eslint (and root
+                      (expand-file-name "node_modules/.bin/eslint" root))))
+    (when (and eslint (file-executable-p eslint))
+      (setq-local flycheck-javascript-eslint-executable eslint))))
+(add-hook 'flycheck-mode-hook #'my/use-eslint-from-node-modules)
+
 
 
 ;;; Tide
@@ -97,7 +115,7 @@
   "Setup tide-mode."
   (interactive)
   (tide-setup)
-  ;;Infact,both flycheck-mode and company-mode are globaly setted!
+  ;;Infact ,in my configuration,both flycheck-mode and company-mode are globaly setted!
   (flycheck-mode +1)
   (setq flycheck-check-syntax-automatically '(save mode-enabled))
   (eldoc-mode +1)
@@ -109,15 +127,20 @@
 ;; formats the buffer before saving
 (add-hook 'before-save-hook 'tide-format-before-save)
 
-(add-hook 'js2-mode-hook #'my/setup-tide-mode)
+;; (add-hook 'js2-mode-hook #'my/setup-tide-mode)
+(add-hook 'js2-mode-hook (lambda ()
+                           (my/setup-tide-mode)
+                           (message "hello")
+                           (flycheck-add-next-checker 'javascript-eslint 'javascript-tide 'append)
+                           ))
 
 (add-hook 'typescript-mode-hook (lambda () (setq mode-name "")))
 (add-hook 'typescript-mode-hook 'add-node-modules-path)
 (add-hook 'typescript-mode-hook #'my/setup-tide-mode)
 
-;;;-----------------------------------------------
-;;;Html Or Web-Mode
-;;;-----------------------------------------------
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                                        ;               Web-Mode              ;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (require 'web-mode)
 (require 'company-web)
 
@@ -135,18 +158,6 @@
   (setq web-mode-enable-current-element-highlight t)
   (setq web-mode-enable-css-colorization t)
   )
-
-(defun my/use-eslint-from-node-modules ()
-  "No Document Now!"
-  ;; use local eslint from node_modules before global
-  ;; http://emacs.stackexchange.com/questions/21205/flycheck-with-file-relative-eslint-executable
-  (let* ((root (locate-dominating-file
-                (or (buffer-file-name) default-directory) "node_modules"))
-         (eslint (and root
-                      (expand-file-name "node_modules/eslint/bin/eslint.js" root))))
-    (when (and eslint (file-executable-p eslint))
-      (setq-local flycheck-javascript-eslint-executable eslint))))
-(add-hook 'flycheck-mode-hook #'my/use-eslint-from-node-modules)
 
 (defun my/web-html-setup ()
   "Web html mode's specific settings."
