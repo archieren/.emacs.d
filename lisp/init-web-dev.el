@@ -17,41 +17,23 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                                         ;       Js2-mode For JavaScript       ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defcustom preferred-javascript-mode
-  (first (remove-if-not #'fboundp '(js2-mode js-mode)))
-  "Javascript mode to use for .js files."
-  :type 'symbol
-  :group 'programming
-  :options '(js2-mode js-mode))
 
-(setq-default js-indent-level 4);;js-mode
 
 
 ;; Need to first remove from list if present, since elpa adds entries too, which
 ;; may be in an arbitrary order
 (eval-when-compile (require 'cl))
-(setq auto-mode-alist (cons `("\\.\\(js\\|es6\\)\\(\\.erb\\)?\\'" . ,preferred-javascript-mode)
-                            (loop for entry in auto-mode-alist
-                                  unless (eq preferred-javascript-mode (cdr entry))
-                                  collect entry)))
-(add-to-list 'interpreter-mode-alist (cons "node" preferred-javascript-mode))
+(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
+(add-to-list 'interpreter-mode-alist '("node" . js2-mode))
 
 ;; js2-mode
 ;; Change some defaults: customize them to override
-(setq-default js2-basic-offset 4
-              js2-bounce-indent-p nil)
-;; Disable js2 mode's syntax error highlighting by default...
-(setq-default js2-mode-show-parse-errors nil
-              js2-mode-show-strict-warnings nil)
-;; ... but enable it if flycheck can't handle javascript
-(autoload 'flycheck-get-checker-for-buffer "flycheck")
-(defun sanityinc/disable-js2-checks-if-flycheck-active ()
-  "Nothing."
-  (unless (flycheck-get-checker-for-buffer)
-    (set (make-local-variable 'js2-mode-show-parse-errors) t)
-    (set (make-local-variable 'js2-mode-show-strict-warnings) t)))
-(add-hook 'js2-mode-hook 'sanityinc/disable-js2-checks-if-flycheck-active)
+(setq-default js-indent-level 4);;js2-basic-offset is it's alias!
+(setq-default js2-basic-offset 4)
+(setq-default js2-bounce-indent-p nil)
+(setq-default js2-global-externs '("module" "require" "assert" "setInterval" "console" "__dirname__"))
 (add-hook 'js2-mode-hook (lambda () (setq mode-name "")))
+(add-hook 'js2-mode-hook 'add-node-modules-path)
 (js2-imenu-extras-setup)
 
 ;; xref-js2
@@ -85,8 +67,6 @@
   nil "" inferior-js-minor-mode-map)
 (dolist (hook '(js2-mode-hook js-mode-hook))
   (add-hook hook 'inferior-js-keys-mode))
-
-(add-hook 'js2-mode-hook 'add-node-modules-path)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -135,6 +115,10 @@
                            (flycheck-add-next-checker 'javascript-eslint 'javascript-tide 'append)
                            ))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                                        ;           Typescript-Mode           ;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-mode))
 (add-hook 'typescript-mode-hook (lambda () (setq mode-name "")))
 (add-hook 'typescript-mode-hook 'add-node-modules-path)
 (add-hook 'typescript-mode-hook #'my/setup-tide-mode)
