@@ -75,7 +75,7 @@
 ;;clang
 (add-to-list 'counsel-etags-ignore-filenames         "*.clang-format")
 ;; NodeJS
-(add-to-list 'counsel-etags-ignore-directories       "node-modules")
+(add-to-list 'counsel-etags-ignore-directories       "node_modules")
 ;;
 ;; 附注:事实上ctags的命令中的很多选项,可以在特定文件中给出
 ;; $HOME/.ctags.d/*.ctags
