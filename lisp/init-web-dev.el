@@ -181,7 +181,9 @@
                                       (my/web-vue-setup)))))
 
 
-
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                                        ;              Haml-Mode              ;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Haml (HTML abstraction markup language)
 ;;; It is based on one primary principle: markup should be beautiful.
 ;;; Haml 是什么？ 好像被sass-mode给加载上来了.
@@ -194,6 +196,7 @@
 ;;;----------------------------------------------
 ;; CSS的预处理有好几个: SASS,Less,Stylus,.....且不管他.
 (require 'css-mode)  ;; Shipped with Emacs
+(require 'emmet-mode)
 (require 'rainbow-mode)
 (require 'mmm-mode)
 (require 'sass-mode)
@@ -201,16 +204,44 @@
 (require 'skewer-less)
 (require 'css-eldoc)
 
+;; 安装css-stylelint的后端
+;; $sudo (c)npm install -g stylelint
+;; $sudo (c)npm install -g stylelint-config-recommended
+;; Flycheck 会自动它作为语法检查!
+
+;; 采用company中的company-css来补全
+(add-hook 'css-mode-hook (lambda () (add-to-list (make-local-variable 'company-backends)
+                                            '(company-css company-files company-capf company-dabbrev))))
+;; Use eldoc for syntax hint
+(autoload 'turn-on-css-eldoc "css-eldoc")
+(add-hook 'css-mode-hook 'turn-on-css-eldoc)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                                        ;          Some Minor Modes!          ;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; Use emmet-mode for smart input!
+(diminish 'emmet-mode " ")
+(dolist (hook '(web-mode-hook
+                sgml-mode-hook
+                css-mode-hook
+                scss-mode-hook
+                js2-mode-hook
+                vue-mode-hook))
+  (add-hook hook 'emmet-mode))
+
+;; Use Rainbow-mode for what?
 (diminish 'rainbow-mode " ")
+(dolist (hook '(css-mode-hook
+                web-mode-hook
+                sass-mode-hook))
+  (add-hook hook 'rainbow-mode))
+
+;; Use Skewer-mode for what?
 (diminish 'skewer-mode " ")
 (diminish 'skewer-less-mode " ")
 (diminish 'skewer-css-mode " ")
 (diminish 'skewer-html-mode " ")
 
-(dolist (hook '(css-mode-hook
-                web-mode-hook
-                sass-mode-hook))
-  (add-hook hook 'rainbow-mode))
 ;; SASS and SCSS
 ;; Prefer the scss-mode built into Emacs
 ;; Emacs在css-model.el中,内建了对scss,less-css的支持.
@@ -225,10 +256,7 @@
 ;; Skewer CSS
 (add-hook 'js2-mode-hook  'skewer-mode)
 (add-hook 'css-mode-hook  'skewer-css-mode)
-(add-hook 'web-mode-hook 'skewer-html-mode)
-;;; Use eldoc for syntax hint
-(autoload 'turn-on-css-eldoc "css-eldoc")
-(add-hook 'css-mode-hook 'turn-on-css-eldoc)
+(add-hook 'web-mode-hook  'skewer-html-mode)
 
 ;;;-----------------------------------------
 ;;; HttpRepl and Restclient

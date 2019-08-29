@@ -251,6 +251,7 @@ locate PACKAGE."
 (require-package 'skewer-mode)
 (require-package 'skewer-less)
 (require-package 'css-eldoc)
+(require-package 'emmet-mode)
 
 ;; init-org
 (require-package 'org-pomodoro)
@@ -272,7 +273,7 @@ locate PACKAGE."
 (require-package 'color-theme-sanityinc-tomorrow)
 (require-package 'dimmer)
 ;;;}}}
-(fullframe list-packages quit-window)
+
 (require 'cl-lib)
 
 (defun sanityinc/set-tabulated-list-column-width (col-name width)
