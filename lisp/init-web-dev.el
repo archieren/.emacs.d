@@ -17,7 +17,8 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                                         ;              JSON-mode              ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(add-hook 'json-mode-hook (lambda () (setq mode-name "")))
+(add-hook 'json-mode-hook (lambda () (setq mode-name " ")))
+(add-hook 'js-mode-hook (lambda () (setq mode-name " ")))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                                         ;       Js2-mode For JavaScript       ;
@@ -37,7 +38,7 @@
 (setq-default js2-basic-offset 4)
 (setq-default js2-bounce-indent-p nil)
 (setq-default js2-global-externs '("module" "require" "assert" "setInterval" "console" "__dirname__"))
-(add-hook 'js2-mode-hook (lambda () (setq mode-name "")))
+(add-hook 'js2-mode-hook (lambda () (setq mode-name " ")))
 (add-hook 'js2-mode-hook 'add-node-modules-path)
 (js2-imenu-extras-setup)
 
