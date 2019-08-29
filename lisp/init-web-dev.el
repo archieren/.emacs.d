@@ -213,7 +213,7 @@
 (add-hook 'css-mode-hook (lambda () (add-to-list (make-local-variable 'company-backends)
                                             '(company-css company-files company-capf company-dabbrev))))
 ;; Use eldoc for syntax hint
-(autoload 'turn-on-css-eldoc "css-eldoc")
+;; (autoload 'turn-on-css-eldoc "css-eldoc")
 (add-hook 'css-mode-hook 'turn-on-css-eldoc)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                                         ;          Some Minor Modes!          ;
