@@ -21,10 +21,51 @@
 (add-hook 'js-mode-hook (lambda () (setq mode-name " ")))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                                        ;          JavaScript-Eslint & Tide
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; 安装javascript-eslint的后端
+;; $sudo (c)npm install -g eslint
+;;; javascript-eslint is a builtin checker in flycheck.
+;; 我怀疑这个问题已经在flycheck中修正了.但还是留着吧,反正不冲突.
+(defun my/use-eslint-from-node-modules ()
+  "No Document Now!"
+  ;; use local eslint from node_modules before global
+  ;; http://emacs.stackexchange.com/questions/21205/flycheck-with-file-relative-eslint-executable
+  (let* ((root (locate-dominating-file
+                (or (buffer-file-name) default-directory) "node_modules"))
+         (eslint (and root
+                      (expand-file-name "node_modules/.bin/eslint" root))))
+    (when (and eslint (file-executable-p eslint))
+      (setq-local flycheck-javascript-eslint-executable eslint))))
+(add-hook 'flycheck-mode-hook #'my/use-eslint-from-node-modules)
+
+
+;;; Tide
+;; Make sure tsconfig.json or jsconfig.json is present in the root folder of the project.
+(require 'tide)
+(diminish 'tide-mode " ")
+(defun my/setup-tide-mode ()
+  "Setup tide-mode."
+  (interactive)
+  ;;Infact ,in my configuration,both flycheck-mode and company-mode are globaly setted!
+  (flycheck-mode +1)
+  (company-mode +1)
+  (eldoc-mode +1)
+  ;;
+  (tide-setup)
+  (tide-hl-identifier-mode +1)
+  ;;
+  (setq flycheck-check-syntax-automatically '(save mode-enabled))
+  (add-to-list (make-local-variable 'company-backends) 'company-files)
+  )
+
+;; formats the buffer before saving
+(add-hook 'before-save-hook #'tide-format-before-save)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                                         ;       Js2-mode For JavaScript       ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-
 
 ;; Need to first remove from list if present, since elpa adds entries too, which
 ;; may be in an arbitrary order
@@ -75,48 +116,9 @@
   (add-hook hook 'inferior-js-keys-mode))
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-                                        ;          JavaScript-Eslint & Tide
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; JAVASCRIPT-ESLINT is a builtin checker in flycheck.
-;; 我怀疑这个问题已经在flycheck中修正了.但还是留着吧,反正不冲突.
-(defun my/use-eslint-from-node-modules ()
-  "No Document Now!"
-  ;; use local eslint from node_modules before global
-  ;; http://emacs.stackexchange.com/questions/21205/flycheck-with-file-relative-eslint-executable
-  (let* ((root (locate-dominating-file
-                (or (buffer-file-name) default-directory) "node_modules"))
-         (eslint (and root
-                      (expand-file-name "node_modules/.bin/eslint" root))))
-    (when (and eslint (file-executable-p eslint))
-      (setq-local flycheck-javascript-eslint-executable eslint))))
-(add-hook 'flycheck-mode-hook #'my/use-eslint-from-node-modules)
-
-
-
-;;; Tide
-(require 'tide)
-(diminish 'tide-mode " ")
-(defun my/setup-tide-mode ()
-  "Setup tide-mode."
-  (interactive)
-  (tide-setup)
-  ;;Infact ,in my configuration,both flycheck-mode and company-mode are globaly setted!
-  (flycheck-mode +1)
-  (setq flycheck-check-syntax-automatically '(save mode-enabled))
-  (eldoc-mode +1)
-  (tide-hl-identifier-mode +1)
-  (add-to-list (make-local-variable 'company-backends) 'company-files)
-  (company-mode +1)
-  )
-
-;; formats the buffer before saving
-(add-hook 'before-save-hook 'tide-format-before-save)
-
 ;; (add-hook 'js2-mode-hook #'my/setup-tide-mode)
 (add-hook 'js2-mode-hook (lambda ()
                            (my/setup-tide-mode)
-                           (message "hello")
                            ;; 下面一句似乎也无必要!tide-setup里似乎就是这么干的.
                            (flycheck-add-next-checker 'javascript-eslint 'javascript-tide 'append)
                            ))
@@ -128,6 +130,8 @@
 (add-hook 'typescript-mode-hook (lambda () (setq mode-name "")))
 (add-hook 'typescript-mode-hook 'add-node-modules-path)
 (add-hook 'typescript-mode-hook #'my/setup-tide-mode)
+(add-hook 'before-save-hook #'tide-format-before-save)
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                                         ;               Web-Mode              ;
@@ -204,11 +208,13 @@
 (require 'skewer-less)
 (require 'css-eldoc)
 
-;; 安装css-stylelint的后端
+;;; 安装css-stylelint的后端
 ;; $sudo (c)npm install -g stylelint
 ;; $sudo (c)npm install -g stylelint-config-recommended
+;;; 安装css-csslint的后端
+;; $sudo (c)npm install -g csslint
 ;; Flycheck 会自动它作为语法检查!
-
+(setq flycheck-stylelintrc "~/.stylelintrc")
 ;; 采用company中的company-css来补全
 (add-hook 'css-mode-hook (lambda () (add-to-list (make-local-variable 'company-backends)
                                             '(company-css company-files company-capf company-dabbrev))))
