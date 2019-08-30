@@ -61,6 +61,16 @@
 
 ;; formats the buffer before saving
 (add-hook 'before-save-hook #'tide-format-before-save)
+;; Format options can be specified in multiple ways.
+;; via elisp
+(setq tide-format-options
+      '(
+        :indentSize
+        4
+        :tabSize
+        4
+        ))
+;; via tsfmt.json (should be present in the root folder along with tsconfig.json)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
