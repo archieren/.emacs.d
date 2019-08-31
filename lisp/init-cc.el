@@ -12,6 +12,21 @@
 (require 'cmake-mode)
 (require 'google-c-style)
 (require 'init-company)
+(require 'irony)
+(require 'company-irony)
+(require 'company-irony-c-headers)
+(require 'flycheck-irony)
+(require 'irony-eldoc)
+(require 'rtags)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                                        ;                Irony                ;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(diminish 'irony-mode " ")
+(add-hook 'irony-mode-hook #'irony-cdb-autosetup-compile-options)
+(add-hook 'flycheck-mode-hook #'flycheck-irony-setup)
+(add-hook 'irony-mode-hook #'irony-eldoc)
+
+
 ;;; avoid default "gnu" style, use more popular one
 
 (setq c-default-style '((java-mode . "java" )
@@ -25,34 +40,42 @@
         tab-width 4
         ;; this will make sure spaces are used instead of tabs
         indent-tabs-mode nil)
-  ;; Company-c-headers
-  (sanityinc/local-push-company-backend 'company-c-headers)
-  ;; (add-to-list 'company-backends 'company-c-headers)
+  ;; --
+  (google-set-c-style)
+  (google-make-newline-indent)
+  ;; --
+  (subword-mode +1)
+  ;; Company-c-headers : If company-irony-c-headers is not configured!
+  ;; (sanityinc/local-push-company-backend 'company-c-headers)
+  ;; Irony
+  (irony-mode +1)
+  (add-to-list (make-local-variable 'company-backends) '(company-irony company-irony-c-headers))
   )
+
 (add-hook 'c-mode-common-hook 'init-cc-c-mode-common-hook)
-(add-hook 'c-mode-common-hook 'google-set-c-style)
-(add-hook 'c-mode-common-hook 'google-make-newline-indent)
-(add-hook 'c-mode-common-hook 'subword-mode)
 
-;;; Company-c-headers
-;;To enable C++ header completion for standard libraries, you have to add its path, for example, like this:
-(add-to-list 'company-c-headers-path-system "/usr/include/c++/9.1.0/")
+;;; Company-c-headers : If company-irony-c-headers is not configured!
+;; To enable C++ header completion for standard libraries, you have to add its path, for example, like this:
+;; (add-to-list 'company-c-headers-path-system "/usr/include/c++/9.1.0/")
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                                        ;                Rtags                ;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(rtags-enable-standard-keybindings)
+(setq rtags-autostart-diagnostics t)
+(rtags-diagnostics)
+(setq rtags-completions-enabled t)
+(rtags-start-process-unless-running)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                                        ;            No Irony Case!           ;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Flycheck-pkg-config
 ;;Flycheck-pkg-config provides an interactive way for configuring flycheck to use C library headers.
 ;;It configures flycheck-clang-include-path, flycheck-gcc-include-path and flycheck-cppcheck-include-path interactively.
 ;;These three variables are defined in flycheck.el
 ;;Usage: M-x flycheck-pkg-config
-
 ;;; Flycheck
-
-
-;;; Cmake-mode
-(setq auto-mode-alist
-      (append '(("CMakeLists\\.txt\\'" . cmake-mode)
-                ("\\.cmake\\'" . cmake-mode))
-              auto-mode-alist))
-
 ;;; Flycheck for cc-mode:
 ;;  Default support status of C,C++ standards
 ;;          C                           C++
@@ -71,20 +94,24 @@
 (defun init-cc-c-mode-hook ()
   "Set my c setups."
   (setq mode-name "")
-  ;;(setq flycheck-checker               'c/c++-clang)
-  ;;(setq flycheck-clang-language-standard "c17")
-  (setq flycheck-checker 'c/c++-gcc)
-  (setq flycheck-gcc-language-standard "c17")
+  ;; clang checker
+  ;; (setq flycheck-checker               'c/c++-clang)
+  ;; (setq flycheck-clang-language-standard "c17")
+  ;; gcc checker
+  ;; (setq flycheck-checker 'c/c++-gcc)
+  ;; (setq flycheck-gcc-language-standard "c17")
   ;; More flycheck-checker c/c++-gcc (c/c++-clang) 's parameters can go here!
   )
 
 (defun init-cc-c++-mode-hook ()
   "Set my c setups."
   (setq mode-name "")
-  ;;(setq flycheck-checker                 'c/c++-clang)
-  ;;(setq flycheck-clang-language-standard "c++17")
-  (setq flycheck-checker                   'c/c++-gcc)
-  (setq flycheck-gcc-language-standard     "c++17")
+  ;; clang checker
+  ;; (setq flycheck-checker                 'c/c++-clang)
+  ;; (setq flycheck-clang-language-standard "c++17")
+  ;; gcc checker
+  ;; (setq flycheck-checker                   'c/c++-gcc)
+  ;; (setq flycheck-gcc-language-standard     "c++17")
   ;; More flycheck-checker c/c++-gcc (c/c++-clang) 's parameters can go here!
   )
 (add-hook 'c-mode-hook   'init-cc-c-mode-hook)
@@ -121,6 +148,14 @@
 ;; to use ‘c-initialization-hook’.  Their values aren’t overwritten when CC
 ;; Mode gets loaded.
 ;;;------------------------------------------------------------------------
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                                        ;              CMake-Mode             ;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(setq auto-mode-alist
+      (append '(("CMakeLists\\.txt\\'" . cmake-mode)
+                ("\\.cmake\\'" . cmake-mode))
+              auto-mode-alist))
 
 (provide 'init-cc)
 ;;; init-cc ends here

@@ -163,6 +163,13 @@ locate PACKAGE."
 (require-package 'google-c-style)
 (require-package 'company-c-headers)
 (require-package 'flycheck-pkg-config)
+(require-package 'irony)
+(require-package 'irony-eldoc)
+(require-package 'company-irony)
+(require-package 'company-irony-c-headers)
+(require-package 'flycheck-irony)
+(require-package 'rtags)
+
 ;; init-lisp
 (require-package 'slime)
 (require-package 'hippie-expand-slime)
