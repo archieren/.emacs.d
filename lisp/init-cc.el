@@ -72,8 +72,8 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                                         ;                Rtags                ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(setq rtags-autostart-diagnostics t)
-(rtags-diagnostics)
+;; (setq rtags-autostart-diagnostics t)
+;; (rtags-diagnostics)
 (setq rtags-completions-enabled t)
 (rtags-start-process-unless-running)
 
