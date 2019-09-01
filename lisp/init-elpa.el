@@ -160,6 +160,7 @@ locate PACKAGE."
 (require-package 'writeroom-mode)
 ;; init-cc
 (require-package 'cmake-mode)
+(require-package 'cmake-ide)
 (require-package 'google-c-style)
 (require-package 'company-c-headers)
 (require-package 'flycheck-pkg-config)

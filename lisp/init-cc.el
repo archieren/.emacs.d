@@ -28,6 +28,7 @@
 ;;; 例如:
 ;;; -- cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON /the/directory/containing/cmakelists/file
 ;;; -- rc -J /path/to/the/directory/containing/compile_commands.json
+;;; 但安装了cmake-ide后,似乎没那么麻烦!?
 (add-hook 'irony-mode-hook #'irony-cdb-autosetup-compile-options)
 (add-hook 'flycheck-mode-hook #'flycheck-irony-setup)
 (add-hook 'irony-mode-hook #'irony-eldoc)
@@ -101,6 +102,14 @@
 
 (require 'ivy-rtags)
 (setq rtags-display-result-backend 'ivy)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                                        ;              Cmake-Ide!             ;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(require 'cmake-ide)
+;; Must have rtags installed!
+;; (require 'rtags)
+(cmake-ide-setup)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                                         ;            No Irony Case!           ;
