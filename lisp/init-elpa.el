@@ -169,6 +169,10 @@ locate PACKAGE."
 (require-package 'company-irony-c-headers)
 (require-package 'flycheck-irony)
 (require-package 'rtags)
+(require-package 'company-rtags)
+(require-package 'flycheck-rtags)
+(require-package 'ivy-rtags)
+
 
 ;; init-lisp
 (require-package 'slime)

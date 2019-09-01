@@ -22,6 +22,12 @@
                                         ;                Irony                ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (diminish 'irony-mode " ")
+;;; 这里牵涉到一个概念: Compilation DataBase!
+;;; See https://sarcasm.github.io/notes/dev/compilation-database.html
+;;; Irony 和 Rtags都会用到!
+;;; 例如:
+;;; -- cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON /the/directory/containing/cmakelists/file
+;;; -- rc -J /path/to/the/directory/containing/compile_commands.json
 (add-hook 'irony-mode-hook #'irony-cdb-autosetup-compile-options)
 (add-hook 'flycheck-mode-hook #'flycheck-irony-setup)
 (add-hook 'irony-mode-hook #'irony-eldoc)
@@ -36,13 +42,14 @@
 ;; Customizations for all modes in CC Mode.
 (defun init-cc-c-mode-common-hook ()
   "Set my personal style for the current buffer."
+  ;; --
+  (google-set-c-style)
+  (google-make-newline-indent)
+  ;; --
   (setq c-basic-offset 4
         tab-width 4
         ;; this will make sure spaces are used instead of tabs
         indent-tabs-mode nil)
-  ;; --
-  (google-set-c-style)
-  (google-make-newline-indent)
   ;; --
   (subword-mode +1)
   ;; Company-c-headers : If company-irony-c-headers is not configured!
@@ -52,7 +59,10 @@
   (add-to-list (make-local-variable 'company-backends) '(company-irony company-irony-c-headers))
   )
 
-(add-hook 'c-mode-common-hook 'init-cc-c-mode-common-hook)
+(add-hook 'c-mode-hook #'init-cc-c-mode-common-hook)
+(add-hook 'c++-mode-hook #'init-cc-c-mode-common-hook)
+
+
 
 ;;; Company-c-headers : If company-irony-c-headers is not configured!
 ;; To enable C++ header completion for standard libraries, you have to add its path, for example, like this:
@@ -61,11 +71,36 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                                         ;                Rtags                ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(rtags-enable-standard-keybindings)
 (setq rtags-autostart-diagnostics t)
 (rtags-diagnostics)
 (setq rtags-completions-enabled t)
 (rtags-start-process-unless-running)
+
+;; (define-key c-mode-base-map (kbd "M-.") 'rtags-find-symbol-at-point)
+;; (define-key c-mode-base-map (kbd "M-,") 'rtags-find-references-at-point)
+;; (define-key c-mode-base-map (kbd "M-?") 'rtags-display-summary)
+(rtags-enable-standard-keybindings)
+
+;; Shutdown rdm when leaving emacs.
+(add-hook 'kill-emacs-hook 'rtags-quit-rdm)
+
+;; (require 'company-rtags)
+;; (add-hook 'c-mode-hook (lambda () (sanityinc/local-push-company-backend 'company-rtags)))
+;; (add-hook 'c++-mode-hook (lambda () (sanityinc/local-push-company-backend 'company-rtags)))
+
+;; (require 'flycheck-rtags)
+;; (defun setup-flycheck-rtags ()
+;;   "Ensure that we use only rtags checking."
+;;   (flycheck-select-checker 'rtags)
+;;   (setq-local flycheck-highlighting-mode nil) ;; RTags creates more accurate overlays.
+;;   (setq-local flycheck-check-syntax-automatically nil)
+;;   (rtags-set-periodic-reparse-timeout 2.0) ;; Run flycheck 2 seconds after being idle.
+;;   )
+;; (add-hook 'c-mode-hook #'setup-flycheck-rtags)
+;; (add-hook 'c++-mode-hook #'setup-flycheck-rtags)
+
+(require 'ivy-rtags)
+(setq rtags-display-result-backend 'ivy)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                                         ;            No Irony Case!           ;
