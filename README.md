@@ -1,9 +1,8 @@
 
+# 这是我的Emacs的配置文件，來至Steven Purcell的配置.
+不准备作为一个可公用的东西，所以我将很多环境相关的东西删掉了。
+我只用archlinux。
 
-# 这是我的Emacs的配置文件，來至Steven Purcell的配置。目前正在慢慢的学习、调整。
-# 不准备作为一个可公用的东西，所以我将很多环境相关的东西删掉了。我只用archlinux。
-# WWW的开发环境，留着无妨，但可能会被弱化。
-# 向高手们（Rdeguardtoo 等）致敬!
 
 Emacs itself comes with support for many programming languages. This
 config adds improved defaults and extended support for the following, listed
