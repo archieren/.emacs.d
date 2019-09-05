@@ -162,6 +162,9 @@
   (setq web-mode-code-indent-offset 4)
   (setq web-mode-enable-current-element-highlight t)
   (setq web-mode-enable-css-colorization t)
+  (set-face-attribute 'web-mode-html-tag-face nil :foreground "royalblue")
+  (set-face-attribute 'web-mode-html-attr-name-face nil :foreground "powderblue")
+  (set-face-attribute 'web-mode-doctype-face nil :foreground "lightskyblue")
   )
 
 (defun my/web-html-setup ()
