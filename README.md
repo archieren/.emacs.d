@@ -8,17 +8,17 @@ Emacs itself comes with support for many programming languages. This
 config adds improved defaults and extended support for the following, listed
 in the approximate order of how much I use them, from most to least:
 
-** Haskell / Elm
-** Ruby / Ruby on Rails
-** CSS / LESS / SASS / SCSS
-** Javascript / Typescript / Coffeescript
-** HTML / HAML / Markdown / Textile / ERB
-** Rust
-** Python
-** Clojure (with Cider and nRepl)
-** Common Lisp (with Slime)
-** PHP
-** Erlang
+* Haskell / Elm
+* Ruby / Ruby on Rails
+* CSS / LESS / SASS / SCSS
+* Javascript / Typescript / Coffeescript
+* HTML / HAML / Markdown / Textile / ERB
+* Rust
+* Python
+* Clojure (with Cider and nRepl)
+* Common Lisp (with Slime)
+* PHP
+* Erlang
 
 In particular, there's a nice config for *autocompletion* with
 [company](https://company-mode.github.io/), and
