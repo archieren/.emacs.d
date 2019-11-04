@@ -9,7 +9,8 @@
 
 
 ;; Added by Package.el.  This must come before configurations of installed packages.
-(package-initialize)
+;; But From Emacs > 24.3 , it seems depricated!
+;; (package-initialize)
 
 (setq debug-on-error t)
 
