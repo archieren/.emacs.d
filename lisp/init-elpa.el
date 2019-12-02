@@ -216,6 +216,7 @@ locate PACKAGE."
 
 ;; init-erlang
 (require-package 'erlang)
+(require-package 'elixir-mode)
 ;; init-haskell
 (require-package 'haskell-mode)
 (require-package 'dante)
