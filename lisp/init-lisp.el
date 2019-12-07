@@ -175,7 +175,7 @@ Eval region from begin-mark to end-mark if active, otherwise the last sexp."
 
 (require 'slime)
 ;;; Another way! Install the slime from quicklisp!
-;; (load (expand-file-name "~/quicklisp/slime-helper.el"))
+;; (load (expand-file-name "~/.quicklisp/slime-helper.el"))
 (slime-setup)
 (require 'slime-autoloads)
 (slime-setup '(slime-fancy slime-banner))
