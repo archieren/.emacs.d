@@ -202,17 +202,6 @@ locate PACKAGE."
 (require-package 'elpy)
 (require-package 'highlight-indentation)
 (require-package 'py-autopep8)
-;; Required Packages for IPython/Jupyter...
-;;See https://github.com/millejoh/emacs-ipython-notebook
-(require-package 'ein)
-(require-package 'dash)
-(require-package 'websocket)
-(require-package 'request)
-(require-package 'request-deferred)
-(require-package 's)
-(require-package 'auto-complete)
-(require-package 'skewer-mode)
-(require-package 'ess) ;;dependency,myabe a bug
 
 ;; init-erlang
 (require-package 'erlang)
