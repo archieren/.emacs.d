@@ -1,4 +1,4 @@
-;;; init.el --- Bootstrap the configurations.
+;;; init.el --- Bootstrap the configurations
 ;;; Commentary:
 ;; S.Purcell modulizes the configurations.It's a good method.
 ;;; Version: 0.0.1
