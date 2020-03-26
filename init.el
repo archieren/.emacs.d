@@ -48,7 +48,8 @@ Should Not be too big." )
   :ensure t
   :config
   (dolist (var `("SSH_AUTH_SOCK" "SSH_AGENT_PID" "GPG_AGENT_INFO" "LANG" "LC_CTYPE"))
-    (add-to-list `exec-path-from-shell-variables var)))
+    (add-to-list `exec-path-from-shell-variables var))
+  (exec-path-from-shell-initialize))
 (use-package which-key :ensure
   t :diminish ""
   :config
@@ -162,12 +163,12 @@ Should Not be too big." )
   (set-face-attribute  'default
 		       nil
 		       :font  (font-spec :family "DejaVu Sans Mono"
-					 :size 16))
+					 :size 14))
   (dolist (script '(kana han symbol cjk-misc bopomofo))
     (set-fontset-font  t ;;(frame-parameter nil 'font)
 		       script
 		       (font-spec :family "Noto Sans Mono CJK SC"
-				  :size 16)))
+				  :size 14)))
   (setq face-font-rescale-alist '(("DejaVu Sans Mono" . 1.0)
 				  ("Noto Sans Mono CJK SC" . 1.0))))
 (use-package doom-themes
@@ -841,7 +842,13 @@ Eval region from begin-mark to end-mark if active, otherwise the last sexp."
 					;            Erlang,Elixir            ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;;(use-package erlang :ensure  t)
+(use-package erlang
+  :ensure  t
+  :init
+  ;;erlang_ls 来自 https://github.com/erlang-ls 下的erlang_ls
+  (add-to-list `exec-path "~/Projects/erlang_ls/_build/default/bin")
+  :config
+  (require `lsp-mode))
 
 (use-package elixir-mode
   :ensure t
