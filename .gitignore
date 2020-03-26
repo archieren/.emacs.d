@@ -63,3 +63,4 @@ request/
 /transient/history.el
 /irony
 /elpy
+/.cache
