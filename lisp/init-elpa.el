@@ -11,7 +11,7 @@
   (setq package-user-dir versioned-package-dir))
 
 ;;; Mirrors of Standard package repositories
-;;; 
+;;;
 (setq package-archives '(("gnu"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
                          ("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
                          ("org" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/org/")))
@@ -56,16 +56,10 @@ locate PACKAGE."
 (require-package 'fullframe)
 (require-package 'cl-lib)
 (require-package 'f)
-(require-package 'wgrep)
-(require-package 'ag)
-(require-package 'wgrep-ag)
-(require-package 'rg)
-(require-package 'ripgrep)
 (require-package 'company)
-;;When we diminish a mode,
-;;we are saying we want it to continue doing its work for us,
-;;but we no longer want to be reminded of it.
+(require-package 'use-package)
 (require-package 'diminish)
+(require-package 'bind-key)
 (require-package 'scratch)
 (require-package 'command-log-mode)
 (require-package 'disable-mouse)
@@ -88,12 +82,13 @@ locate PACKAGE."
 (require-package 'diff-hl)
 
 ;;; init-grep
-;;(require-package 'wgrep)
-;;(require-package 'ag)
-;;(require-package 'wgrep-ag)
-;;(require-package 'rg)
+(require-package 'wgrep)
+(require-package 'ag)
+(require-package 'wgrep-ag)
+(require-package 'rg)
+(require-package 'ripgrep)
 
-  ;;; init-flycheck
+;;; init-flycheck
 (require-package 'flycheck)
 (require-package 'flycheck-color-mode-line)
   ;;; init-ido
@@ -202,17 +197,6 @@ locate PACKAGE."
 (require-package 'elpy)
 (require-package 'highlight-indentation)
 (require-package 'py-autopep8)
-;; Required Packages for IPython/Jupyter...
-;;See https://github.com/millejoh/emacs-ipython-notebook
-(require-package 'ein)
-(require-package 'dash)
-(require-package 'websocket)
-(require-package 'request)
-(require-package 'request-deferred)
-(require-package 's)
-(require-package 'auto-complete)
-(require-package 'skewer-mode)
-(require-package 'ess) ;;dependency,myabe a bug
 
 ;; init-erlang
 (require-package 'erlang)
