@@ -848,7 +848,8 @@ Eval region from begin-mark to end-mark if active, otherwise the last sexp."
   ;;erlang_ls 来自 https://github.com/erlang-ls 下的erlang_ls
   (add-to-list `exec-path "~/Projects/erlang_ls/_build/default/bin")
   :config
-  (require `lsp-mode))
+  (require `lsp-mode)
+  (add-hook `erlang-mode-hook `lsp))
 
 (use-package elixir-mode
   :ensure t
