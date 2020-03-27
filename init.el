@@ -177,8 +177,8 @@ Should Not be too big." )
   ;; Global settings (defaults)
   (setq doom-themes-enable-bold t
         doom-themes-enable-italic t)
-  (load-theme `doom-solarized-dark t)
-  ;;(load-theme `doom-one t)
+  ;; (load-theme `doom-solarized-dark t)
+  (load-theme `doom-one t)
   ;; Enable flashing mode-line on errors
   (doom-themes-visual-bell-config)
   ;; Corrects (and improves) org-mode's native fontification.
@@ -562,6 +562,10 @@ Should Not be too big." )
   (treemacs-filewatch-mode t)
   (treemacs-fringe-indicator-mode t)
   (setq treemacs-is-never-other-window nil)
+  (use-package treemacs-icons-dired
+    :ensure t
+    :config
+    (treemacs-icons-dired-mode))
   (use-package treemacs-projectile
     :ensure t)
   (use-package treemacs-magit
