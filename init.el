@@ -1024,12 +1024,13 @@ Eval region from begin-mark to end-mark if active, otherwise the last sexp."
     (setq mode-name "")
     (setq flycheck-flake8-maximum-line-length 240))
   (add-hook `python-mode-hook `init-python-mode-hook-setup)
-  (use-package lsp-python-ms :ensure t)
-  ;; 注意lsp-pyls的优先级比lsp-python-ms高
-  ;; python 安装python-language-server包后,会自动用lsp-pyls.
-  ;; 注意python安装的jedi包的版本问题，这个似乎老在变
+  ;; (use-package lsp-python-ms :ensure t)
+  ;; ;; 注意lsp-pyls的优先级比lsp-python-ms高
+  ;; ;; python 安装python-language-server包后,会自动用lsp-pyls.
+  ;; ;; 注意python安装的jedi包的版本问题，这个似乎老在变
+  ;; (require `lsp-mode)
+  ;; (require `lsp-python-ms)
   (require `lsp-mode)
-  (require `lsp-python-ms)
   (add-hook `python-mode-hook `lsp))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 					;           Structureed Doc.          ;
