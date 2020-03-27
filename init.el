@@ -183,6 +183,7 @@ Should Not be too big." )
   (doom-themes-visual-bell-config)
   ;; Corrects (and improves) org-mode's native fontification.
   (doom-themes-org-config)
+  ;; Set the treemacs-theme
   (setq doom-themes-treemacs-theme "doom-colors") ; use the colorful treemacs theme
   (doom-themes-treemacs-config))
 (use-package doom-modeline
