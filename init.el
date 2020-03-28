@@ -823,16 +823,20 @@ Eval region from begin-mark to end-mark if active, otherwise the last sexp."
     ;; By default, lsp-mode automatically activates lsp-ui unless lsp-auto-configure is set to nil.
     ;; You only have to put (use-package lsp-ui) in your config and the package will work out of the box.
     ;; :init (add-hook `lsp-mode-hook `lsp-ui-mode)
-    :custom
+    :config
     ;;------------------
-    (lsp-ui-doc-enable t)
-    (lsp-ui-doc-delay 2)
-    (lsp-ui-doc-position `at-point)
+    (setq lsp-ui-doc-delay 1.0)
+    (setq lsp-ui-doc-position `at-point)
+    (setq lsp-ui-doc-enable nil)
     ;;------------------
-    (lsp-ui-sideline-enable t)
-    (lsp-ui-sideline-show-hover t)
-    (lsp-ui-sideline-ignore-duplicate t)
-    (lsp-ui-sideline-show-code-actions t))
+    (setq lsp-ui-sideline-show-hover t)
+    (setq lsp-ui-sideline-ignore-duplicate t)
+    (setq lsp-ui-sideline-show-code-actions t)
+    (setq lsp-ui-sideline-enable t)
+    ;;------------------
+    (define-key lsp-ui-mode-map (kbd "M-.") `lsp-ui-peek-find-definitions)
+    (define-key lsp-ui-mode-map (kbd "M-?") `lsp-ui-peek-find-references)
+    (setq lsp-ui-peek-enable t))
   (use-package company-lsp
     :ensure t
     :config
