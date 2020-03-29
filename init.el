@@ -336,7 +336,7 @@ Should Not be too big." )
   :ensure t
   ;:bind (("M-?" . rg-project))
   :config
-  (global-set-key (kbd "M-?") 'rg-project)
+  (global-set-key (kbd "s-?") 'rg-project)
   (unless (executable-find "rg")
     (warn "\nWARNING: Could not find the ripgrep executable."))
   (use-package deadgrep
@@ -413,8 +413,8 @@ Should Not be too big." )
   :bind (("M-x" . counsel-M-x)
 	 ("C-x C-f" . counsel-find-file)
 	 ("C-x b" . counsel-switch-buffer)
-	 ("s-c r" . counsel-rg)
-	 ("s-c a" . counsel-ag))
+	 ("s-c c r" . counsel-rg)
+	 ("s-c c a" . counsel-ag))
   :config
   (if (executable-find "rg")
       ;; use ripgrep instead of grep,ag, because it's way faster
@@ -427,10 +427,10 @@ Should Not be too big." )
     (warn "\nWARNING: Could not find the ripgrep executable.")))
 (use-package counsel-etags
   :ensure t
-  :bind (("s-c ." . counsel-etags-find-tag-at-point)
-	 ("s-c g" . counsel-etags-grep-symbol-at-point)
-	 ("s-c f" . counsel-etags-find-tag)
-	 ("s-c s" . counsel-etags-scan-code))
+  :bind (("s-c c ." . counsel-etags-find-tag-at-point)
+	 ("s-c c g" . counsel-etags-grep-symbol-at-point)
+	 ("s-c c f" . counsel-etags-find-tag)
+	 ("s-c c s" . counsel-etags-scan-code))
   :config
   ;; Ignores of ctags
   (add-to-list `counsel-etags-ignore-directories       "build_clang")
