@@ -1011,6 +1011,20 @@ Eval region from begin-mark to end-mark if active, otherwise the last sexp."
     :config
     (setq  conda-anaconda-home (expand-file-name "~/anaconda3/"))
     (setq conda-env-home-directory (expand-file-name "~/anaconda3/"))
+    ;;
+    (defun init-conda-env-shell-init (orig_fun &rest args)
+      "Activate the current env in a newly opened shell PROCESS."
+      (let* ((process (car args))
+	     (activate-command (if (eq system-type 'windows-nt)
+				   '("activate")
+				 '("conda" "activate")))
+	     (full-command (append activate-command `(,conda-env-current-name "\n")))
+	     (command-string (combine-and-quote-strings full-command)))
+	(comint-send-string process command-string)))
+    (advice-add `conda-env-shell-init :around `init-conda-env-shell-init)
+    (global-set-key (kbd "s-c .") `conda-env-activate)
+    (global-set-key (kbd "s-c ,") `conda-env-deactivate)
+    ;;
     (conda-env-initialize-interactive-shells)
     (conda-env-initialize-eshell))
   ;;
