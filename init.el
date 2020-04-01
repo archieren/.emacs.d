@@ -43,7 +43,9 @@ Should Not be too big." )
 (eval-when-compile (require `use-package))
 (use-package diminish :ensure t)
 (use-package bind-key :ensure t)
-;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+					;              Basic Env              ;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (use-package exec-path-from-shell
   :ensure t
   :config
@@ -59,6 +61,7 @@ Should Not be too big." )
   (setq which-key-side-window-max-height 0.5)
   (which-key-mode t))
 (use-package dash :ensure t)
+(setq auto-save-default nil)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 					;                  UI                 ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
