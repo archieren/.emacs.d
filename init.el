@@ -125,6 +125,7 @@ Should Not be too big." )
 (use-package ace-window
   :ensure t
   :config
+  (global-set-key [remap other-window] `ace-window)
   (global-set-key (kbd "M-o") `ace-window))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 					;            Window-number            ;
@@ -567,7 +568,7 @@ Should Not be too big." )
   (treemacs-follow-mode t)
   (treemacs-filewatch-mode t)
   (treemacs-fringe-indicator-mode t)
-  (setq treemacs-is-never-other-window nil)
+  (setq treemacs-is-never-other-window t)
   (use-package treemacs-icons-dired
     :ensure t
     :config
