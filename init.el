@@ -993,6 +993,7 @@ Eval region from begin-mark to end-mark if active, otherwise the last sexp."
     :diminish ""
     :config
     (add-hook `haskell-mode-hook `hindent-mode))
+  ;; 需要安装haskell-ide-engine
   (use-package lsp-haskell
     :ensure t
     :config
