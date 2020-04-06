@@ -168,7 +168,7 @@ Should Not be too big." )
   (set-face-attribute  'default
 		       nil
 		       :font  (font-spec :family "DejaVu Sans Mono"
-					 :size 14))
+					 :size 12))
   (dolist (script '(kana han symbol cjk-misc bopomofo))
     (set-fontset-font  t ;;(frame-parameter nil 'font)
 		       script
@@ -610,8 +610,8 @@ Should Not be too big." )
   :diminish ""
   :config
   (autoload `enable-paredit-mode "paredit")
+  ;; lsipy-modes is (emacs-lisp-mode ielm-mode lisp-mode inferior-lisp-mode lisp-interaction-mode)
   (init-add-hook-to-lispy-modes `enable-paredit-mode)
-  ;;
   (init-add-hook-to-lispy-modes `init-lisp-enable-check-parens-on-save)
   ;;
   (defun init-maybe-map-paredit-newline ()
@@ -645,7 +645,7 @@ Should Not be too big." )
   :ensure t
   :diminish ""
   :config
-  ;;
+  ;; emacss-lispy-modes 含有 emacs-lisp-mode 和 ielm-mode
   (require `hippie-exp)
   (defun init-hippie-expand-for-elisp ()
     "Locally set `hippie-expand' completion functions for use with Emacs Lisp."
@@ -657,6 +657,7 @@ Should Not be too big." )
   (init-add-hook-to-emacss-lispy-modes `turn-on-eldoc-mode)
   (init-add-hook-to-emacss-lispy-modes `turn-on-elisp-slime-nav-mode)
   (add-hook `emacs-lisp-mode-hook (lambda () (setq mode-name "")))
+  (add-hook `ielm-mode-hook (lambda () (setq mode-name "")))
   (setq-default initial-scratch-message (concat ";; Happy hacking, " user-login-name " - Emacs  you!\n\n"))
   ;; Make C-x C-e run 'eval-region if the region is active
   (defun init-eval-last-sexp-or-region (prefix)
@@ -758,40 +759,30 @@ Eval region from begin-mark to end-mark if active, otherwise the last sexp."
                  '(ccl ("ccl") :coding-system utf-8-unix)))
   ;;
   (slime-setup)
-  (slime-setup `(slime-fancy slime-banner))
+  (slime-setup `(slime-fancy slime-banner slime-repl slime-fuzzy))
   (use-package hippie-expand-slime
     :ensure t
     :config
     (add-hook `slime-mode-hook `set-up-slime-hippie-expand))
-  (use-package slime-company :ensure t
+  (use-package slime-company
+    :ensure t
     :config
-    (let ((extras (when (require `slime-company nil t)
-		    `(slime-company))))
-      (slime-setup (append `(slime-repl slime-fuzzy) extras))))
+    (slime-setup `(slime-company)))
   (setq slime-protocol-version `ignore)
   (setq slime-net-coding-system `utf-8-unix)
-  ;(setq slime-complete-symbol*-fancy t)
-  ;; The custom variable "slime-complete-symbol-function" was obsoleted.
-  ;; Use slime-completion-at-point-functions instead.
   (setq slime-completion-at-point-functions `slime-fuzzy-complete-symbol)
   (require `slime-repl)
   (require `slime-c-p-c)
   (require `slime-macrostep)
   (diminish `slime-autodoc-mode)
-  (defun init-slime-repl-setup ()
-    "Mode setup function for slime REPL."
-    (enable-paredit-mode)
-    (turn-on-eldoc-mode)
-    (init-lisp-disable-indent-guide)
-    (init-lisp-enable-check-parens-on-save)
-    (set-up-slime-hippie-expand)
-    (setq show-trailing-whitespace nil))
-  ;;(define-key slime-repl-mode-map (read-kbd-macro paredit-backward-delete-key) nil)
+  (define-key slime-repl-mode-map (read-kbd-macro paredit-backward-delete-key) nil)
   ;; Bind TAB to `indent-for-tab-command', as in regular Slime buffers.
-  ;;(define-key slime-repl-mode-map (kbd "TAB") `indent-for-tab-command)
-  (add-hook `slime-repl-mode-hook (lambda () (setq mode-name ""))))
-;;(eval-after-load `slime-repl `(progn (add-hook `slime-repl-mode-hook `init-slime-repl-setup)))
-;;不知为什么,init-slime-repl-setup里的东西这不起作用!
+  (define-key slime-repl-mode-map (kbd "TAB") `indent-for-tab-command)
+  (add-hook `slime-repl-mode-hook (lambda ()
+				    (setq mode-name "")
+				    (setq show-trailing-whitespace nil)
+				    (paredit-mode +1)
+				    (turn-on-eldoc-mode))))
 
 
 (use-package cask-mode :ensure t)
