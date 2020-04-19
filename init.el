@@ -173,7 +173,7 @@ Should Not be too big." )
     (set-fontset-font  t ;;(frame-parameter nil 'font)
 		       script
 		       (font-spec :family "Noto Sans Mono CJK SC"
-				  :size 14)))
+				  :size 12)))
   (setq face-font-rescale-alist '(("DejaVu Sans Mono" . 1.0)
 				  ("Noto Sans Mono CJK SC" . 1.0))))
 (use-package doom-themes
