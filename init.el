@@ -1080,17 +1080,47 @@ Eval region from begin-mark to end-mark if active, otherwise the last sexp."
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 					;            C/C++/Object-C           ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(use-package ccls
+(use-package cc-mode
   :ensure t
   :config
-  (setq ccls-args '("--log-file=/tmp/ccls.log"))
-  (require `lsp-mode)
-  (setq lsp-diagnostic-package nil)
-  (setq-default flycheck-disabled-checkers '(c/c++-clang c/c++-cppcheck c/c++-gcc))
+  (use-package google-c-style
+    :ensure t)
+  (defun init-cc-c-mode-common-hook ()
+    "Set my personal style for the current buffer."
+    ;; --
+    (google-set-c-style)
+    (google-make-newline-indent)
+    (require google-c-style)
+    (setq c-basic-offset 4
+	  tab-width 4
+	  ;; this will make sure spaces are used instead of tabs
+	  indent-tabs-mode nil)
+    (subword-mode +1))
+  (add-hook `c-mode-hook `init-cc-c-mode-common-hook)
+  (add-hook `c++-mode-hook `init-cc-c-mode-common-hook)
+  (add-hook `objc-mode-hook `init-cc-c-mode-common-hook)
+  (add-hook `c-mode-common-hook `rainbow-delimiters-mode)
 
-  (add-hook `c++-mode-hook `lsp)
-  (add-hook `c-mode-hook `lsp)
-  (add-hook `objc-mode-hook `lsp))
+  (add-to-list 'projectile-globally-ignored-directories ".ccls-cache")
+  (add-to-list 'projectile-project-root-files-bottom-up ".ccls-root")
+  (add-to-list 'projectile-project-root-files-top-down-recurring "compile_commands.json")
+
+  (use-package cmake-mode
+    :ensure t
+    :mode (("CMakeLists\\.txt\\'" . cmake-mode)
+	   ("\\.cmake\\'" . cmake-mode))
+    :config
+    (add-hook `cmake-mode-hook (lambda() (add-to-list (make-local-variable `company-backends) `company-cmake))))
+  (use-package ccls
+    :ensure t
+    :config
+    (setq ccls-args '("--log-file=/tmp/ccls.log"))
+    (require `lsp-mode)
+    (setq-default flycheck-disabled-checkers '(c/c++-clang c/c++-cppcheck c/c++-gcc))
+
+    (add-hook `c++-mode-hook `lsp)
+    (add-hook `c-mode-hook `lsp)
+    (add-hook `objc-mode-hook `lsp)))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 					;           Structureed Doc.          ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
