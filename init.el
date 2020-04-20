@@ -1078,6 +1078,20 @@ Eval region from begin-mark to end-mark if active, otherwise the last sexp."
   (require `lsp-mode)
   (add-hook `python-mode-hook `lsp))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+					;            C/C++/Object-C           ;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(use-package ccls
+  :ensure t
+  :config
+  (setq ccls-args '("--log-file=/tmp/ccls.log"))
+  (require `lsp-mode)
+  (setq lsp-diagnostic-package nil)
+  (setq-default flycheck-disabled-checkers '(c/c++-clang c/c++-cppcheck c/c++-gcc))
+
+  (add-hook `c++-mode-hook `lsp)
+  (add-hook `c-mode-hook `lsp)
+  (add-hook `objc-mode-hook `lsp))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 					;           Structureed Doc.          ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
