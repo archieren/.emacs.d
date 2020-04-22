@@ -843,7 +843,7 @@ Eval region from begin-mark to end-mark if active, otherwise the last sexp."
     (setq lsp-ui-sideline-show-hover t)
     (setq lsp-ui-sideline-ignore-duplicate t)
     (setq lsp-ui-sideline-show-code-actions t)
-    (setq lsp-ui-sideline-enable t)
+    (setq lsp-ui-sideline-enable nil)
     ;;------------------
     (define-key lsp-ui-mode-map (kbd "M-.") `lsp-ui-peek-find-definitions)
     (define-key lsp-ui-mode-map (kbd "M-?") `lsp-ui-peek-find-references)
