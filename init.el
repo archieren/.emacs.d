@@ -335,6 +335,19 @@ Should Not be too big." )
       (format "%s[%s - %s]" projectile-mode-line-prefix project-name project-type)))
   (setq-default projectile-mode-line-prefix "")
   (setq projectile-mode-line-function `init-projectile-mode-line-fn)
+
+  ;; ------------------Added by you need
+  ;; All
+  (add-to-list `projectile-globally-ignored-directories ".vscode")
+  (add-to-list `projectile-globally-ignored-directories "build")
+  (add-to-list `projectile-globally-ignored-directories "data")
+  ;; cc-mode
+  (add-to-list `projectile-globally-ignored-directories ".ccls-cache")
+  (add-to-list `projectile-globally-ignored-directories ".clangd")
+  (add-to-list 'projectile-project-root-files-bottom-up ".ccls-root")
+  (add-to-list 'projectile-project-root-files-top-down-recurring "compile_commands.json")
+  ;; ------------------
+
   (projectile-mode t))
 
 (use-package rg
@@ -823,6 +836,8 @@ Eval region from begin-mark to end-mark if active, otherwise the last sexp."
     ;;------------------
     (setq lsp-ui-doc-delay 0.1)
     (setq lsp-ui-doc-position `at-point)
+    (setq lsp-ui-doc-max-height 8)
+    (setq lsp-ui-doc-border "purple" )
     (setq lsp-ui-doc-enable t)
     ;;------------------
     (setq lsp-ui-sideline-show-hover t)
@@ -1078,19 +1093,18 @@ Eval region from begin-mark to end-mark if active, otherwise the last sexp."
   (require `lsp-mode)
   (add-hook `python-mode-hook `lsp))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-					;            C/C++/Object-C           ;
+					;            CC-mode:C/C++/Object-C   ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (use-package cc-mode
   :ensure t
   :config
-  (use-package google-c-style
-    :ensure t)
+  (use-package modern-cpp-font-lock
+    :ensure t
+    :config
+    (modern-c++-font-lock-global-mode))
   (defun init-cc-c-mode-common-hook ()
     "Set my personal style for the current buffer."
     ;; --
-    (google-set-c-style)
-    (google-make-newline-indent)
-    (require google-c-style)
     (setq c-basic-offset 4
 	  tab-width 4
 	  ;; this will make sure spaces are used instead of tabs
@@ -1101,26 +1115,31 @@ Eval region from begin-mark to end-mark if active, otherwise the last sexp."
   (add-hook `objc-mode-hook `init-cc-c-mode-common-hook)
   (add-hook `c-mode-common-hook `rainbow-delimiters-mode)
 
-  (add-to-list 'projectile-globally-ignored-directories ".ccls-cache")
-  (add-to-list 'projectile-project-root-files-bottom-up ".ccls-root")
-  (add-to-list 'projectile-project-root-files-top-down-recurring "compile_commands.json")
-
   (use-package cmake-mode
     :ensure t
     :mode (("CMakeLists\\.txt\\'" . cmake-mode)
 	   ("\\.cmake\\'" . cmake-mode))
     :config
     (add-hook `cmake-mode-hook (lambda() (add-to-list (make-local-variable `company-backends) `company-cmake))))
+
+  ;; Use lsp, auto fall back from ccls to clangd
+  ;; 有个概念要清楚：compilation database和文件compile_commands.json对很多工具的辅助作用！
+  ;; 我的方法是用CMAKE来生成它。
+  ;; 1） 在 ProjectRoot/CMakeList.txt 中包含： set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+  ;; 2)  在 build/ 运行: cmake ..
+  ;; 3)  在 ProjectRoot/ 运行: ln -s build/compile_commands.json compile_commands.json 建立符号链接
+  ;; 4)  在 ProjectRoot/.ccls 中 为ccls如常配置。
+  ;; 即可。这样项目的目录清晰。用设置参数的方式，不是太好！
   (use-package ccls
     :ensure t
     :config
-    (setq ccls-args '("--log-file=/tmp/ccls.log"))
-    (require `lsp-mode)
-    (setq-default flycheck-disabled-checkers '(c/c++-clang c/c++-cppcheck c/c++-gcc))
-
-    (add-hook `c++-mode-hook `lsp)
-    (add-hook `c-mode-hook `lsp)
-    (add-hook `objc-mode-hook `lsp)))
+    (setq ccls-args '("--log-file=/tmp/ccls.log")))
+  ;; (setq lsp-clients-clangd-args '("--compile-commands-dir=./build" "-background-index"))
+ 
+  (setq-default flycheck-disabled-checkers '(c/c++-clang c/c++-cppcheck c/c++-gcc))
+  (add-hook `c++-mode-hook `lsp)
+  (add-hook `c-mode-hook `lsp)
+  (add-hook `objc-mode-hook `lsp))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 					;           Structureed Doc.          ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
