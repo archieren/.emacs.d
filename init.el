@@ -1003,8 +1003,9 @@ Eval region from begin-mark to end-mark if active, otherwise the last sexp."
   (use-package lsp-haskell
     :ensure t
     :config
-    (setq lsp-haskell-process-path-hie "ghcide")
-    (setq lsp-haskell-process-args-hie `())
+    ;; For ghcide
+    ;; (setq lsp-haskell-process-path-hie "ghcide")
+    ;; (setq lsp-haskell-process-args-hie `())
     ;; Comment/uncomment this line to see interactions between lsp client/server.
     ;; (setq lsp-log-io t)
     (add-hook `haskell-mode-hook `lsp)))
