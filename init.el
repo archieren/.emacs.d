@@ -1144,7 +1144,7 @@ Eval region from begin-mark to end-mark if active, otherwise the last sexp."
     :config
     (setq ccls-args '("--log-file=/tmp/ccls.log")))
   ;; (setq lsp-clients-clangd-args '("--compile-commands-dir=./build" "-background-index"))
- 
+
   (setq-default flycheck-disabled-checkers '(c/c++-clang c/c++-cppcheck c/c++-gcc))
   (add-hook `c++-mode-hook `lsp)
   (add-hook `c-mode-hook `lsp)
