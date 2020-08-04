@@ -1007,6 +1007,8 @@ Eval region from begin-mark to end-mark if active, otherwise the last sexp."
   (use-package lsp-haskell
     :ensure t
     :config
+    ;; For Haskell-language-server
+    (setq lsp-haskell-process-path-hie "haskell-language-server-wrapper")
     ;; For ghcide
     ;; (setq lsp-haskell-process-path-hie "ghcide")
     ;; (setq lsp-haskell-process-args-hie `())
