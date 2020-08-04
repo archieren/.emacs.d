@@ -1157,7 +1157,7 @@ Eval region from begin-mark to end-mark if active, otherwise the last sexp."
 
 (use-package yaml-mode
   :ensure t
-  :mode "\\.yml\\.erb\\'"
+  :mode "\\.yaml\\.yml\\.erb\\'"
   :hook (yaml-mode . goto-address-prog-mode))
 (use-package markdown-mode
   :ensure t
