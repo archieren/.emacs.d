@@ -345,6 +345,7 @@ Should Not be too big." )
   (add-to-list `projectile-globally-ignored-directories ".vscode")
   (add-to-list `projectile-globally-ignored-directories "build")
   (add-to-list `projectile-globally-ignored-directories "data")
+  (add-to-list `projectile-globally-ignored-directories ".stack-work")
   ;; cc-mode
   (add-to-list `projectile-globally-ignored-directories ".ccls-cache")
   (add-to-list `projectile-globally-ignored-directories ".clangd")
@@ -852,10 +853,11 @@ Eval region from begin-mark to end-mark if active, otherwise the last sexp."
     (define-key lsp-ui-mode-map (kbd "M-.") `lsp-ui-peek-find-definitions)
     (define-key lsp-ui-mode-map (kbd "M-?") `lsp-ui-peek-find-references)
     (setq lsp-ui-peek-enable t))
-  (use-package company-lsp
-    :ensure t
-    :config
-    (push `company-lsp company-backends))
+  ;; company-lsp is no longer supported!
+  ;; (use-package company-lsp
+  ;;   :ensure t
+  ;;   :config
+  ;;   (push `company-lsp company-backends))
   (use-package lsp-ivy
     :ensure t
     :commands (lsp-ivy-workspace-symbol lsp-ivy-global-workspace-symbol))
