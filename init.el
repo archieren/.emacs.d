@@ -1191,7 +1191,26 @@ Eval region from begin-mark to end-mark if active, otherwise the last sexp."
   (use-package org-bullets
     :ensure t
     :config
-    (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))))
+    (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   `((R . t)
+     (ditaa . nil)
+     (dot . t)
+     (emacs-lisp . t)
+     (gnuplot . t)
+     (haskell . nil)
+     (latex . t)
+     (ledger . t)
+     (ocaml . nil)
+     (octave . t)
+     (plantuml . t)
+     (python . t)
+     (ruby . t)
+     (screen . nil)
+     (,(if (locate-library "ob-sh") 'sh 'shell) . t)
+     (sql . nil)
+     (sqlite . t))))
 
 
 
