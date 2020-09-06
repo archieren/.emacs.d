@@ -82,7 +82,22 @@ Should Not be too big." )
 (pixel-scroll-mode t)
 (electric-pair-mode t)
 (electric-indent-mode t)
-(winner-mode t)
+(use-package winner
+  :ensure t
+  :custom
+  (winner-boring-buffers
+   '("*Completions*"
+     "*Compile-Log*"
+     "*inferior-lisp*"
+     "*Fuzzy Completions*"
+     "*Apropos*"
+     "*Help*"
+     "*cvs*"
+     "*Buffer List*"
+     "*Ibuffer*"
+     "*esh command on file*"))
+  :config
+  (winner-mode t))
 (defun init-defaults ()
   "Something should be done for all."
   (require `diminish)
