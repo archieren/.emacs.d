@@ -187,12 +187,12 @@ Should Not be too big." )
   (set-face-attribute  'default
 		       nil
 		       :font  (font-spec :family "DejaVu Sans Mono"
-					 :size 12))
+					 :size 14))
   (dolist (script '(kana han symbol cjk-misc bopomofo))
     (set-fontset-font  t ;;(frame-parameter nil 'font)
 		       script
 		       (font-spec :family "Noto Sans Mono CJK SC"
-				  :size 12)))
+				  :size 14)))
   (setq face-font-rescale-alist '(("DejaVu Sans Mono" . 1.0)
 				  ("Noto Sans Mono CJK SC" . 1.0))))
 (use-package doom-themes
@@ -201,8 +201,8 @@ Should Not be too big." )
   ;; Global settings (defaults)
   (setq doom-themes-enable-bold t
         doom-themes-enable-italic t)
-  ;; (load-theme `doom-solarized-dark t)
-  (load-theme `doom-one t)
+  (load-theme `doom-solarized-dark t)
+  ;; (load-theme `doom-one t)
   ;; Enable flashing mode-line on errors
   (doom-themes-visual-bell-config)
   ;; Corrects (and improves) org-mode's native fontification.
@@ -858,12 +858,12 @@ Eval region from begin-mark to end-mark if active, otherwise the last sexp."
     (setq lsp-ui-doc-position `at-point)
     (setq lsp-ui-doc-max-height 8)
     (setq lsp-ui-doc-border "purple" )
-    (setq lsp-ui-doc-enable t)
+    (setq lsp-ui-doc-enable nil)
     ;;------------------
     (setq lsp-ui-sideline-show-hover t)
     (setq lsp-ui-sideline-ignore-duplicate t)
     (setq lsp-ui-sideline-show-code-actions t)
-    (setq lsp-ui-sideline-enable nil)
+    (setq lsp-ui-sideline-enable t)
     ;;------------------
     (define-key lsp-ui-mode-map (kbd "M-.") `lsp-ui-peek-find-definitions)
     (define-key lsp-ui-mode-map (kbd "M-?") `lsp-ui-peek-find-references)
