@@ -39,7 +39,7 @@ Should Not be too big." )
 (setq package-archives `(("gnu"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
                          ("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
                          ("org" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/org/")))
-(setq package-enable-at-startup nil)
+
 (package-initialize)
 (unless (package-installed-p `use-package)
   (package-refresh-contents)
