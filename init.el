@@ -134,6 +134,8 @@ Should Not be too big." )
 (subword-mode t)
 (show-paren-mode t)
 (global-prettify-symbols-mode t)
+;;;
+(add-hook 'after-init-hook 'global-hl-line-mode) ;; 跟踪当前行
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 					;                 Avy,Ace-window      ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -437,7 +439,7 @@ Should Not be too big." )
   :config
   (ivy-mode t)
   (setq ivy-use-virtual-buffers t)
-  (setq ivy-count-format "(%d/%d) ")
+  (setq ivy-count-format "[%d/%d] ")
   ;;Projectile-completion-system 有三 ido,helm,ivy
   (if (package-installed-p `projectile)
       (setq projectile-completion-system `ivy)))
@@ -842,7 +844,7 @@ Eval region from begin-mark to end-mark if active, otherwise the last sexp."
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (use-package lsp-mode
   :ensure t
-  :diminish lsp-mode
+  :diminish `lsp-mode
   :init
   ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
   (setq lsp-keymap-prefix "s-c l")
@@ -1161,13 +1163,44 @@ Eval region from begin-mark to end-mark if active, otherwise the last sexp."
   (use-package ccls
     :ensure t
     :config
-    (setq ccls-args '("--log-file=/tmp/ccls.log")))
+    (setq ccls-args `("--log-file=/tmp/ccls.log")))
   ;; (setq lsp-clients-clangd-args '("--compile-commands-dir=./build" "-background-index"))
 
   (setq-default flycheck-disabled-checkers '(c/c++-clang c/c++-cppcheck c/c++-gcc))
   (add-hook `c++-mode-hook `lsp)
   (add-hook `c-mode-hook `lsp)
   (add-hook `objc-mode-hook `lsp))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+					;           Web Development           ;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(use-package web-mode
+  :ensure t
+  :mode ("\\.html\\'" "\\.vue\\'" "\\.jsx\\'")
+  :config
+  (use-package company-web :ensure t)
+  (defun init-web-mode-hook ()
+    "Hooks for Web mode."
+    (setq web-mode-markup-indent-offset 4)
+    (setq web-mode-markup-indent-offset 4)
+    (setq web-mode-css-indent-offset 4)
+    (setq web-mode-code-indent-offset 4)
+    (setq web-mode-enable-current-element-highlight t)
+    (setq web-mode-enable-css-colorization t))
+
+  (defun init-web-html-setup ()
+    "My web setups!"
+    (flycheck-add-mode 'html-tidy 'web-mode)
+    (flycheck-select-checker 'html-tidy))
+
+  (add-hook 'web-mode-hook 'init-web-mode-hook)
+  (add-hook 'web-mode-hook (lambda ()
+                             (when (equal web-mode-content-type "html")
+                               (init-web-html-setup))))
+  (add-hook 'web-mode-hook (lambda()
+			     (add-to-list (make-local-variable 'company-backends)
+					  '(company-web-html company-files)))))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 					;           Structureed Doc.          ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -1178,7 +1211,7 @@ Eval region from begin-mark to end-mark if active, otherwise the last sexp."
   :hook (yaml-mode . goto-address-prog-mode))
 (use-package markdown-mode
   :ensure t
-  :mode "\\.md\\.html\\'"
+  :mode "\\.md\\'"
   :init
   (push `markdown-mode whitespace-cleanup-mode-ignore-modes))
 (use-package textile-mode
