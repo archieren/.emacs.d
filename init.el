@@ -135,7 +135,9 @@ Should Not be too big." )
 (show-paren-mode t)
 (global-prettify-symbols-mode t)
 ;;;
-(add-hook 'after-init-hook 'global-hl-line-mode) ;; 跟踪当前行
+(add-hook 'after-init-hook '(lambda ()
+			      (global-hl-line-mode) ;; 跟踪当前行
+			      ))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 					;                 Avy,Ace-window      ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -349,20 +351,15 @@ Should Not be too big." )
   :ensure t
   :config
   (define-key projectile-mode-map (kbd "s-c p") `projectile-command-map)
-  (defun init-projectile-mode-line-fn ()
-    "Report project in mode-line."
-    (let* ((project-name (projectile-project-name))
-	   (project-type (projectile-project-type)))
-      (format "%s[%s - %s]" projectile-mode-line-prefix project-name project-type)))
-  (setq-default projectile-mode-line-prefix "")
-  (setq projectile-mode-line-function `init-projectile-mode-line-fn)
-
   ;; ------------------Added by you need
   ;; All
   (add-to-list `projectile-globally-ignored-directories ".vscode")
   (add-to-list `projectile-globally-ignored-directories "build")
   (add-to-list `projectile-globally-ignored-directories "data")
   (add-to-list `projectile-globally-ignored-directories ".stack-work")
+  ;; java-script modes
+  (add-to-list `projectile-globally-ignored-directories "node_modules")
+  (add-to-list `projectile-globally-ignored-directories "flow-typed")
   ;; cc-mode
   (add-to-list `projectile-globally-ignored-directories ".ccls-cache")
   (add-to-list `projectile-globally-ignored-directories ".clangd")
@@ -691,8 +688,8 @@ Should Not be too big." )
   ;;
   (init-add-hook-to-emacss-lispy-modes `turn-on-eldoc-mode)
   (init-add-hook-to-emacss-lispy-modes `turn-on-elisp-slime-nav-mode)
-  (add-hook `emacs-lisp-mode-hook (lambda () (setq mode-name "")))
-  (add-hook `ielm-mode-hook (lambda () (setq mode-name "")))
+  ;; (add-hook `emacs-lisp-mode-hook (lambda () (setq mode-name "")))
+  ;; (add-hook `ielm-mode-hook (lambda () (setq mode-name "")))
   (setq-default initial-scratch-message (concat ";; Happy hacking, " user-login-name " - Emacs  you!\n\n"))
   ;; Make C-x C-e run 'eval-region if the region is active
   (defun init-eval-last-sexp-or-region (prefix)
@@ -778,7 +775,7 @@ Eval region from begin-mark to end-mark if active, otherwise the last sexp."
   ;;
   (require `slime)
   (init-add-auto-mode `lisp-mode "\\.cl\\'")
-  (add-hook `lisp-mode-hook (lambda () (setq mode-name "")))
+  ;; (add-hook `lisp-mode-hook (lambda () (setq mode-name "")))
   (add-hook `lisp-mode-hook
 	    (lambda () (unless (featurep `slime)
 		    (require `slime)
@@ -814,7 +811,7 @@ Eval region from begin-mark to end-mark if active, otherwise the last sexp."
   ;; Bind TAB to `indent-for-tab-command', as in regular Slime buffers.
   (define-key slime-repl-mode-map (kbd "TAB") `indent-for-tab-command)
   (add-hook `slime-repl-mode-hook (lambda ()
-				    (setq mode-name "")
+				    ;; (setq mode-name "")
 				    (setq show-trailing-whitespace nil)
 				    (paredit-mode +1)
 				    (turn-on-eldoc-mode))))
@@ -827,8 +824,8 @@ Eval region from begin-mark to end-mark if active, otherwise the last sexp."
   :ensure t
   :config
   (require 'racket-mode)
-  (add-hook 'racket-mode-hook      (lambda () (setq mode-name "")))
-  (add-hook 'racket-repl-mode-hook (lambda () (setq mode-name "")))
+  ;;(add-hook 'racket-mode-hook      (lambda () (setq mode-name "")))
+  ;;(add-hook 'racket-repl-mode-hook (lambda () (setq mode-name "")))
   (setq racket-program "racket")
   ;; racket-racket-program, racket-raco-program are obsolete variables!
   ;; (setq racket-raco-program "raco")
@@ -1005,7 +1002,7 @@ Eval region from begin-mark to end-mark if active, otherwise the last sexp."
   ;; About Haskell-Cabal-Mode
   ;;  Edit the .cabal File
   (add-hook `haskell-cabal-mode-hook `subword-mode)
-  (add-hook `haskell-cabal-mode-hook (lambda () (setq mode-name "")))
+  ;; (add-hook `haskell-cabal-mode-hook (lambda () (setq mode-name "")))
   (define-key haskell-cabal-mode-map (kbd "C-c C-p") `haskell-compile)
   ;; Hakell-Mode
   (init-add-auto-mode `haskell-mode "\\.ghci\\'")
@@ -1014,7 +1011,7 @@ Eval region from begin-mark to end-mark if active, otherwise the last sexp."
   (add-hook `haskell-mode-hook `haskell-indentation-mode)
   (add-hook `haskell-mode-hook `rainbow-delimiters-mode)
   (add-hook `haskell-mode-hook `subword-mode)
-  (add-hook `haskell-mode-hook (lambda () (setq mode-name "")))
+  ;; (add-hook `haskell-mode-hook (lambda () (setq mode-name "")))
   ;; 关注 interactive-haskell-mode 和 lsp-mode 是否会冲突
   (add-hook `haskell-mode-hook `interactive-haskell-mode)
   (use-package hindent
@@ -1040,7 +1037,7 @@ Eval region from begin-mark to end-mark if active, otherwise the last sexp."
 (use-package rust-mode
   :ensure t
   :config
-  (add-hook `rust-mode-hook (lambda () (setq mode-name "")))
+  ;;(add-hook `rust-mode-hook (lambda () (setq mode-name "")))
   (require `company)
   (define-key rust-mode-map (kbd "TAB") `company-indent-or-complete-common)
   (setq company-tooltip-align-annotations t)
@@ -1111,7 +1108,7 @@ Eval region from begin-mark to end-mark if active, otherwise the last sexp."
     (setq indent-tabs-mode nil)
     (setq python-indent-guess-indent-offset nil)
     (setq python-indent-offset 4)
-    (setq mode-name "")
+    ;; (setq mode-name "")
     (setq flycheck-flake8-maximum-line-length 240))
   (add-hook `python-mode-hook `init-python-mode-hook-setup)
   ;; (use-package lsp-python-ms :ensure t)
@@ -1172,13 +1169,79 @@ Eval region from begin-mark to end-mark if active, otherwise the last sexp."
   (add-hook `objc-mode-hook `lsp))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+					;       JavaScript Development        ;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(use-package json-mode :ensure t)
+(use-package js-comint :ensure t)
+;; JavaScript的处理，目前只用js2-mode。js-mode是它的parent mode， 系统自带。
+(use-package js2-mode
+  :ensure t
+  :mode ("\\.js\\'")
+  :config
+  (setq-default js-indent-level 4) ;;js2-basic-offset is it's alias!
+  (setq-default js2-basic-offset 4)
+  (setq-default js2-bounce-indent-p nil)
+  (setq-default js2-global-externs '("module" "require" "assert" "setInterval" "console" "__dirname__"))
+  ;; xref-js2
+  (use-package xref-js2
+    ;; xref-js2没有用tag系统。用ag、rg之类的搜索函数。
+    ;; 确保ag(silver searcher)在系统上安装了。rg(ripgrep)也可用，但我怕一些兼容问题。
+    :ensure t
+    :config
+    (define-key js2-mode-map (kbd "M-.") nil)
+    (add-hook 'js2-mode-hook (lambda () (add-hook 'xref-backend-functions 'xref-js2-xref-backend nil t))))
+  (use-package prettier-js
+    :ensure t
+    :config
+    (add-hook 'js2-mode-hook 'prettier-js-mode)
+    (setq prettier-js-args '("--trailing-comma" "all" "--bracket-spacing" "false")))
+  ;; add-node-modules-path
+  (use-package add-node-modules-path
+    :ensure t
+    :config
+    (add-hook 'js-mode-hook 'add-node-modules-path)
+    (add-hook 'js2-mode-hook 'add-node-modules-path))
+  ;; npm-mode
+  (use-package npm-mode
+    :ensure t
+    :config
+    (add-hook 'js2-mode-hook (lambda () (npm-mode)))
+    (add-to-list 'interpreter-mode-alist '("node" . js2-mode))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+					;        TypeScript Development       ;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 我有些没理顺tide的作用，很多地方在用。 这里是针对typescript的最简配置。
+;; 由于tide提供了两个flycheck的checker：javascript-tide、jsx-tide。为利用他们而产生的许多配置，我觉得不纯，最好不用。
+(use-package typescript-mode
+  :ensure t
+  :mode ("\\.ts\\'")
+  :config
+  (use-package add-node-modules-path
+    :ensure t
+    :config
+    (add-hook 'typescript-mode-hook 'add-node-modules-path))
+  (use-package tide
+    :ensure t
+    :config
+    (setq tide-format-options '( :indentSize 4 :tabSize 4 ))
+    (add-hook 'typescript-mode-hook 'tide-setup)
+    (add-hook 'typescript-mode-hook 'tide-hl-identifier-mode)
+    (add-hook 'before-save-hook 'tide-format-before-save)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 					;           Web Development           ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 需要安装html-tidy：$sudo pacman -S tidy
+;; 需要安装css-stylelint的后端： $npm install -g stylelint
+;;                             $npm install -g stylelint-config-recommended
 (use-package web-mode
   :ensure t
   :mode ("\\.html\\'" "\\.vue\\'" "\\.jsx\\'")
   :config
+  ;;
   (use-package company-web :ensure t)
+  ;;
   (defun init-web-mode-hook ()
     "Hooks for Web mode."
     (setq web-mode-markup-indent-offset 4)
@@ -1187,19 +1250,46 @@ Eval region from begin-mark to end-mark if active, otherwise the last sexp."
     (setq web-mode-code-indent-offset 4)
     (setq web-mode-enable-current-element-highlight t)
     (setq web-mode-enable-css-colorization t))
-
+  ;;
   (defun init-web-html-setup ()
     "My web setups!"
+    ;; (setq mode-name "")
     (flycheck-add-mode 'html-tidy 'web-mode)
-    (flycheck-select-checker 'html-tidy))
-
+    (flycheck-select-checker 'html-tidy)
+    (add-to-list (make-local-variable 'company-backends)
+		 '(company-web-html company-files)))
+  ;;
+  (defun init-web-vue-setup ()
+    "Setup for web-mode vue files."
+    ;; (setq mode-name "")
+    (flycheck-add-mode 'javascript-eslint 'web-mode)
+    (flycheck-select-checker 'javascript-eslint)
+    (add-to-list (make-local-variable 'company-backends)
+		 '(company-tide company-web-html company-files company-css)))
+  ;;
   (add-hook 'web-mode-hook 'init-web-mode-hook)
-  (add-hook 'web-mode-hook (lambda ()
-                             (when (equal web-mode-content-type "html")
-                               (init-web-html-setup))))
-  (add-hook 'web-mode-hook (lambda()
-			     (add-to-list (make-local-variable 'company-backends)
-					  '(company-web-html company-files)))))
+  (add-hook 'web-mode-hook (lambda () (cond ((string-equal "html" (file-name-extension buffer-file-name))
+					(init-web-html-setup))
+				       ((string-equal "vue" (file-name-extension buffer-file-name))
+					(init-vue-mode-hook)))))
+  ;;
+  (use-package css-mode
+    :ensure t
+    :mode "\\.css\\'"
+    :config
+    (setq-default css-indent-offset 4)
+    ;; (setq flycheck-stylelintrc "~/.stylelintrc")
+    (setq-default css-indent-offset 4)
+    (add-to-list (make-local-variable 'company-backends) '(company-css company-files company-capf company-dabbrev))
+    (add-hook 'css-mode-hook 'turn-on-css-eldoc))
+  (use-package scss-mode
+    :ensure t
+    :mode ("\\.scss\\'" "\\.sass\\'"))
+  (use-package emmet-mode
+    :ensure t
+    :config
+    (dolist (hook '(web-mode-hook sgml-mode-hook css-mode-hook scss-mode-hook js2-mode-hook))
+      (add-hook hook 'emmet-mode))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 					;           Structureed Doc.          ;
@@ -1235,7 +1325,6 @@ Eval region from begin-mark to end-mark if active, otherwise the last sexp."
   :config
   (setq org-hide-emphasis-markers t
 	org-startup-indented t)
-  (add-hook 'org-mode-hook (lambda () (setq mode-name "")))
   (use-package org-bullets
     :ensure t
     :config
