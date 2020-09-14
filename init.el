@@ -1260,7 +1260,7 @@ Eval region from begin-mark to end-mark if active, otherwise the last sexp."
     (flycheck-add-mode 'javascript-eslint 'web-mode)
     (flycheck-select-checker 'javascript-eslint)
     (add-to-list (make-local-variable 'company-backends)
-		 '(company-tide company-web-html company-files company-css)))
+		 '(company-web-html company-files company-css)))
   ;;
   (add-hook 'web-mode-hook 'init-web-mode-hook)
   (add-hook 'web-mode-hook (lambda () (cond ((string-equal "html" (file-name-extension buffer-file-name))
