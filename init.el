@@ -1172,11 +1172,16 @@ Eval region from begin-mark to end-mark if active, otherwise the last sexp."
 					;       JavaScript Development        ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (use-package json-mode :ensure t)
-(use-package js-comint :ensure t)
+(use-package add-node-modules-path :ensure t)
+(use-package npm-mode
+  :ensure t
+  :config
+  (add-to-list 'interpreter-mode-alist '("node" . js2-mode)))
 ;; JavaScript的处理，目前只用js2-mode。js-mode是它的parent mode， 系统自带。
+;; 系统应当安装eslint: $npm install -g eslint
 (use-package js2-mode
   :ensure t
-  :mode ("\\.js\\'")
+  :mode "\\.js\\'"
   :config
   (setq-default js-indent-level 4) ;;js2-basic-offset is it's alias!
   (setq-default js2-basic-offset 4)
@@ -1196,17 +1201,9 @@ Eval region from begin-mark to end-mark if active, otherwise the last sexp."
     (add-hook 'js2-mode-hook 'prettier-js-mode)
     (setq prettier-js-args '("--trailing-comma" "all" "--bracket-spacing" "false")))
   ;; add-node-modules-path
-  (use-package add-node-modules-path
-    :ensure t
-    :config
-    (add-hook 'js-mode-hook 'add-node-modules-path)
-    (add-hook 'js2-mode-hook 'add-node-modules-path))
+  (add-hook 'js2-mode-hook 'add-node-modules-path)
   ;; npm-mode
-  (use-package npm-mode
-    :ensure t
-    :config
-    (add-hook 'js2-mode-hook (lambda () (npm-mode)))
-    (add-to-list 'interpreter-mode-alist '("node" . js2-mode))))
+  (add-hook 'js2-mode-hook (lambda () (npm-mode))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 					;        TypeScript Development       ;
@@ -1215,12 +1212,10 @@ Eval region from begin-mark to end-mark if active, otherwise the last sexp."
 ;; 由于tide提供了两个flycheck的checker：javascript-tide、jsx-tide。为利用他们而产生的许多配置，我觉得不纯，最好不用。
 (use-package typescript-mode
   :ensure t
-  :mode ("\\.ts\\'")
+  :mode "\\.ts\\'"
   :config
-  (use-package add-node-modules-path
-    :ensure t
-    :config
-    (add-hook 'typescript-mode-hook 'add-node-modules-path))
+  (add-hook 'typescript-mode-hook 'add-node-modules-path)
+  (add-hook 'typescript-mode-hook (lambda () (npm-mode)))
   (use-package tide
     :ensure t
     :config
@@ -1271,26 +1266,25 @@ Eval region from begin-mark to end-mark if active, otherwise the last sexp."
   (add-hook 'web-mode-hook (lambda () (cond ((string-equal "html" (file-name-extension buffer-file-name))
 					(init-web-html-setup))
 				       ((string-equal "vue" (file-name-extension buffer-file-name))
-					(init-vue-mode-hook)))))
-  ;;
-  (use-package css-mode
-    :ensure t
-    :mode "\\.css\\'"
-    :config
-    (setq-default css-indent-offset 4)
-    ;; (setq flycheck-stylelintrc "~/.stylelintrc")
-    (setq-default css-indent-offset 4)
-    (add-to-list (make-local-variable 'company-backends) '(company-css company-files company-capf company-dabbrev))
-    (add-hook 'css-mode-hook 'turn-on-css-eldoc))
-  (use-package scss-mode
-    :ensure t
-    :mode ("\\.scss\\'" "\\.sass\\'"))
-  (use-package emmet-mode
-    :ensure t
-    :config
-    (dolist (hook '(web-mode-hook sgml-mode-hook css-mode-hook scss-mode-hook js2-mode-hook))
-      (add-hook hook 'emmet-mode))))
-
+					(init-vue-mode-hook))))))
+(use-package css-eldoc :ensure t)
+(use-package css-mode
+  :ensure t
+  :mode "\\.css\\'"
+  :config
+  (setq-default css-indent-offset 4)
+  ;; (setq flycheck-stylelintrc "~/.stylelintrc")
+  (setq-default css-indent-offset 4)
+  (add-to-list (make-local-variable 'company-backends) '(company-css company-files company-capf company-dabbrev))
+  (add-hook 'css-mode-hook 'turn-on-css-eldoc))
+(use-package scss-mode
+  :ensure t
+  :mode ("\\.scss\\'" "\\.sass\\'"))
+(use-package emmet-mode
+  :ensure t
+  :config
+  (dolist (hook '(web-mode-hook sgml-mode-hook css-mode-hook scss-mode-hook js2-mode-hook))
+    (add-hook hook 'emmet-mode)))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 					;           Structureed Doc.          ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
