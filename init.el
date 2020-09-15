@@ -1173,6 +1173,8 @@ Eval region from begin-mark to end-mark if active, otherwise the last sexp."
 ;; 一般我避开用微软的，尽管他们很好！
 ;;   $npm i -g javascript-typescript-langserver
 ;;   $npm i -g typescript-language-server
+;; 另外，安装eslint。
+;;   $npm i -g eslint
 (use-package json-mode
   :ensure t
   :config
