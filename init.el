@@ -290,8 +290,6 @@ Should Not be too big." )
   (dolist (hook (mapcar `derived-mode-hook-name init-lispy-modes))
     (add-hook hook action)))
 
-
-
 (use-package rainbow-delimiters
   :ensure t
   :diminish ""
@@ -1171,58 +1169,27 @@ Eval region from begin-mark to end-mark if active, otherwise the last sexp."
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 					;       JavaScript Development        ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(use-package json-mode :ensure t)
-(use-package add-node-modules-path :ensure t)
-(use-package npm-mode
+;; 牵涉到安装那个language-server。注意typescript-language-server是微软的tsserver的包装。
+;; 一般我避开用微软的，尽管他们很好！
+;;   $npm i -g javascript-typescript-langserver
+;;   $npm i -g typescript-language-server
+(use-package json-mode
   :ensure t
   :config
-  (add-to-list 'interpreter-mode-alist '("node" . js2-mode)))
-;; JavaScript的处理，目前只用js2-mode。js-mode是它的parent mode， 系统自带。
-;; 系统应当安装eslint: $npm install -g eslint
-(use-package js2-mode
+  (require 'lsp)
+  (add-hook 'json-mode-hook 'lsp))
+(use-package js
   :ensure t
-  :mode "\\.js\\'"
   :config
-  (setq-default js-indent-level 4) ;;js2-basic-offset is it's alias!
-  (setq-default js2-basic-offset 4)
-  (setq-default js2-bounce-indent-p nil)
-  (setq-default js2-global-externs '("module" "require" "assert" "setInterval" "console" "__dirname__"))
-  ;; xref-js2
-  (use-package xref-js2
-    ;; xref-js2没有用tag系统。用ag、rg之类的搜索函数。
-    ;; 确保ag(silver searcher)在系统上安装了。rg(ripgrep)也可用，但我怕一些兼容问题。
-    :ensure t
-    :config
-    (define-key js2-mode-map (kbd "M-.") nil)
-    (add-hook 'js2-mode-hook (lambda () (add-hook 'xref-backend-functions 'xref-js2-xref-backend nil t))))
-  (use-package prettier-js
-    :ensure t
-    :config
-    (add-hook 'js2-mode-hook 'prettier-js-mode)
-    (setq prettier-js-args '("--trailing-comma" "all" "--bracket-spacing" "false")))
-  ;; add-node-modules-path
-  (add-hook 'js2-mode-hook 'add-node-modules-path)
-  ;; npm-mode
-  (add-hook 'js2-mode-hook (lambda () (npm-mode))))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-					;        TypeScript Development       ;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; 我有些没理顺tide的作用，很多地方在用。 这里是针对typescript的最简配置。
-;; 由于tide提供了两个flycheck的checker：javascript-tide、jsx-tide。为利用他们而产生的许多配置，我觉得不纯，最好不用。
+  (setq-default js-indent-level 4)
+  (require 'lsp)
+  (add-hook 'js-mode-hook 'lsp))
 (use-package typescript-mode
   :ensure t
   :mode "\\.ts\\'"
   :config
-  (add-hook 'typescript-mode-hook 'add-node-modules-path)
-  (add-hook 'typescript-mode-hook (lambda () (npm-mode)))
-  (use-package tide
-    :ensure t
-    :config
-    (setq tide-format-options '( :indentSize 4 :tabSize 4 ))
-    (add-hook 'typescript-mode-hook 'tide-setup)
-    (add-hook 'typescript-mode-hook 'tide-hl-identifier-mode)
-    (add-hook 'before-save-hook 'tide-format-before-save)))
+  (require 'lsp)
+  (add-hook 'typescript-mode-hook 'lsp))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 					;           Web Development           ;
