@@ -1170,7 +1170,7 @@ Eval region from begin-mark to end-mark if active, otherwise the last sexp."
 					;       JavaScript Development        ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 牵涉到安装那个language-server。注意typescript-language-server是微软的tsserver的包装。
-;; 一般我避开用微软的，尽管他们很好！
+;; 而javascript-typescript-langserver好像有些不受推荐.不知还在发展不?
 ;;   $npm i -g javascript-typescript-langserver
 ;;   $npm i -g typescript-language-server
 ;; 另外，安装eslint。
@@ -1180,12 +1180,13 @@ Eval region from begin-mark to end-mark if active, otherwise the last sexp."
   :config
   (require 'lsp)
   (add-hook 'json-mode-hook 'lsp))
-(use-package js
+(use-package js2-mode
   :ensure t
+  :mode "\\.js\\'"
   :config
   (setq-default js-indent-level 4)
   (require 'lsp)
-  (add-hook 'js-mode-hook 'lsp))
+  (add-hook 'js2-mode-hook 'lsp))
 (use-package typescript-mode
   :ensure t
   :mode "\\.ts\\'"
