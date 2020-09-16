@@ -821,18 +821,10 @@ Eval region from begin-mark to end-mark if active, otherwise the last sexp."
 (use-package racket-mode
   :ensure t
   :config
-  (require 'racket-mode)
-  ;;(add-hook 'racket-mode-hook      (lambda () (setq mode-name "")))
-  ;;(add-hook 'racket-repl-mode-hook (lambda () (setq mode-name "")))
   (setq racket-program "racket")
-  ;; racket-racket-program, racket-raco-program are obsolete variables!
-  ;; (setq racket-raco-program "raco")
-  (add-hook 'racket-mode-hook
-	    (lambda ()
-	      (define-key racket-mode-map (kbd "C-c r") 'racket-run)))
+  (add-hook 'racket-mode-hook (lambda () (define-key racket-mode-map (kbd "s-c r") 'racket-run)))
   (add-hook 'racket-mode-hook      `racket-unicode-input-method-enable)
   (add-hook 'racket-repl-mode-hook `racket-unicode-input-method-enable)
-
   (add-hook 'racket-mode-hook (lambda () (enable-paredit-mode))))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 					;               Lsp-mode              ;
@@ -846,9 +838,6 @@ Eval region from begin-mark to end-mark if active, otherwise the last sexp."
   :config
   (use-package lsp-ui
     :ensure t
-    ;; By default, lsp-mode automatically activates lsp-ui unless lsp-auto-configure is set to nil.
-    ;; You only have to put (use-package lsp-ui) in your config and the package will work out of the box.
-    ;; :init (add-hook `lsp-mode-hook `lsp-ui-mode)
     :config
     ;;------------------
     (setq lsp-ui-doc-delay 0.1)
@@ -866,16 +855,8 @@ Eval region from begin-mark to end-mark if active, otherwise the last sexp."
     (define-key lsp-ui-mode-map (kbd "M-?") `lsp-ui-peek-find-references)
     (setq lsp-ui-peek-enable t))
   ;; company-lsp is no longer supported!
-  ;; (use-package company-lsp
-  ;;   :ensure t
-  ;;   :config
-  ;;   (push `company-lsp company-backends))
-  (use-package lsp-ivy
-    :ensure t
-    :commands (lsp-ivy-workspace-symbol lsp-ivy-global-workspace-symbol))
-  (use-package lsp-treemacs
-    :ensure t
-    :commands lsp-treemacs-errors-list)
+  (use-package lsp-ivy :ensure t)
+  (use-package lsp-treemacs :ensure t)
   (add-hook `lsp-mode-hook `lsp-enable-which-key-integration))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -1000,7 +981,6 @@ Eval region from begin-mark to end-mark if active, otherwise the last sexp."
   ;; About Haskell-Cabal-Mode
   ;;  Edit the .cabal File
   (add-hook `haskell-cabal-mode-hook `subword-mode)
-  ;; (add-hook `haskell-cabal-mode-hook (lambda () (setq mode-name "")))
   (define-key haskell-cabal-mode-map (kbd "C-c C-p") `haskell-compile)
   ;; Hakell-Mode
   (init-add-auto-mode `haskell-mode "\\.ghci\\'")
@@ -1009,7 +989,7 @@ Eval region from begin-mark to end-mark if active, otherwise the last sexp."
   (add-hook `haskell-mode-hook `haskell-indentation-mode)
   (add-hook `haskell-mode-hook `rainbow-delimiters-mode)
   (add-hook `haskell-mode-hook `subword-mode)
-  ;; (add-hook `haskell-mode-hook (lambda () (setq mode-name "")))
+  (add-hook `haskell-mode-hook `eldoc-mode)
   ;; 关注 interactive-haskell-mode 和 lsp-mode 是否会冲突
   (add-hook `haskell-mode-hook `interactive-haskell-mode)
   (use-package hindent
@@ -1017,17 +997,11 @@ Eval region from begin-mark to end-mark if active, otherwise the last sexp."
     :diminish ""
     :config
     (add-hook `haskell-mode-hook `hindent-mode))
-  ;; 需要安装haskell-ide-engine
+  ;; 需要安装haskell-language-server，它是ghcide、hie的合体。
   (use-package lsp-haskell
     :ensure t
     :config
-    ;; For Haskell-language-server
     (setq lsp-haskell-process-path-hie "haskell-language-server-wrapper")
-    ;; For ghcide
-    ;; (setq lsp-haskell-process-path-hie "ghcide")
-    ;; (setq lsp-haskell-process-args-hie `())
-    ;; Comment/uncomment this line to see interactions between lsp client/server.
-    ;; (setq lsp-log-io t)
     (add-hook `haskell-mode-hook `lsp)))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 					;                 Rust                ;
@@ -1035,7 +1009,6 @@ Eval region from begin-mark to end-mark if active, otherwise the last sexp."
 (use-package rust-mode
   :ensure t
   :config
-  ;;(add-hook `rust-mode-hook (lambda () (setq mode-name "")))
   (require `company)
   (define-key rust-mode-map (kbd "TAB") `company-indent-or-complete-common)
   (setq company-tooltip-align-annotations t)
@@ -1171,10 +1144,14 @@ Eval region from begin-mark to end-mark if active, otherwise the last sexp."
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 牵涉到安装那个language-server。注意typescript-language-server是微软的tsserver的包装。
 ;; 而javascript-typescript-langserver好像有些不受推荐.不知还在发展不?
+;; lsp中，javascript-typescript-langserver优先级较typescript-language-server优先级低。
+;; 好像还有个Facebook搞的，flow-server什么的？ 暂时不管吧。
 ;;   $npm i -g javascript-typescript-langserver
 ;;   $npm i -g typescript-language-server
 ;; 另外，安装eslint。
 ;;   $npm i -g eslint
+;; (use-package add-node-modules-path :ensure t)
+(use-package npm-mode :ensure t)
 (use-package json-mode
   :ensure t
   :config
@@ -1185,14 +1162,20 @@ Eval region from begin-mark to end-mark if active, otherwise the last sexp."
   :mode "\\.js\\'"
   :config
   (setq-default js-indent-level 4)
+  (setq-default js2-basic-offset 4)
+  (setq-default js2-bounce-indent-p nil)
+  (setq-default js2-global-externs
+		'("module" "require" "assert" "setInterval" "console" "__dirname__"))
   (require 'lsp)
-  (add-hook 'js2-mode-hook 'lsp))
+  (add-hook 'js2-mode-hook 'lsp)
+  (add-hook 'js2-mode-hook 'npm-mode))
 (use-package typescript-mode
   :ensure t
   :mode "\\.ts\\'"
   :config
   (require 'lsp)
-  (add-hook 'typescript-mode-hook 'lsp))
+  (add-hook 'typescript-mode-hook 'lsp)
+  (add-hook 'typescript-mode-hook 'npm-mode))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 					;           Web Development           ;
@@ -1200,12 +1183,13 @@ Eval region from begin-mark to end-mark if active, otherwise the last sexp."
 ;; 需要安装html-tidy：$sudo pacman -S tidy
 ;; 需要安装css-stylelint的后端： $npm install -g stylelint
 ;;                             $npm install -g stylelint-config-recommended
+;; 不知道上面的tidy等还有用不？我以后均用lsp来作 Web Development
+;; npm install -g vscode-css-languageserver-bin
+;; npm install -g vscode-html-languageserver-bin
 (use-package web-mode
   :ensure t
-  :mode ("\\.html\\'" "\\.vue\\'" "\\.jsx\\'")
+  :mode "\\.html\\'"
   :config
-  ;;
-  (use-package company-web :ensure t)
   ;;
   (defun init-web-mode-hook ()
     "Hooks for Web mode."
@@ -1216,40 +1200,27 @@ Eval region from begin-mark to end-mark if active, otherwise the last sexp."
     (setq web-mode-enable-current-element-highlight t)
     (setq web-mode-enable-css-colorization t))
   ;;
-  (defun init-web-html-setup ()
-    "My web setups!"
-    ;; (setq mode-name "")
-    (flycheck-add-mode 'html-tidy 'web-mode)
-    (flycheck-select-checker 'html-tidy)
-    (add-to-list (make-local-variable 'company-backends)
-		 '(company-web-html company-files)))
-  ;;
-  (defun init-web-vue-setup ()
-    "Setup for web-mode vue files."
-    ;; (setq mode-name "")
-    (flycheck-add-mode 'javascript-eslint 'web-mode)
-    (flycheck-select-checker 'javascript-eslint)
-    (add-to-list (make-local-variable 'company-backends)
-		 '(company-web-html company-files company-css)))
-  ;;
   (add-hook 'web-mode-hook 'init-web-mode-hook)
-  (add-hook 'web-mode-hook (lambda () (cond ((string-equal "html" (file-name-extension buffer-file-name))
-					(init-web-html-setup))
-				       ((string-equal "vue" (file-name-extension buffer-file-name))
-					(init-vue-mode-hook))))))
+  (add-hook 'web-mode-hook 'rainbow-mode)
+  (add-hook 'web-mode-hook 'lsp))
+
 (use-package css-eldoc :ensure t)
 (use-package css-mode
   :ensure t
   :mode "\\.css\\'"
   :config
-  (setq-default css-indent-offset 4)
-  ;; (setq flycheck-stylelintrc "~/.stylelintrc")
-  (setq-default css-indent-offset 4)
-  (add-to-list (make-local-variable 'company-backends) '(company-css company-files company-capf company-dabbrev))
-  (add-hook 'css-mode-hook 'turn-on-css-eldoc))
+  (add-hook 'css-mode-hook 'turn-on-css-eldoc)
+  (add-hook 'css-mode-hook 'rainbow-mode)
+  ;; lsp本身好像支持css、scss、sass等等。
+  (add-hook 'css-mode-hook 'lsp))
 (use-package scss-mode
   :ensure t
-  :mode ("\\.scss\\'" "\\.sass\\'"))
+  :mode "\\.scss\\'"
+  :config
+  (add-hook 'scss-mode-hook 'turn-on-css-eldoc)
+  (add-hook 'scss-mode-hook 'rainbow-mode)
+  ;; lsp本身好像支持css、scss、sass等等。
+  (add-hook 'scss-mode-hook 'lsp))
 (use-package emmet-mode
   :ensure t
   :config
