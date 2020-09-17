@@ -392,7 +392,10 @@ Should Not be too big." )
     (add-hook `prog-mode-hook `yas-minor-mode)
     :config
     (yas-reload-all))
-  (use-package yasnippet-snippets :ensure t)
+  (use-package yasnippet-snippets
+    :ensure t
+    :config
+    (yas-reload-all))
   (defvar my-company-point)
   (advice-add `company-complete-common
 	      :after (lambda ()
