@@ -858,8 +858,8 @@ Eval region from begin-mark to end-mark if active, otherwise the last sexp."
     (define-key lsp-ui-mode-map (kbd "M-?") `lsp-ui-peek-find-references)
     (setq lsp-ui-peek-enable t))
   ;; company-lsp is no longer supported!
-  (use-package lsp-ivy :ensure t)
-  (use-package lsp-treemacs :ensure t)
+  (use-package lsp-ivy :ensure t :commands lsp-ivy-workspace-symbol)
+  (use-package lsp-treemacs :ensure t :commands lsp-treemacs-errors-list)
   (add-hook `lsp-mode-hook `lsp-enable-which-key-integration))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -905,75 +905,9 @@ Eval region from begin-mark to end-mark if active, otherwise the last sexp."
 	    (setenv "PATH" (string-join exec-path path-separator))))
       (kill-local-variable `exec-path)
       (kill-local-variable `process-environment)))
-;; (use-package haskell-mode
-;;   :ensure t
-;;   :diminish (interactive-haskell-mode . "" )
-;;   :config
-;;   ;; About Haskell-Cabal-Mode
-;;   ;;  Edit the .cabal File
-;;   (add-hook `haskell-cabal-mode-hook `init-stack-exec-path-mode)
-;;   (add-hook `haskell-cabal-mode-hook `subword-mode)
-;;   (add-hook `haskell-cabal-mode-hook (lambda () (setq mode-name "")))
-;;   (define-key haskell-cabal-mode-map (kbd "C-c C-p") `haskell-compile)
-;;   (custom-set-variables `(haskell-compile-ignore-cabal t))
-;;   ;; Hakell-Mode
-;;   (init-add-auto-mode `haskell-mode "\\.ghci\\'")
-;;   (add-hook `haskell-mode-hook `init-stack-exec-path-mode)
-;;   (add-hook `haskell-mode-hook `subword-mode)
-;;   (add-hook `haskell-mode-hook (lambda () (setq mode-name "")))
-;;   (add-hook `haskell-mode-hook `eldoc-mode)
-;;   (add-hook `haskell-mode-hook `rainbow-delimiters-mode)
-;;   (add-hook `haskell-mode-hook `haskell-decl-scan-mode) ;;; C-M-a C-M-e C-M-h
-;;   (add-hook `haskell-mode-hook `haskell-auto-insert-module-template)
-;;   (add-hook `haskell-mode-hook `flycheck-mode)
 
-;;   (define-key haskell-mode-map (kbd "C-c C-h") `haskell-hoogle)
-;;   (define-key haskell-mode-map (kbd "C-o")   `open-line)
-;;   (define-key haskell-mode-map (kbd "C-c C-p") `haskell-compile)
-
-;;   (push `haskell-mode page-break-lines-modes) ;; page-break-lines
-
-;;   ;; hindent-mode
-;;   ;; 需要系统按装hindent
-;;   (use-package hindent
-;;     :ensure t
-;;     :diminish hindent-mode
-;;     :config
-;;     (add-hook `haskell-mode-hook `hindent-mode)
-;;     (when (require `nadvice)
-;;       (defun  init-haskell-hindent--before-save-wrapper (oldfun &rest args)
-;; 	(with-demoted-errors "Error invoking hindent: %s"
-;; 	  (let ((debug-on-error nil))
-;; 	    (apply oldfun args))))
-;;       (advice-add `hindent--before-save :around `init-haskell-hindent--before-save-wrapper)))
-
-;;   ;; Indentation.
-;;   ;; Haskell Mode ships with two indentation modes:
-;;   ;;      -- haskell-indention-mode
-;;   ;;      -- haskell-indent-mode  --Deprecated!!
-;;   (add-hook `haskell-mode-hook `haskell-indentation-mode)
-
-;;   ;; 其实禁用了 haskell-mode 定义的几个checker.
-;;   ;; haskell-hlint is shipped with  flycheck!
-;;   ;; But hlint should be installed in the os system!
-;;   (require `flycheck)
-;;   (add-hook `haskell-mode-hook (lambda () (flycheck-select-checker `haskell-hlint)))
-
-
-;;   ;; Using external formatters. Stylish-haskell should be intsalled!
-;;   (custom-set-variables `(haskell-stylish-on-save t))
-;;   (custom-set-variables `(haskell-tags-on-save t))
-;;   (custom-set-variables `(haskell-compile-ignore-cabal t))
-;;   (define-key haskell-mode-map (kbd "M-.") `haskell-mode-jump-to-def-or-tag)
-
-;;   ;; interactive-haskell-mode 是个子模式,
-;;   ;; 负责haskell-mode如何与主模式haskell-interactive-mode交互.
-;;   ;; 妈的,才明白!
-;;   ;;(require `interactive-haskell-mode)
-;;   (require `haskell)
-;;   ;(diminish `interactive-haskell-mode "")
-;;   (add-hook `haskell-mode-hook `interactive-haskell-mode)
-;;   (setq flycheck-check-syntax-automatically `(save mode-enabled)))
+;; interactive-haskell-mode 是个子模式, "Minor mode for enabling haskell-process interaction."
+;; 负责haskell-mode如何与主模式haskell-interactive-mode交互.
 
 ;;-----------------------------------------------------------------------------
 (use-package haskell-mode
@@ -1172,9 +1106,15 @@ Eval region from begin-mark to end-mark if active, otherwise the last sexp."
   (require 'lsp)
   (add-hook 'js2-mode-hook 'lsp)
   (add-hook 'js2-mode-hook 'npm-mode))
+(use-package rjsx-mode
+  :ensure t
+  :mode "\\.jsx\\'"
+  :config
+  (require 'lsp)
+  (add-hook 'rjsx-mode-hook 'lsp)
+  (add-hook 'rjsx-mode-hook 'npm-mode))
 (use-package typescript-mode
   :ensure t
-  :mode "\\.ts\\'"
   :config
   (require 'lsp)
   (add-hook 'typescript-mode-hook 'lsp)
