@@ -1164,10 +1164,23 @@ Eval region from begin-mark to end-mark if active, otherwise the last sexp."
   (add-hook 'scss-mode-hook 'rainbow-mode)
   ;; lsp本身好像支持css、scss、sass等等。
   (add-hook 'scss-mode-hook 'lsp))
+(use-package sass-mode
+  :ensure t
+  :mode "\\.sass\\'"
+  :config
+  (add-hook 'sass-mode-hook 'turn-on-css-eldoc)
+  (add-hook 'sass-mode-hook 'rainbow-mode)
+  ;; lsp本身好像支持css、scss、sass等等。
+  (add-hook 'sass-mode-hook 'lsp))
 (use-package emmet-mode
   :ensure t
   :config
-  (dolist (hook '(web-mode-hook sgml-mode-hook css-mode-hook scss-mode-hook js2-mode-hook))
+  (dolist (hook '(web-mode-hook
+		  sgml-mode-hook
+		  css-mode-hook
+		  sass-mode-hook
+		  scss-mode-hook
+		  js2-mode-hook))
     (add-hook hook 'emmet-mode)))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 					;           Structureed Doc.          ;
