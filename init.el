@@ -388,6 +388,10 @@ Should Not be too big." )
   (use-package yasnippet
     :ensure t
     :diminish yas-minor-mode
+    :bind (("C-'" . company-yasnippet)
+	   :map yas-minor-mode-map
+		("TAB" . nil)
+		("<tab>" . nil))
     :init
     (add-hook `prog-mode-hook `yas-minor-mode)
     :config
@@ -396,14 +400,6 @@ Should Not be too big." )
     :ensure t
     :config
     (yas-reload-all))
-  (defvar my-company-point)
-  (advice-add `company-complete-common
-	      :after (lambda ()
-		       (when (equal my-company-point (point))
-			 (yas-expand))))
-  (advice-add `company-complete-common
-	      :before (lambda ()
-			(setq my-company-point (point))))
   ;; hippie-expand 是内建的.
   ;; 暂时放在这儿!
   (global-set-key (kbd "M-/") `hippie-expand)
@@ -668,12 +664,11 @@ Should Not be too big." )
     (if (memq this-command init-paredit-minibuffer-commands)
 	(enable-paredit-mode)))
   (add-hook `minibuffer-setup-hook `init-conditionally-enable-paredit-mode))
-(use-package paredit-everywhere
-  :ensure t
-  :diminish ""
-  :hook ((prog-mode css-mode) . paredit-everywhere-mode))
 
-
+(use-package smartparens-config
+  :ensure smartparens
+  :hook ((python-mode haskell-mode rust-mode  erlang-mode elixir-mode js2-mode rjsx-mode web-mode css-mode) . smartparens-mode)
+  :config (progn (show-smartparens-global-mode t)))
 (use-package elisp-slime-nav
   :ensure t
   :diminish ""
@@ -812,7 +807,6 @@ Eval region from begin-mark to end-mark if active, otherwise the last sexp."
   ;; Bind TAB to `indent-for-tab-command', as in regular Slime buffers.
   (define-key slime-repl-mode-map (kbd "TAB") `indent-for-tab-command)
   (add-hook `slime-repl-mode-hook (lambda ()
-				    ;; (setq mode-name "")
 				    (setq show-trailing-whitespace nil)
 				    (paredit-mode +1)
 				    (turn-on-eldoc-mode))))
