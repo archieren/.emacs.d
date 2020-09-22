@@ -667,8 +667,18 @@ Should Not be too big." )
 
 (use-package smartparens-config
   :ensure smartparens
-  :hook ((python-mode haskell-mode rust-mode  erlang-mode elixir-mode js2-mode rjsx-mode web-mode css-mode) . smartparens-mode)
-  :config (progn (show-smartparens-global-mode t)))
+  :hook ((python-mode
+	  haskell-mode
+	  rust-mode
+	  erlang-mode
+	  elixir-mode
+	  js2-mode
+	  rjsx-mode
+	  web-mode
+	  css-mode) . smartparens-strict-mode)
+  :config
+  (require 'smartparens-python)
+  (progn (show-smartparens-global-mode t)))
 (use-package elisp-slime-nav
   :ensure t
   :diminish ""
@@ -1073,12 +1083,14 @@ Eval region from begin-mark to end-mark if active, otherwise the last sexp."
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 					;       JavaScript Development        ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; 牵涉到安装那个language-server。注意typescript-language-server是微软的tsserver的包装。
-;; 而javascript-typescript-langserver好像有些不受推荐.不知还在发展不?
-;; lsp中，javascript-typescript-langserver优先级较typescript-language-server优先级低。
-;; 好像还有个Facebook搞的，flow-server什么的？ 暂时不管吧。
-;;   $npm i -g javascript-typescript-langserver
-;;   $npm i -g typescript-language-server
+;; 针对json-mode，安装json-ls: $npm i -g json-ls
+;; 针对JavaScript：
+;;    牵涉到安装那个language-server。注意typescript-language-server是微软的tsserver的包装。
+;;    而javascript-typescript-langserver好像有些不受推荐.不知还在发展不?
+;;    lsp中，javascript-typescript-langserver优先级较typescript-language-server优先级低。
+;;    好像还有个Facebook搞的，flow-server什么的？ 暂时不管吧。
+;;    $npm i -g javascript-typescript-langserver
+;;    $npm i -g typescript-language-server
 ;; 另外，安装eslint。
 ;;   $npm i -g eslint
 ;; (use-package add-node-modules-path :ensure t)
