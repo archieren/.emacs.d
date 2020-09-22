@@ -665,20 +665,6 @@ Should Not be too big." )
 	(enable-paredit-mode)))
   (add-hook `minibuffer-setup-hook `init-conditionally-enable-paredit-mode))
 
-(use-package smartparens-config
-  :ensure smartparens
-  :hook ((python-mode
-	  haskell-mode
-	  rust-mode
-	  erlang-mode
-	  elixir-mode
-	  js2-mode
-	  rjsx-mode
-	  web-mode
-	  css-mode) . smartparens-strict-mode)
-  :config
-  (require 'smartparens-python)
-  (progn (show-smartparens-global-mode t)))
 (use-package elisp-slime-nav
   :ensure t
   :diminish ""
