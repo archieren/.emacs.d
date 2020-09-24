@@ -400,17 +400,31 @@ Should Not be too big." )
   :ensure t
   :diminish ""
   :config
-  (global-company-mode t)
-  (setq company-idle-delay 0)
-  (setq company-minimum-prefix-length 5)
   (setq tab-always-indent `complete)
+  (setq company-idle-delay 0.1
+        company-minimum-prefix-length 3
+        company-tooltip-limit 14
+        company-tooltip-align-annotations t
+        company-require-match `never
+        company-global-modes `(not erc-mode message-mode help-mode gud-mode)
+        company-frontends `(company-pseudo-tooltip-frontend company-echo-metadata-frontend)
+        ;; Buffer-local backends will be computed when loading a major mode, so
+        ;; only specify a global default here.
+        ;; company-backends `(company-capf)
+	)
+  (global-company-mode t)
+  (use-package company-box
+    :ensure t
+    :hook (company-mode . company-box-mode)
+    ;; :init (setq company-box-icons-alist 'company-box-icons-all-the-icons)
+    )
   (use-package yasnippet
     :ensure t
     :diminish yas-minor-mode
     :bind (("C-'" . company-yasnippet)
 	   :map yas-minor-mode-map
-		("TAB" . nil)
-		("<tab>" . nil))
+	   ("TAB" . nil)
+	   ("<tab>" . nil))
     :init
     (add-hook `prog-mode-hook `yas-minor-mode)
     :config
