@@ -119,10 +119,24 @@ Should Not be too big." )
 ;;;
 (setq-default truncate-lines t)
 (setq-default truncate-partial-width-windows nil)
+;;; 停掉鼠标滚动功能. 鼠标滚动还对图像显示有影响,会导致busy.
+(mouse-wheel-mode -1)
+(global-set-key [wheel-up] 'ignore)
+(global-set-key [double-wheel-up] 'ignore)
+(global-set-key [triple-wheel-up] 'ignore)
+(global-set-key [wheel-down] 'ignore)
+(global-set-key [double-wheel-down] 'ignore)
+(global-set-key [triple-wheel-down] 'ignore)
+(global-set-key [wheel-left] 'ignore)
+(global-set-key [double-wheel-left] 'ignore)
+(global-set-key [triple-wheel-left] 'ignore)
+(global-set-key [wheel-right] 'ignore)
+(global-set-key [double-wheel-right] 'ignore)
+(global-set-key [triple-wheel-right] 'ignore)
+;; (setq mouse-wheel-scroll-amount `(1 ((shift) . 1))) ;; one line at a time
+;; (setq mouse-wheel-progressive-speed nil) ;; don't accelerate scrolling
+;; (setq mouse-wheel-follow-mouse t) ;; scroll window under mouse
 ;;;
-(setq mouse-wheel-scroll-amount `(1 ((shift) . 1))) ;; one line at a time
-(setq mouse-wheel-progressive-speed nil) ;; don't accelerate scrolling
-(setq mouse-wheel-follow-mouse t) ;; scroll window under mouse
 (setq scroll-step 1) ;; keyboard scroll one line at a time
 ;;;
 (setq uniquify-buffer-name-style `reverse)
@@ -400,6 +414,7 @@ Should Not be too big." )
   :ensure t
   :diminish ""
   :config
+  (define-key company-mode-map (kbd "TAB") `company-indent-or-complete-common)
   (setq tab-always-indent `complete)
   (setq company-idle-delay 0.1
         company-minimum-prefix-length 3
@@ -413,11 +428,11 @@ Should Not be too big." )
         ;; company-backends `(company-capf)
 	)
   (global-company-mode t)
-  (use-package company-box
-    :ensure t
-    :hook (company-mode . company-box-mode)
-    ;; :init (setq company-box-icons-alist 'company-box-icons-all-the-icons)
-    )
+  ;; (use-package company-box
+  ;;   :ensure t
+  ;;   :hook (company-mode . company-box-mode)
+  ;;   ;; :init (setq company-box-icons-alist 'company-box-icons-all-the-icons)
+  ;;   )
   (use-package yasnippet
     :ensure t
     :diminish yas-minor-mode
