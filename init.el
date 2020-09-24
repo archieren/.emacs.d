@@ -121,18 +121,11 @@ Should Not be too big." )
 (setq-default truncate-partial-width-windows nil)
 ;;; 停掉鼠标滚动功能. 鼠标滚动还对图像显示有影响,会导致busy.
 (mouse-wheel-mode -1)
-(global-set-key [wheel-up] 'ignore)
-(global-set-key [double-wheel-up] 'ignore)
-(global-set-key [triple-wheel-up] 'ignore)
-(global-set-key [wheel-down] 'ignore)
-(global-set-key [double-wheel-down] 'ignore)
-(global-set-key [triple-wheel-down] 'ignore)
-(global-set-key [wheel-left] 'ignore)
-(global-set-key [double-wheel-left] 'ignore)
-(global-set-key [triple-wheel-left] 'ignore)
-(global-set-key [wheel-right] 'ignore)
-(global-set-key [double-wheel-right] 'ignore)
-(global-set-key [triple-wheel-right] 'ignore)
+(global-set-key (kbd "<down-mouse-1>") nil)
+(global-set-key (kbd "<up-mouse-1>") nil)
+(global-set-key (kbd "<drag-mouse-1>") nil)
+(global-set-key (kbd "<mouse-2>") nil)
+(global-set-key (kbd "<mouse-3>") nil)
 ;; (setq mouse-wheel-scroll-amount `(1 ((shift) . 1))) ;; one line at a time
 ;; (setq mouse-wheel-progressive-speed nil) ;; don't accelerate scrolling
 ;; (setq mouse-wheel-follow-mouse t) ;; scroll window under mouse
