@@ -29,12 +29,11 @@ Should Not be too big." )
 					;   Settings about Packages-Install   ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;About Loading ...
-(add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
+(add-to-list `load-path (expand-file-name "lisp" user-emacs-directory))
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 
 (require `package)
-(let ((versioned-package-dir
-       (expand-file-name (format "elpa-%s.%s" emacs-major-version emacs-minor-version) user-emacs-directory)))
+(let ((versioned-package-dir (expand-file-name (format "elpa-%s.%s" emacs-major-version emacs-minor-version) user-emacs-directory)))
   (setq package-user-dir versioned-package-dir))
 (setq package-archives `(("gnu"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
                          ("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
@@ -70,7 +69,7 @@ Should Not be too big." )
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 					;                  UI                 ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(fset 'yes-or-no-p 'y-or-n-p)
+(fset `yes-or-no-p `y-or-n-p)
 (setq use-file-dialog nil)
 (setq use-dialog-box nil)
 (setq inhibit-startup-screen t)
@@ -86,7 +85,7 @@ Should Not be too big." )
   :ensure t
   :custom
   (winner-boring-buffers
-   '("*Completions*"
+   `("*Completions*"
      "*Compile-Log*"
      "*inferior-lisp*"
      "*Fuzzy Completions*"
@@ -135,7 +134,7 @@ Should Not be too big." )
 (show-paren-mode t)
 (global-prettify-symbols-mode t)
 ;;;
-(add-hook 'after-init-hook '(lambda ()
+(add-hook `after-init-hook `(lambda ()
 			      (global-hl-line-mode) ;; 跟踪当前行
 			      ))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -181,6 +180,34 @@ Should Not be too big." )
   (setq-default beacon-lighter "")
   (setq-default beacon-size 9)
   (beacon-mode t))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+					;               Treemacs              ;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(use-package treemacs
+  :ensure t
+  :config
+  (treemacs-follow-mode t)
+  (treemacs-filewatch-mode t)
+  (treemacs-fringe-indicator-mode t)
+  (setq treemacs-is-never-other-window t)
+  (use-package treemacs-icons-dired
+    :ensure t
+    :config
+    (treemacs-icons-dired-mode))
+  (use-package treemacs-projectile
+    :ensure t)
+  (use-package treemacs-magit
+    :ensure t)
+  :bind
+  (:map global-map
+	("s-t"       . treemacs-select-window)
+        ("s-c t 0"   . treemacs-select-window)
+        ("s-c t 1"   . treemacs-delete-other-windows)
+        ("s-c t t"   . treemacs)
+        ("s-c t B"   . treemacs-bookmark)
+        ("s-c t C-t" . treemacs-find-file)
+        ("s-c t M-t" . treemacs-find-tag)))
+
 ;;;Fonts
 ;;----------------------------------------------------------------------------
 ;;; 字体设置 - 用等宽字体，比较好对齐中英文!
@@ -188,16 +215,16 @@ Should Not be too big." )
 (use-package all-the-icons
   :ensure t ; 第一次时,另外需要手工执行 M-x all-the-icons-install-fonts
   :config
-  (set-face-attribute  'default
+  (set-face-attribute  `default
 		       nil
 		       :font  (font-spec :family "DejaVu Sans Mono"
 					 :size 14))
-  (dolist (script '(kana han symbol cjk-misc bopomofo))
+  (dolist (script `(kana han symbol cjk-misc bopomofo))
     (set-fontset-font  t ;;(frame-parameter nil 'font)
 		       script
 		       (font-spec :family "Noto Sans Mono CJK SC"
 				  :size 14)))
-  (setq face-font-rescale-alist '(("DejaVu Sans Mono" . 1.0)
+  (setq face-font-rescale-alist `(("DejaVu Sans Mono" . 1.0)
 				  ("Noto Sans Mono CJK SC" . 1.0))))
 (use-package doom-themes
   :ensure t
@@ -248,7 +275,7 @@ Should Not be too big." )
   :diminish ""
   :config
   (require `whitespace)
-  (setq whitespace-style '(face lines-tail))
+  (setq whitespace-style `(face lines-tail))
   (setq whitespace-line-column 256)
   (diminish `global-whitespace-mode)
   (global-whitespace-mode t)
@@ -295,19 +322,11 @@ Should Not be too big." )
   :diminish ""
   :config
   (add-hook `prog-mode-hook `rainbow-delimiters-mode))
-(use-package highlight-indentation
-  :ensure t
-  :diminish ""
-  :config
-  ;;(set-face-background 'highlight-indentation-face "#e3e3d3")
-  ;;(set-face-background 'highlight-indentation-current-column-face "#c3b3b3")
-  )
 (use-package highlight-indent-guides
   :ensure t
   :config
-  (setq highlight-indent-guides-method `column )
-  ;;(add-hook `prog-mode-hook `highlight-indent-guides-mode)
-  )
+  (setq highlight-indent-guides-method `bitmap )
+  (add-hook `prog-mode-hook `highlight-indent-guides-mode))
 (use-package highlight-escape-sequences
   :ensure t
   :diminish ""
@@ -361,8 +380,8 @@ Should Not be too big." )
   ;; cc-mode
   (add-to-list `projectile-globally-ignored-directories ".ccls-cache")
   (add-to-list `projectile-globally-ignored-directories ".clangd")
-  (add-to-list 'projectile-project-root-files-bottom-up ".ccls-root")
-  (add-to-list 'projectile-project-root-files-top-down-recurring "compile_commands.json")
+  (add-to-list `projectile-project-root-files-bottom-up ".ccls-root")
+  (add-to-list `projectile-project-root-files-top-down-recurring "compile_commands.json")
   ;; ------------------
 
   (projectile-mode t))
@@ -371,7 +390,7 @@ Should Not be too big." )
   :ensure t
   ;:bind (("M-?" . rg-project))
   :config
-  (global-set-key (kbd "s-?") 'rg-project)
+  (global-set-key (kbd "s-?") `rg-project)
   (unless (executable-find "rg")
     (warn "\nWARNING: Could not find the ripgrep executable."))
   (use-package deadgrep
@@ -497,12 +516,12 @@ Should Not be too big." )
 ;;;Dired
 (require `dired)
 (setq-default dired-dwim-target t)
-(setq dired-recursive-deletes 'top)
+(setq dired-recursive-deletes `top)
 (define-key dired-mode-map [mouse-2] `dired-find-alternate-file)
 (define-key dired-mode-map (kbd "RET") `dired-find-alternate-file)
 (define-key dired-mode-map (kbd "C-c C-p") `wdired-change-to-wdired-mode)
 ;; 只在一个buffer 里打开 dired-mode!
-(put `dired-find-alternate-file 'disabled nil)
+(put `dired-find-alternate-file `disabled nil)
 ;;Dired里显示一些版本信息.
 (use-package diff-hl
   :ensure t
@@ -533,7 +552,7 @@ Should Not be too big." )
       (:name "Size" :inline t)
       (file-size-human-readable (buffer-size)))
   (setq ibuffer-formats
-	'((mark modified read-only vc-status-mini " "
+	`((mark modified read-only vc-status-mini " "
 		(name 22 22 :left :elide)
 		" "
 		(size-h 9 -1 :right)
@@ -589,32 +608,6 @@ Should Not be too big." )
   (fullframe ibuffer ibuffer-quit)
   (fullframe magit-status magit-mode-quit-window)
   (fullframe list-packages quit-window))
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-					;               Treemacs              ;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(use-package treemacs
-  :ensure t
-  :config
-  (treemacs-follow-mode t)
-  (treemacs-filewatch-mode t)
-  (treemacs-fringe-indicator-mode t)
-  (setq treemacs-is-never-other-window t)
-  (use-package treemacs-icons-dired
-    :ensure t
-    :config
-    (treemacs-icons-dired-mode))
-  (use-package treemacs-projectile
-    :ensure t)
-  (use-package treemacs-magit
-    :ensure t)
-  :bind
-  (:map global-map
-        ("s-c t 0"   . treemacs-select-window)
-        ("s-c t 1"   . treemacs-delete-other-windows)
-        ("s-c t t"   . treemacs)
-        ("s-c t B"   . treemacs-bookmark)
-        ("s-c t C-t" . treemacs-find-file)
-        ("s-c t M-t" . treemacs-find-tag)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 					;              Languages              ;
@@ -650,7 +643,7 @@ Should Not be too big." )
       (local-set-key (kbd "RET") `paredit-newline)))
   (add-hook `paredit-mode-hook `init-maybe-map-paredit-newline)
   ;;
-  (dolist (binding '("C-<2left>" "C-<right>" "C-M-<left>" "C-M-<right>" "M-s" "M-?"))
+  (dolist (binding `("C-<2left>" "C-<right>" "C-M-<left>" "C-M-<right>" "M-s" "M-?"))
     (define-key paredit-mode-map (read-kbd-macro binding) nil))
   ;;
   (defvar init-paredit-minibuffer-commands `(eval-expression
@@ -673,7 +666,7 @@ Should Not be too big." )
   (require `hippie-exp)
   (defun init-hippie-expand-for-elisp ()
     "Locally set `hippie-expand' completion functions for use with Emacs Lisp."
-    (make-local-variable 'hippie-expand-try-functions-list)
+    (make-local-variable `hippie-expand-try-functions-list)
     (add-to-list `hippie-expand-try-functions-list `try-complete-lisp-symbol t)
     (add-to-list `hippie-expand-try-functions-list `try-complete-lisp-symbol-partially t))
   (init-add-hook-to-emacss-lispy-modes `init-hippie-expand-for-elisp)
@@ -773,14 +766,14 @@ Eval region from begin-mark to end-mark if active, otherwise the last sexp."
 		    (require `slime)
 		    (normal-mode))))
   (when (executable-find "sbcl")
-    (add-to-list 'slime-lisp-implementations
-                 '(sbcl ("sbcl") :coding-system utf-8-unix)))
+    (add-to-list `slime-lisp-implementations
+                 `(sbcl ("sbcl") :coding-system utf-8-unix)))
   (when (executable-find "lisp")
-    (add-to-list 'slime-lisp-implementations
-                 '(cmucl ("lisp") :coding-system iso-latin-1-unix)))
+    (add-to-list `slime-lisp-implementations
+                 `(cmucl ("lisp") :coding-system iso-latin-1-unix)))
   (when (executable-find "ccl")
-    (add-to-list 'slime-lisp-implementations
-                 '(ccl ("ccl") :coding-system utf-8-unix)))
+    (add-to-list `slime-lisp-implementations
+                 `(ccl ("ccl") :coding-system utf-8-unix)))
   ;;
   (slime-setup)
   (slime-setup `(slime-fancy slime-banner slime-repl slime-fuzzy))
@@ -815,10 +808,10 @@ Eval region from begin-mark to end-mark if active, otherwise the last sexp."
   :ensure t
   :config
   (setq racket-program "racket")
-  (add-hook 'racket-mode-hook (lambda () (define-key racket-mode-map (kbd "s-c r") 'racket-run)))
-  (add-hook 'racket-mode-hook      `racket-unicode-input-method-enable)
-  (add-hook 'racket-repl-mode-hook `racket-unicode-input-method-enable)
-  (add-hook 'racket-mode-hook (lambda () (enable-paredit-mode))))
+  (add-hook `racket-mode-hook (lambda () (define-key racket-mode-map (kbd "s-c r") `racket-run)))
+  (add-hook `racket-mode-hook      `racket-unicode-input-method-enable)
+  (add-hook `racket-repl-mode-hook `racket-unicode-input-method-enable)
+  (add-hook `racket-mode-hook (lambda () (enable-paredit-mode))))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 					;               Lsp-mode              ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -874,7 +867,7 @@ Eval region from begin-mark to end-mark if active, otherwise the last sexp."
   (require `lsp-mode)
   (add-hook `elixir-mode-hook `lsp)
   (add-hook `elixir-mode-hook
-	    (lambda () (add-hook 'before-save-hook `elixir-format nil t))))
+	    (lambda () (add-hook `before-save-hook `elixir-format nil t))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 					;               Haskell               ;
@@ -890,7 +883,7 @@ Eval region from begin-mark to end-mark if active, otherwise the last sexp."
 	  (let ((stack-path (append
 			     (list (concat (string-trim-right (shell-command-to-string "stack path --local-install-root")) "/bin"))
 			     (parse-colon-path (replace-regexp-in-string "[\r\n]+\\'" "" (shell-command-to-string "stack path --bin-path"))))))
-	    (setq-local exec-path (seq-uniq stack-path 'string-equal))
+	    (setq-local exec-path (seq-uniq stack-path `string-equal))
 	    (make-local-variable `process-environment)
 	    (setenv "PATH" (string-join exec-path path-separator))))
       (kill-local-variable `exec-path)
@@ -982,9 +975,9 @@ Eval region from begin-mark to end-mark if active, otherwise the last sexp."
     (defun init-conda-env-shell-init (orig_fun &rest args)
       "Activate the current env in a newly opened shell PROCESS."
       (let* ((process (car args))
-	     (activate-command (if (eq system-type 'windows-nt)
-				   '("activate")
-				 '("conda" "activate")))
+	     (activate-command (if (eq system-type `windows-nt)
+				   `("activate")
+				 `("conda" "activate")))
 	     (full-command (append activate-command `(,conda-env-current-name "\n")))
 	     (command-string (combine-and-quote-strings full-command)))
 	(comint-send-string process command-string)))
@@ -1061,7 +1054,7 @@ Eval region from begin-mark to end-mark if active, otherwise the last sexp."
     (setq ccls-args `("--log-file=/tmp/ccls.log")))
   ;; (setq lsp-clients-clangd-args '("--compile-commands-dir=./build" "-background-index"))
 
-  (setq-default flycheck-disabled-checkers '(c/c++-clang c/c++-cppcheck c/c++-gcc))
+  (setq-default flycheck-disabled-checkers `(c/c++-clang c/c++-cppcheck c/c++-gcc))
   (add-hook `c++-mode-hook `lsp)
   (add-hook `c-mode-hook `lsp)
   (add-hook `objc-mode-hook `lsp))
@@ -1084,8 +1077,8 @@ Eval region from begin-mark to end-mark if active, otherwise the last sexp."
 (use-package json-mode
   :ensure t
   :config
-  (require 'lsp)
-  (add-hook 'json-mode-hook 'lsp))
+  (require `lsp)
+  (add-hook `json-mode-hook `lsp))
 (use-package js2-mode
   :ensure t
   :mode "\\.js\\'"
@@ -1094,23 +1087,23 @@ Eval region from begin-mark to end-mark if active, otherwise the last sexp."
   (setq-default js2-basic-offset 4)
   (setq-default js2-bounce-indent-p nil)
   (setq-default js2-global-externs
-		'("module" "require" "assert" "setInterval" "console" "__dirname__"))
-  (require 'lsp)
-  (add-hook 'js2-mode-hook 'lsp)
-  (add-hook 'js2-mode-hook 'npm-mode))
+		`("module" "require" "assert" "setInterval" "console" "__dirname__"))
+  (require `lsp)
+  (add-hook `js2-mode-hook `lsp)
+  (add-hook `js2-mode-hook `npm-mode))
 (use-package rjsx-mode
   :ensure t
   :mode "\\.jsx\\'"
   :config
-  (require 'lsp)
-  (add-hook 'rjsx-mode-hook 'lsp)
-  (add-hook 'rjsx-mode-hook 'npm-mode))
+  (require `lsp)
+  (add-hook `rjsx-mode-hook `lsp)
+  (add-hook `rjsx-mode-hook `npm-mode))
 (use-package typescript-mode
   :ensure t
   :config
-  (require 'lsp)
-  (add-hook 'typescript-mode-hook 'lsp)
-  (add-hook 'typescript-mode-hook 'npm-mode))
+  (require `lsp)
+  (add-hook `typescript-mode-hook `lsp)
+  (add-hook `typescript-mode-hook `npm-mode))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 					;           Web Development           ;
@@ -1135,45 +1128,45 @@ Eval region from begin-mark to end-mark if active, otherwise the last sexp."
     (setq web-mode-enable-current-element-highlight t)
     (setq web-mode-enable-css-colorization t))
   ;;
-  (add-hook 'web-mode-hook 'init-web-mode-hook)
-  (add-hook 'web-mode-hook 'rainbow-mode)
-  (add-hook 'web-mode-hook 'lsp))
+  (add-hook `web-mode-hook `init-web-mode-hook)
+  (add-hook `web-mode-hook `rainbow-mode)
+  (add-hook `web-mode-hook `lsp))
 
 (use-package css-eldoc :ensure t)
 (use-package css-mode
   :ensure t
   :mode "\\.css\\'"
   :config
-  (add-hook 'css-mode-hook 'turn-on-css-eldoc)
-  (add-hook 'css-mode-hook 'rainbow-mode)
+  (add-hook `css-mode-hook `turn-on-css-eldoc)
+  (add-hook `css-mode-hook `rainbow-mode)
   ;; lsp本身好像支持css、scss、sass等等。
-  (add-hook 'css-mode-hook 'lsp))
+  (add-hook `css-mode-hook `lsp))
 (use-package scss-mode
   :ensure t
   :mode "\\.scss\\'"
   :config
-  (add-hook 'scss-mode-hook 'turn-on-css-eldoc)
-  (add-hook 'scss-mode-hook 'rainbow-mode)
+  (add-hook `scss-mode-hook `turn-on-css-eldoc)
+  (add-hook `scss-mode-hook `rainbow-mode)
   ;; lsp本身好像支持css、scss、sass等等。
-  (add-hook 'scss-mode-hook 'lsp))
+  (add-hook `scss-mode-hook `lsp))
 (use-package sass-mode
   :ensure t
   :mode "\\.sass\\'"
   :config
-  (add-hook 'sass-mode-hook 'turn-on-css-eldoc)
-  (add-hook 'sass-mode-hook 'rainbow-mode)
+  (add-hook `sass-mode-hook `turn-on-css-eldoc)
+  (add-hook `sass-mode-hook `rainbow-mode)
   ;; lsp本身好像支持css、scss、sass等等。
-  (add-hook 'sass-mode-hook 'lsp))
+  (add-hook `sass-mode-hook `lsp))
 (use-package emmet-mode
   :ensure t
   :config
-  (dolist (hook '(web-mode-hook
+  (dolist (hook `(web-mode-hook
 		  sgml-mode-hook
 		  css-mode-hook
 		  sass-mode-hook
 		  scss-mode-hook
 		  js2-mode-hook))
-    (add-hook hook 'emmet-mode)))
+    (add-hook hook `emmet-mode)))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 					;           Structureed Doc.          ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -1194,7 +1187,7 @@ Eval region from begin-mark to end-mark if active, otherwise the last sexp."
   :ensure t
   :mode  "\\.[Cc][Ss][Vv]\\'"
   :config
-  (setq csv-separators '("," ";" "|" " ")))
+  (setq csv-separators `("," ";" "|" " ")))
 (use-package terraform-mode
   :ensure t
   :config
@@ -1211,9 +1204,9 @@ Eval region from begin-mark to end-mark if active, otherwise the last sexp."
   (use-package org-bullets
     :ensure t
     :config
-    (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+    (add-hook `org-mode-hook (lambda () (org-bullets-mode 1))))
   (org-babel-do-load-languages
-   'org-babel-load-languages
+   `org-babel-load-languages
    `((R . t)
      (ditaa . nil)
      (dot . t)
@@ -1228,13 +1221,13 @@ Eval region from begin-mark to end-mark if active, otherwise the last sexp."
      (python . t)
      (ruby . t)
      (screen . nil)
-     (,(if (locate-library "ob-sh") 'sh 'shell) . t)
+     (,(if (locate-library "ob-sh") `sh `shell) . t)
      (sql . nil)
      (sqlite . t))))
 
 
 
 
-(provide 'init)
+(provide `init)
 ;;; init.el ends here
 
