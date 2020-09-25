@@ -121,11 +121,6 @@ Should Not be too big." )
 (setq-default truncate-partial-width-windows nil)
 ;;; 停掉鼠标滚动功能. 鼠标滚动还对图像显示有影响,会导致busy.
 (mouse-wheel-mode -1)
-(global-set-key (kbd "<down-mouse-1>") nil)
-(global-set-key (kbd "<up-mouse-1>") nil)
-(global-set-key (kbd "<drag-mouse-1>") nil)
-(global-set-key (kbd "<mouse-2>") nil)
-(global-set-key (kbd "<mouse-3>") nil)
 ;; (setq mouse-wheel-scroll-amount `(1 ((shift) . 1))) ;; one line at a time
 ;; (setq mouse-wheel-progressive-speed nil) ;; don't accelerate scrolling
 ;; (setq mouse-wheel-follow-mouse t) ;; scroll window under mouse
@@ -410,14 +405,11 @@ Should Not be too big." )
   (define-key company-mode-map (kbd "TAB") `company-indent-or-complete-common)
   (setq tab-always-indent `complete)
   (setq company-idle-delay 0.1
-        company-minimum-prefix-length 3
+        company-minimum-prefix-length 5
         company-tooltip-limit 14
         company-tooltip-align-annotations t
         company-require-match `never
         company-global-modes `(not erc-mode message-mode help-mode gud-mode)
-        company-frontends `(company-pseudo-tooltip-frontend company-echo-metadata-frontend)
-        ;; Buffer-local backends will be computed when loading a major mode, so
-        ;; only specify a global default here.
         ;; company-backends `(company-capf)
 	)
   (global-company-mode t)
@@ -436,10 +428,7 @@ Should Not be too big." )
     :init
     (add-hook `prog-mode-hook `yas-minor-mode)
     :config
-    (yas-reload-all))
-  (use-package yasnippet-snippets
-    :ensure t
-    :config
+    (use-package yasnippet-snippets :ensure t)
     (yas-reload-all))
   ;; hippie-expand 是内建的.
   ;; 暂时放在这儿!
@@ -942,6 +931,9 @@ Eval region from begin-mark to end-mark if active, otherwise the last sexp."
   ;; 需要安装haskell-language-server，它是ghcide、hie的合体。
   (use-package lsp-haskell
     :ensure t
+    :bind
+    (:map interactive-haskell-mode-map
+	  ("M-." . nil))
     :config
     (setq lsp-haskell-process-path-hie "haskell-language-server-wrapper")
     (add-hook `haskell-mode-hook `lsp)))
