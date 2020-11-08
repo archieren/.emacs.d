@@ -234,8 +234,8 @@ Should Not be too big." )
   ;; Global settings (defaults)
   (setq doom-themes-enable-bold t
         doom-themes-enable-italic t)
-  ;; (load-theme `doom-solarized-dark t)
-  (load-theme `doom-one t)
+  (load-theme `doom-solarized-dark t)
+  ;; (load-theme `doom-one t)
   ;; Enable flashing mode-line on errors
   (doom-themes-visual-bell-config)
   ;; Corrects (and improves) org-mode's native fontification.
@@ -1245,3 +1245,4 @@ Eval region from begin-mark to end-mark if active, otherwise the last sexp."
 (provide `init)
 ;;; init.el ends here
 
+(put 'downcase-region 'disabled nil)
