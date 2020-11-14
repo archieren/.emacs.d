@@ -935,7 +935,8 @@ Eval region from begin-mark to end-mark if active, otherwise the last sexp."
     (:map interactive-haskell-mode-map
 	  ("M-." . nil))
     :config
-    (setq lsp-haskell-process-path-hie "haskell-language-server-wrapper")
+    ;; what changed?
+    (setq lsp-haskell-server-path "haskell-language-server-wrapper")
     (add-hook `haskell-mode-hook `lsp)))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 					;                 Rust                ;
