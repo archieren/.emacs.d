@@ -833,6 +833,7 @@ Eval region from begin-mark to end-mark if active, otherwise the last sexp."
   ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
   (setq lsp-keymap-prefix "s-c l")
   :config
+  (setq lsp-headerline-breadcrumb-enable nil)
   (use-package lsp-ui
     :ensure t
     :config
