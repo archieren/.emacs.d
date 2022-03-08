@@ -616,8 +616,7 @@ Should Not be too big." )
 	 ("C-M-<up>" . magit-section-up))
   :config
   (use-package magit-popup :ensure t)
-  ;; (use-package magithub :ensure t)
-  )
+  (use-package magithub :ensure t))
 
 (use-package fullframe :ensure t
   :config
