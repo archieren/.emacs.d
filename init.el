@@ -199,6 +199,7 @@ Should Not be too big." )
   (use-package treemacs-projectile
     :ensure t)
   (use-package treemacs-magit
+    :after magit
     :ensure t)
   :bind
   (:map global-map
@@ -586,26 +587,18 @@ Should Not be too big." )
 					;           VC,Git and Magit          ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (use-package git-blamed :ensure t)
-(use-package gitignore-mode :ensure t)
-(use-package gitconfig-mode :ensure t)
+(use-package git-modes :ensure t)
+;; (use-package gitignore-mode :ensure t)
+;; (use-package gitconfig-mode :ensure t)
 (use-package git-timemachine
   :ensure t
   :bind (("C-x v t" . git-timemachine-toggle)))
-(use-package magit
-  :ensure t
-  :bind (("C-x g" . magit-status)
-	 ("C-x M-g" . magit-dispatch)
-	 :map  magit-status-mode-map
-	 ("C-M-<up>" . magit-section-up)))
-;(use-package magit-popup :ensure t)
 (use-package git-commit
   :ensure t
   :hook (git-commit-mode . goto-address-mode))
 (use-package git-messenger :ensure t)
-
 (use-package bug-reference-github :ensure t)
 (use-package github-clone :ensure t)
-(use-package magithub :ensure t)
 (use-package git-gutter
   :ensure t
   :bind (("C-x v =" . git-gutter:popup-hunk)
@@ -614,6 +607,18 @@ Should Not be too big." )
   :config
   (global-git-gutter-mode t)
   (git-gutter:linum-setup))
+
+(use-package magit
+  :ensure t
+  :bind (("C-x g" . magit-status)
+	 ("C-x M-g" . magit-dispatch)
+	 :map  magit-status-mode-map
+	 ("C-M-<up>" . magit-section-up))
+  :config
+  (use-package magit-popup :ensure t)
+  ;; (use-package magithub :ensure t)
+  )
+
 (use-package fullframe :ensure t
   :config
   (fullframe ibuffer ibuffer-quit)
@@ -923,7 +928,7 @@ Eval region from begin-mark to end-mark if active, otherwise the last sexp."
   (add-hook `haskell-mode-hook `subword-mode)
   (add-hook `haskell-mode-hook `eldoc-mode)
   ;; 关注 interactive-haskell-mode 和 lsp-mode 是否会冲突
-  (add-hook `haskell-mode-hook `interactive-haskell-mode)
+  ;; (add-hook `haskell-mode-hook `interactive-haskell-mode)
   (use-package hindent
     :ensure t
     :diminish ""
@@ -932,9 +937,9 @@ Eval region from begin-mark to end-mark if active, otherwise the last sexp."
   ;; 需要安装haskell-language-server，它是ghcide、hie的合体。
   (use-package lsp-haskell
     :ensure t
-    :bind
-    (:map interactive-haskell-mode-map
-	  ("M-." . nil))
+    ;; :bind
+    ;; (:map interactive-haskell-mode-map
+    ;; 	  ("M-." . nil))
     :config
     ;; what changed?
     (setq lsp-haskell-server-path "haskell-language-server-wrapper")
