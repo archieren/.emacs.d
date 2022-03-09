@@ -733,10 +733,6 @@ Eval region from begin-mark to end-mark if active, otherwise the last sexp."
   ;;
   (use-package aggressive-indent
     :ensure t)
-  (use-package cl-lib-highlight
-    :ensure t
-    :config
-    (cl-lib-highlight-initialize))
   (use-package macrostep
     :ensure t
     :config
