@@ -615,7 +615,8 @@ Should Not be too big." )
 	 :map  magit-status-mode-map
 	 ("C-M-<up>" . magit-section-up))
   :config
-  (use-package magit-popup :ensure t))
+  (use-package magit-popup :ensure t)
+  (use-package forge :ensure t))
 
 (use-package fullframe :ensure t
   :config
