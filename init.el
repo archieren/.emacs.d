@@ -923,7 +923,7 @@ Eval region from begin-mark to end-mark if active, otherwise the last sexp."
   (add-hook `haskell-mode-hook `subword-mode)
   (add-hook `haskell-mode-hook `eldoc-mode)
   ;; 关注 interactive-haskell-mode 和 lsp-mode 是否会冲突
-  ;; (add-hook `haskell-mode-hook `interactive-haskell-mode)
+  (add-hook `haskell-mode-hook `interactive-haskell-mode)
   (use-package hindent
     :ensure t
     :diminish ""
