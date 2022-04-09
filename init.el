@@ -1230,7 +1230,7 @@ Eval region from begin-mark to end-mark if active, otherwise the last sexp."
      (gnuplot . t)
      (haskell . nil)
      (latex . t)
-     (ledger . t)
+     (ledger . nil)
      (ocaml . nil)
      (octave . t)
      (plantuml . t)
