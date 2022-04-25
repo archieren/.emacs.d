@@ -403,7 +403,7 @@ Should Not be too big." )
   :ensure t
   :diminish ""
   :config
-  (define-key company-mode-map (kbd "TAB") `company-indent-or-complete-common)
+  (define-key company-mode-map (kbd "s-<tab>") `company-indent-or-complete-common)
   (setq tab-always-indent `complete)
   (setq company-idle-delay 0.1
         company-minimum-prefix-length 5
