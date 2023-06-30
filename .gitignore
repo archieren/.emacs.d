@@ -1,4 +1,6 @@
-/forge-database.sqlite
+/*.sqlite
+/*.sql
+/*.~undo-tree~
 /.lsp-session*
 /url/cache
 /.emacs.desktop
