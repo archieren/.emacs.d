@@ -35,9 +35,9 @@ Should Not be too big." )
 (require `package)
 (let ((versioned-package-dir (expand-file-name (format "elpa-%s.%s" emacs-major-version emacs-minor-version) user-emacs-directory)))
   (setq package-user-dir versioned-package-dir))
-(setq package-archives `(("gnu"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
-                         ("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
-                         ("org" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/org/")))
+(setq package-archives `(("gnu"   . "http://mirrors.ustc.edu.cn/elpa/gnu/")
+                        ("melpa" . "http://mirrors.ustc.edu.cn/elpa/melpa/")))
+;;("org" . "http://mirrors.ustc.edu.cn/elpa/org/")
 
 (package-initialize)
 (unless (package-installed-p `use-package)
@@ -216,7 +216,7 @@ Should Not be too big." )
 ;;; 字体设置 - 用等宽字体，比较好对齐中英文!
 ;;----------------------------------------------------------------------------
 (use-package all-the-icons
-  :ensure t ; 第一次时,另外需要手工执行 M-x all-the-icons-install-fonts
+  :ensure t ; 第一次时,另外需要手工执行 M-x all-the-icons-install-fonts.在~/.local/share/fonts下,可看到...
   :config
   (set-face-attribute  `default
 		       nil
@@ -229,6 +229,16 @@ Should Not be too big." )
 				  :size 14)))
   (setq face-font-rescale-alist `(("DejaVu Sans Mono" . 1.0)
 				  ("Noto Sans Mono CJK SC" . 1.0))))
+
+(use-package nerd-icons
+  ;; :custom
+  ;; The Nerd Font you want to use in GUI
+  ;; "Symbols Nerd Font Mono" is the default and is recommended
+  ;; but you can use any other Nerd Font if you want
+  ;; (nerd-icons-font-family "Symbols Nerd Font Mono")
+  :ensure t ; 第一次时, 需 M-x nerd-icons-install-fonts 来安装"Symbols Nerd Fonts Mono".在~/.local/share/fonts下,可看到NFM.ttf.
+)
+
 (use-package doom-themes
   :ensure t
   :config
