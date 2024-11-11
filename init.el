@@ -603,9 +603,6 @@ Should Not be too big." )
 (use-package git-timemachine
   :ensure t
   :bind (("C-x v t" . git-timemachine-toggle)))
-(use-package git-commit
-  :ensure t
-  :hook (git-commit-mode . goto-address-mode))
 (use-package git-messenger :ensure t)
 (use-package bug-reference-github :ensure t)
 (use-package github-clone :ensure t)
