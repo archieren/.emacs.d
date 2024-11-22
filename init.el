@@ -881,7 +881,7 @@ Eval region from begin-mark to end-mark if active, otherwise the last sexp."
   :ensure t
   :init
   ;;elixir-ls 来自 https://github.com/elixir-lsp下的elixir-ls
-  (add-to-list `exec-path "~/Projects/elixir-ls/release")
+  (add-to-list `exec-path "~/Projects/elixir-ls-master/")
   :config
   (require `lsp-mode)
   (add-hook `elixir-mode-hook `lsp)
