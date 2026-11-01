@@ -68,3 +68,6 @@ request/
 /irony
 /elpy
 /.cache
+/eln-cache/
+/projectile-frecency.eld
+/forge-database*.db
