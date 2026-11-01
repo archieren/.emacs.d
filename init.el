@@ -1,4 +1,4 @@
-;;; init.el --- Bootstrap the configurations
+;;; init.el --- Bootstrap the configurations  -*- lexical-binding: t; -*-
 ;;; Commentary:
 ;; Hello!
 ;;; Version: 0.0.1
